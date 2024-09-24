@@ -1,5 +1,5 @@
 import { AppDataSource } from "../db/database-connect";
-import { Comment } from "../db/entity/Comment";
+import { Comment } from "../db/entities/Comment";
 import { productService } from "./product.service";
 import { UserService } from "./user.service";
 

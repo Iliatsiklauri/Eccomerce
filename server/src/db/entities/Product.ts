@@ -39,11 +39,14 @@ export class Product {
   @JoinColumn({ name: "categoryId" })
   category: Category;
 
-  @Column({ default: false })
+  @Column({ nullable: false })
   categoryId: number;
 
   @Column({ default: false })
   pinned: boolean;
+
+  @Column({ default: 0 })
+  inStock: number;
 
   @CreateDateColumn()
   createdAt: Date;

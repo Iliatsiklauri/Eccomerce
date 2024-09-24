@@ -1,21 +1,16 @@
-import { DataSource } from "typeorm";
-import { User } from "./entity/User";
-import dotenv from "dotenv";
-import { Product } from "./entity/Product";
-import { Comment } from "./entity/Comment";
-import { Category } from "./entity/Category";
-
-dotenv.config();
-export const AppDataSource = new DataSource({
+import { DataSource, DataSourceOptions } from "typeorm";
+import { dbConfig } from "../config/dbConfig";
+const dataSourceOptions: DataSourceOptions = {
   type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  host: dbConfig.host,
+  port: dbConfig.port,
+  username: dbConfig.user,
+  password: dbConfig.password,
+  database: dbConfig.name,
+  entities: [`${__dirname}/entities/*.{ts,js}`],
   synchronize: false,
-  logging: true,
-  entities: [User, Product, Comment, Category],
-  subscribers: [],
-  migrations: [],
-});
+  migrations: [`${__dirname}/migrations/**/*.{ts,js}`],
+  subscribers: [`${__dirname}/subscribers/**/*.{ts,js}`],
+  migrationsTableName: "_migrations",
+};
+export const AppDataSource = new DataSource(dataSourceOptions);

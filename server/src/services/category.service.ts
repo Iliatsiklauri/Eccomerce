@@ -1,5 +1,5 @@
 import { AppDataSource } from "../db/database-connect";
-import { Category } from "../db/entity/Category";
+import { Category } from "../db/entities/Category";
 import { categoryType } from "../utils/validation";
 import { awsService } from "./aws.service";
 

@@ -16,6 +16,10 @@ export const getAllProducts = async (req: Request, res: Response) => {
   let limit = parseInt(req.query.limit as string) || 20;
   let skip = limit * (page - 1);
   const [products, total] = await productsService.getAllProducts(skip, limit);
+  if (!products)
+    return res
+      .status(400)
+      .json(new ErrorRes(400, "error while fetching products"));
   res.status(200).json(products);
 };
 

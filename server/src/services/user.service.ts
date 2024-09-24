@@ -1,5 +1,5 @@
 import { AppDataSource } from "../db/database-connect";
-import { User } from "../db/entity/User";
+import { User } from "../db/entities/User";
 import { generateToken } from "../utils/jwt";
 import { userType } from "../utils/validation";
 import bcrypt from "bcrypt";

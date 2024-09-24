@@ -1,5 +1,5 @@
 import { AppDataSource } from "../db/database-connect";
-import { Product } from "../db/entity/Product";
+import { Product } from "../db/entities/Product";
 import { productType } from "../utils/validation";
 import { awsService } from "./aws.service";
 
@@ -11,11 +11,15 @@ export class productService {
     skip: number,
     limit: number
   ): Promise<[Product[], number]> {
-    return await this.productRepository.findAndCount({
-      skip,
-      take: limit,
-      relations: ["comments", "comments.user", "category"],
-    });
+    try {
+      return await this.productRepository.findAndCount({
+        skip,
+        take: limit,
+        relations: ["comments", "comments.user", "category"],
+      });
+    } catch (er) {
+      return null;
+    }
   }
 
   async getProductById(id): Promise<Product> {

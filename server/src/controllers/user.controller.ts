@@ -5,7 +5,7 @@ import { SuccessRes, ErrorRes, userSchema } from "../utils/validation";
 const UsersService = new UserService();
 
 export const getAllUsers = async (req: Request, res: Response) => {
-  if (req.user.role !== "ADMIN")
+  if (req.user?.role !== "ADMIN")
     return res.status(401).json(new ErrorRes(401, "Access denied"));
   const users = await UsersService.getAllUsers();
   res.status(200).json(users);
