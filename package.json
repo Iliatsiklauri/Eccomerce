@@ -1,0 +1,22 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start:client": "cd client && npm run dev",
+    "start:postgres": "cd server && npm run start-server",
+    "start:server": "cd server && npm start",
+    "start": "concurrently \"npm run start:postgres\" \"npm run start:client\" \"npm run start:server\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.0.1",
+    "multer": "^1.4.5-lts.1"
+  }
+}

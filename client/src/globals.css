@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.spinner {
+  border: 10px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 10px solid #3498db;
+  width: 100px;
+  height: 100px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+  z-index: 100;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: black !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #e2e8f0 inset !important;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.container1 {
+  width: 100%;
+}
+@media (min-width: 640px) {
+  .container1 {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container1 {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container1 {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container1 {
+    max-width: 1100px;
+  }
+}
+@media (min-width: 1536px) {
+  .container1 {
+    max-width: 1200px;
+  }
+}
