@@ -1,7 +1,3 @@
-type fetchProductsType = {
-  category?: string | null;
-};
-
 export const fetchProducts = async () => {
   try {
     const data1 = await fetch(
