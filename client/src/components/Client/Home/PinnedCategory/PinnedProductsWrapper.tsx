@@ -16,7 +16,7 @@ export default function PinnedProductsWrapper({ Category }: PropType) {
         category: Category.id,
         pinned: true,
       });
-      setPinnedProducts(res);
+      setPinnedProducts(res.products.slice(0, 5));
     }
     getData();
   }, [Category.id]);

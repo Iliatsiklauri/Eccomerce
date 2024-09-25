@@ -30,7 +30,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
         .status(400)
         .json(new ErrorRes(400, "error while fetching products"));
     }
-    res.status(200).json(products);
+    res.status(200).json({ products, total });
   } catch (er) {
     console.log(er);
   }

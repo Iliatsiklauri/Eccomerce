@@ -19,15 +19,17 @@ export const fetchProducts = async ({ pinned }: { pinned: boolean | null }) => {
 export const fetchProductsByCategory = async ({
   category,
   pinned,
+  page,
 }: {
   category: number;
   pinned: boolean;
+  page?: number;
 }) => {
   try {
     const res = await fetch(
       `${
         process.env.NEXT_PUBLIC_GETPRODUCTS_API as string
-      }/?category=${category}&pinned=${pinned}` as string,
+      }/?category=${category}&pinned=${pinned}&page=${page}` as string,
       {
         method: "GET",
         headers: {

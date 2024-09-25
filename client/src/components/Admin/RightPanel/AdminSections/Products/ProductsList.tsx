@@ -8,7 +8,7 @@ export default function ProductsList() {
   useEffect(() => {
     async function getData() {
       const res = await fetchProducts({ pinned: false });
-      setProduct(res);
+      setProduct(res.products);
     }
     getData();
   }, []);
