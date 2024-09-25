@@ -34,6 +34,9 @@ export const panelData: panelDataType[] = [
 export type Category = {
   id: number;
   title: string;
+  pinned: boolean;
+  image: string;
+  link: string;
 };
 
 export type CardType = {
@@ -48,6 +51,7 @@ export type CardType = {
   createdAt: string;
   comments: commentType[];
 };
+
 export type commentType = {
   id: number;
   content: string;

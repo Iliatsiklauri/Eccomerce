@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   JoinColumn,
+  Collection,
 } from "typeorm";
 import { Comment } from "./Comment";
 import { Category } from "./Category";

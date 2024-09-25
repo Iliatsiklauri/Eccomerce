@@ -12,15 +12,25 @@ const productsService = new productService();
 const categorysService = new categoryService();
 
 export const getAllProducts = async (req: Request, res: Response) => {
-  let page = parseInt(req.query.page as string) || 1;
-  let limit = parseInt(req.query.limit as string) || 20;
-  let skip = limit * (page - 1);
-  const [products, total] = await productsService.getAllProducts(skip, limit);
-  if (!products)
-    return res
-      .status(400)
-      .json(new ErrorRes(400, "error while fetching products"));
-  res.status(200).json(products);
+  try {
+    let page = parseInt(req.query.page as string) || 1;
+    let limit = parseInt(req.query.limit as string) || 20;
+    let skip = limit * (page - 1);
+    const category = parseInt(req.query.category as string);
+    const [products, total] = await productsService.getAllProducts(
+      skip,
+      limit,
+      category
+    );
+    if (!products) {
+      return res
+        .status(400)
+        .json(new ErrorRes(400, "error while fetching products"));
+    }
+    res.status(200).json(products);
+  } catch (er) {
+    console.log(er);
+  }
 };
 
 export const getProductById = async (req: Request, res: Response) => {

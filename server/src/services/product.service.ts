@@ -9,15 +9,24 @@ export class productService {
 
   async getAllProducts(
     skip: number,
-    limit: number
+    limit: number,
+    category?: number
   ): Promise<[Product[], number]> {
     try {
-      return await this.productRepository.findAndCount({
-        skip,
-        take: limit,
-        relations: ["comments", "comments.user", "category"],
-      });
+      const query = await this.productRepository
+        .createQueryBuilder("product")
+        .skip(skip)
+        .limit(limit)
+        .leftJoinAndSelect("product.comments", "comments")
+        .leftJoinAndSelect("comments.user", "user")
+        .leftJoinAndSelect("product.category", "category");
+      if (category) {
+        query.where("category.id = :category", { category });
+      }
+      const [products, total] = await query.getManyAndCount();
+      return [products, total];
     } catch (er) {
+      console.log(er);
       return null;
     }
   }
@@ -63,8 +72,25 @@ export class productService {
         );
         target = { ...target, filepath: filePath, image: imageUrl };
       }
-      const { title, description, price, pinned, category } = updateProductDto;
-      target = { ...target, title, description, price, pinned, category };
+      const {
+        title,
+        description,
+        price,
+        pinned,
+        category,
+        salePrice,
+        inStock,
+      } = updateProductDto;
+      target = {
+        ...target,
+        title,
+        description,
+        price,
+        pinned,
+        category,
+        salePrice,
+        inStock,
+      };
       await this.productRepository.save(target);
       return updateProductDto;
     } catch (er) {

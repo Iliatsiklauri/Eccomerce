@@ -1,6 +1,7 @@
 import Navbar from "../components/Client/Home/Navbar/Navbar";
 import Hero from "../components/Client/Home/Hero/Hero";
 import { Suspense } from "react";
+import PinnedCategory from "../components/Client/Home/PinnedCategory/PinnedCategory";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Navbar />
       <Suspense>
         <Hero />
+        <PinnedCategory />
       </Suspense>
     </div>
   );
