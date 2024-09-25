@@ -1,9 +1,9 @@
-import { CardType } from "@/src/utils/data";
+import { Product } from "@/src/utils/data";
 import Image from "next/image";
 import React from "react";
 
 type ProductType = {
-  product: CardType;
+  product: Product;
 };
 export default function SingleProduct({ product }: ProductType) {
   return (

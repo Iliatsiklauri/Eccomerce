@@ -10,23 +10,25 @@ export class productService {
   async getAllProducts(
     skip: number,
     limit: number,
-    category?: number
+    category?: number,
+    pinned?: boolean
   ): Promise<[Product[], number]> {
     try {
       const query = await this.productRepository
         .createQueryBuilder("product")
-        .skip(skip)
-        .limit(limit)
         .leftJoinAndSelect("product.comments", "comments")
         .leftJoinAndSelect("comments.user", "user")
         .leftJoinAndSelect("product.category", "category");
+      if (pinned) {
+        query.orderBy("product.pinned", "DESC");
+      }
       if (category) {
         query.where("category.id = :category", { category });
       }
+      query.skip(skip).take(limit);
       const [products, total] = await query.getManyAndCount();
       return [products, total];
     } catch (er) {
-      console.log(er);
       return null;
     }
   }
@@ -60,7 +62,7 @@ export class productService {
     }
   }
 
-  async updatePost(updateProductDto, id) {
+  async updateProduct(updateProductDto, id) {
     try {
       let target = await this.productRepository.findOneBy({ id });
       if (!target) return null;

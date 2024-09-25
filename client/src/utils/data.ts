@@ -39,7 +39,7 @@ export type Category = {
   link: string;
 };
 
-export type CardType = {
+export type Product = {
   id: number;
   title: string;
   description: string;

@@ -1,5 +1,12 @@
-import React from "react";
+import ProductsList from "@/src/components/Client/Category/ProductsList";
+import React, { Suspense } from "react";
 
 export default function page() {
-  return <div>page</div>;
+  return (
+    <div className="container1 flex items-center justify-center flex-col gap-10">
+      <Suspense>
+        <ProductsList />
+      </Suspense>
+    </div>
+  );
 }

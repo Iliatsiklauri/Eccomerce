@@ -1,13 +1,13 @@
 import { fetchProducts } from "@/src/api/ProductsApi";
-import { CardType } from "@/src/utils/data";
+import { Product } from "@/src/utils/data";
 import React, { useEffect, useState } from "react";
 import SingleProduct from "./SingleProduct";
 
 export default function ProductsList() {
-  const [products, setProduct] = useState<null | CardType[]>(null);
+  const [products, setProduct] = useState<null | Product[]>(null);
   useEffect(() => {
     async function getData() {
-      const res = await fetchProducts();
+      const res = await fetchProducts({ pinned: false });
       setProduct(res);
     }
     getData();
