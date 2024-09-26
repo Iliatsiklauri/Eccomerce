@@ -7,7 +7,7 @@ export default function ProductsList() {
   const [products, setProduct] = useState<null | Product[]>(null);
   useEffect(() => {
     async function getData() {
-      const res = await fetchProducts({ pinned: false });
+      const res = await fetchProducts({ pinned: true });
       setProduct(res.products);
     }
     getData();
@@ -20,8 +20,10 @@ export default function ProductsList() {
             <th>ID</th>
             <th>Title</th>
             <th>Category</th>
+            <th>Pinned</th>
             <th>Description</th>
             <th>Price</th>
+            <th>Sale Price</th>
             <th>Posted At</th>
           </tr>
         </thead>

@@ -96,7 +96,9 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   const updated = await productsService.updateProduct(req.body, req.params.id);
   if (!updated) return res.status(400).json(new ErrorRes(400, "Bad request"));
-  res.status(204).json(new SuccessRes(204, "Product updated successfully"));
+  return res
+    .status(200)
+    .json(new SuccessRes(200, "Product updated successfully"));
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {

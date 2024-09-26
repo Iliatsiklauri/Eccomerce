@@ -5,7 +5,7 @@ export default function CartButton() {
   return (
     <div
       className="w-[32px] overflow-hidden h-[32px] bg-green-500 rounded-md flex items-center justify-center cursor-pointer  
-    absolute top-3 right-[-50px] group-hover:right-3 z-20 transition-all duration-200 ease-in-out
+    absolute top-3 right-[-50px] group-hover:right-3 z-20 transition-all duration-200 ease-in-out pointer-events-none
     "
     >
       <Image

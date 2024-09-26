@@ -37,7 +37,7 @@ export class productService {
     try {
       return await this.productRepository.findOne({
         where: { id },
-        relations: ["comments", "comments.user"],
+        relations: ["comments", "comments.user", "category"],
       });
     } catch (er) {
       return null;
@@ -70,7 +70,7 @@ export class productService {
         await this.AWSService.deleteImage(target.filepath);
         const { filePath, imageUrl } = await this.AWSService.uploadImage(
           updateProductDto.image,
-          "/products"
+          "products"
         );
         target = { ...target, filepath: filePath, image: imageUrl };
       }

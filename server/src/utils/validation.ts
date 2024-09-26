@@ -10,6 +10,11 @@ export const userSchema = Joi.object({
   password: Joi.string().required().min(8),
 }).options({ abortEarly: false });
 
+export const logInSchema = Joi.object({
+  email: Joi.string().required().pattern(new RegExp("^[^@]+@[^@]+.[^@]+$")),
+  password: Joi.string().required().min(8),
+}).options({ abortEarly: false });
+
 export const productSchema = Joi.object({
   title: Joi.string().required(),
   description: Joi.string().required(),

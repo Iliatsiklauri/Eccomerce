@@ -22,8 +22,20 @@ export default function SingleProduct({ product }: ProductType) {
         </div>
       </td>
       <td className="">{product.category.title}</td>
-      <td>{product.description}</td>
-      <td>{product.price}</td>
+
+      <td>
+        {product.pinned && (
+          <Image
+            src={"/icons/adminPanel/pin.png"}
+            alt="pinned product"
+            width={30}
+            height={30}
+          />
+        )}
+      </td>
+      <td className="w-[180px]">{product.description}</td>
+      <td>₾{product.salePrice}</td>
+      <td>₾{product.price}</td>
       <th className="font-normal">{product.createdAt.slice(0, 10)}</th>
     </tr>
   );

@@ -8,7 +8,7 @@ export default function ViewMoreButton({ id }: PropType) {
   return (
     <Link
       className="h-[40px] flex items-center justify-center gap-4 cursor-pointer"
-      href={`/products/?category=${id}`}
+      href={`/products/?category=${id}&page=1`}
     >
       <p className="text-black hover:underline">View More</p>
       <Image

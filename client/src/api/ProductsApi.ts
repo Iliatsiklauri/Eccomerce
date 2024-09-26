@@ -1,6 +1,6 @@
 export const fetchProducts = async ({ pinned }: { pinned: boolean | null }) => {
   const url = pinned
-    ? `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/?pinned=true}`
+    ? `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/?pinned=true`
     : process.env.NEXT_PUBLIC_GETPRODUCTS_API;
   try {
     const data1 = await fetch(url as string, {

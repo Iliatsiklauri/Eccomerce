@@ -18,7 +18,7 @@ export default function PinnedCategory() {
     getData();
   }, []);
   return (
-    <div className="w-full flex flex-col items-center justify-between gap-8">
+    <div className="w-full flex flex-col items-center justify-between gap-12">
       {loading && <PinnedWrapperSkeleton />}
       {pinned?.map((el, key) => (
         <PinnedProductsWrapper Category={el} key={key} />

@@ -42,7 +42,9 @@ export default function Navbar() {
           className={`h-full px-5 flex items-center justify-center text-xs gap-1.5 rounded-3xl cursor-pointer text-white transition-all duration-200 ease-in-out hover:bg-lightBrown
            ${category.link === "/" && "bg-lightBrown"}  `}
           href={`${
-            category.link === "/" ? "/" : `/products/?category=${category.id}`
+            category.link === "/"
+              ? "/"
+              : `/products/?category=${category.id}&page=1`
           }`}
           key={key}
         >

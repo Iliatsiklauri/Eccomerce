@@ -44,6 +44,7 @@ export type Product = {
   title: string;
   description: string;
   price: number;
+  salePrice: number;
   image: string;
   filepath: string;
   category: Category;

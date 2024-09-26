@@ -14,7 +14,6 @@ export class AuthService {
     signInDto: Pick<User, "email" | "password">
   ): Promise<null | number | string> {
     const { email, password } = signInDto;
-    if (!password) return 400;
 
     const user: User = await UsersService.getUserByEmail(email);
     if (!user) return 404;

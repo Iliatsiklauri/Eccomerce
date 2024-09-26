@@ -1,51 +1,56 @@
 "use client";
 import { fetchProductsByCategory } from "@/src/api/ProductsApi";
 import { Product } from "@/src/utils/data";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Card from "../Home/Card/Card";
 import Pagination from "../Home/Pagination/Pagination";
-import CardSkeleton from "../Home/Card/CardSkeleton";
+import ProductsListSkeleton from "./ProductsListSkeleton";
 
 export default function ProductsList() {
   const [loading, setLoading] = useState(true);
-  const params = useSearchParams();
-  const active = params.get("category");
-  const page = params.get("page");
-  const [products, setProducts] = useState<null | {
+  const [data, setData] = useState<null | {
     total: number;
     products: Product[];
   }>(null);
+  const router = useRouter();
+  const params = useSearchParams();
+  const category = params.get("category");
+  const page = params.get("page") ? Number(params.get("page")) : 1;
+
   useEffect(() => {
     async function getData() {
       const res = await fetchProductsByCategory({
-        category: Number(active),
+        category: Number(category),
         pinned: false,
         page: Number(page),
       });
-      setProducts(res);
-      setLoading(false);
+      setData(res);
+      document.querySelector("header")?.scrollIntoView();
     }
+    setLoading(false);
     getData();
-  }, [active, page]);
+  }, [category, page]);
+  if (!data?.products.length && !loading) {
+    return <h1 className="text-xl font-semibold text-black">No Products :)</h1>;
+  }
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-10">
-      <div className="flex items-center justify-center flex-col gap-5">
-        {loading && (
-          <>
-            <CardSkeleton showHeader />
-            <CardSkeleton showHeader />
-            <CardSkeleton showHeader />
-            <CardSkeleton showHeader />
-          </>
-        )}
-      </div>
-      <div className="grid grid-cols-5">
-        {products?.products.map((el: Product, key) => (
-          <Card card={el} key={key} />
+    <div className="w-full h-full flex flex-col items-center justify-center gap-20">
+      <div className="grid grid-cols-5 gap-y-8">
+        {data?.products.map((el: Product) => (
+          <Card card={el} key={el.id} />
         ))}
       </div>
-      <Pagination total={products?.total} active={active} />
+      {loading && <ProductsListSkeleton showheader />}
+      <Pagination
+        total={data?.total}
+        onChange={(newPage) => {
+          router.push(`/products?category=${category}&page=${newPage}`, {
+            scroll: false,
+          });
+        }}
+        activePage={Number(page)}
+      />
     </div>
   );
 }
