@@ -35,6 +35,7 @@ export default function SignUpForm() {
     });
 
     const user: user = jwtDecode(res.success?.token);
+
     dispatch(
       logIn({ email: user.email, role: user.role, fullname: user.fullname })
     );

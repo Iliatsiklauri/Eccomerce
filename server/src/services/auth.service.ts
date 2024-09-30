@@ -13,19 +13,23 @@ export class AuthService {
   async singIn(
     signInDto: Pick<User, "email" | "password">
   ): Promise<null | number | string> {
-    const { email, password } = signInDto;
+    try {
+      const { email, password } = signInDto;
 
-    const user: User = await UsersService.getUserByEmail(email);
-    if (!user) return 404;
+      const user: User = await UsersService.getUserByEmail(email);
+      if (!user) return 404;
+      console.log(user);
+      const isPassCorrect = await bcrypt.compare(password, user.password);
+      if (!isPassCorrect) return 401;
 
-    const isPassCorrect = await bcrypt.compare(password, user.password);
-    if (!isPassCorrect) return 401;
-
-    return await generateToken({
-      email,
-      role: user.role,
-      fullname: user.fullname,
-      initialAdmin: user.initialAdmin,
-    });
+      return await generateToken({
+        email,
+        role: user.role,
+        fullname: user.fullname,
+        initialAdmin: user.initialAdmin,
+      });
+    } catch (er) {
+      return null;
+    }
   }
 }

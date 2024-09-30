@@ -53,7 +53,9 @@ export default function SignInForm() {
       maxAge: 7200,
       httpOnly: false,
     });
-
+    if (user.role === "ADMIN") {
+      return Router.push("/admin/Dashboard");
+    }
     Router.push("/");
   };
 

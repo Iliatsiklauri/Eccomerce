@@ -20,10 +20,6 @@ export function middleware(request: NextRequest) {
   }
   const { pathname } = request.nextUrl;
 
-  if (pathname === "/" && role === "ADMIN") {
-    return NextResponse.redirect(new URL("/admin/Dashboard", request.url));
-  }
-
   if (pathname.startsWith("/admin") && (!token || role !== "ADMIN")) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }

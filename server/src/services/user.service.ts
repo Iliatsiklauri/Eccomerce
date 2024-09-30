@@ -21,7 +21,10 @@ export class UserService {
 
   async getUserByEmail(email: string): Promise<User | null> {
     try {
-      const user = await this.userRepository.findOneBy({ email });
+      const user = await this.userRepository.findOne({
+        where: { email },
+        select: ["email", "password", "role", "fullname", "initialAdmin"],
+      });
       return user ?? null;
     } catch {
       return null;

@@ -21,6 +21,8 @@ export const signIn = async (req: Request, res: Response) => {
     return res.status(404).json(new ErrorRes(404, "User does not exist"));
   if (response === 401)
     return res.status(401).json(new ErrorRes(401, "Incorrect password"));
+  if (!response)
+    return res.status(401).json(new ErrorRes(400, "Error while signing in"));
 
   res
     .status(200)

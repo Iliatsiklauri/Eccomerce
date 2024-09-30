@@ -20,8 +20,8 @@ export default function Navbar() {
   useEffect(() => {
     async function getData() {
       const res = await getCategories();
-      res[0] = { link: "/", title: "All", image: "" };
-      setCategories(res);
+      res[res.length - 1] = { link: "/", title: "All", image: "" };
+      setCategories(res.reverse());
       setLoading(false);
     }
     getData();
