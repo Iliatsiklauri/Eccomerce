@@ -21,6 +21,7 @@ export const productSchema = Joi.object({
   price: Joi.number().required(),
   salePrice: Joi.number().required(),
   category: Joi.string().required(),
+  inStock: Joi.number().required(),
   pinned: Joi.boolean(),
 }).options({ abortEarly: false });
 
@@ -30,6 +31,7 @@ export const updateProductSchema = Joi.object({
   price: Joi.number(),
   salePrice: Joi.number(),
   category: Joi.string(),
+  inStock: Joi.number(),
   pinned: Joi.boolean(),
 }).options({ abortEarly: false });
 

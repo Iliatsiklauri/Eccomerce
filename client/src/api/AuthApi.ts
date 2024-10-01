@@ -1,4 +1,4 @@
-import { SignIn, SignUp } from "../utils/auth";
+import { SignIn, SignUp } from "../types/User";
 
 export const signUpUser = async (data: SignUp) => {
   try {

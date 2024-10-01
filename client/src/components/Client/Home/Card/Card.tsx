@@ -19,13 +19,13 @@ export default function Card({ card }: { card: Product }) {
       <div className="flex items-start justify-between flex-col h-full p-0.5">
         <div className="flex flex-col items-start justify-center">
           <p className="text-lg font-medium">{card.title}</p>
-          <p className="text-[12px]">ID :{card.id}</p>
-          <p className=" text-red-600">{card.pinned && "Pinned"}</p>
+          {/* <p className="text-[12px]">ID :{card.id}</p> */}
+          {/* <p className=" text-red-600">{card.pinned && "Pinned"}</p> */}
           <p className="text-sm opacity-50 tracking-tight">
             {card.description}
           </p>
         </div>
-        <p className="text-lg font-medium">₾{card.price}</p>
+        <p className="text-lg font-medium">${card.price}</p>
       </div>
     </div>
   );

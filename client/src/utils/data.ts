@@ -1,5 +1,3 @@
-import { userType } from "../store/features/usersSlice";
-
 type panelDataType = {
   name: string;
   imageUrl: string;
@@ -30,32 +28,3 @@ export const panelData: panelDataType[] = [
     imageUrl: "/icons/adminPanel/setting.png",
   },
 ];
-
-export type Category = {
-  id: number;
-  title: string;
-  pinned: boolean;
-  image: string;
-  link: string;
-};
-
-export type Product = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  salePrice: number;
-  image: string;
-  filepath: string;
-  category: Category;
-  pinned: boolean;
-  createdAt: string;
-  comments: commentType[];
-};
-
-export type commentType = {
-  id: number;
-  content: string;
-  user: userType;
-  createdAt: Date;
-};

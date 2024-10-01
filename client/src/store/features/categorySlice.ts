@@ -1,11 +1,13 @@
-import { Category } from "@/src/utils/data";
+import { CategoryType } from "@/src/utils/data";
 import { createSlice } from "@reduxjs/toolkit";
 
 type categoryState = {
-  category: Category[] | undefined;
+  category: CategoryType[] | [];
+  loading: boolean;
 };
 const initialState: categoryState = {
-  category: undefined,
+  category: [],
+  loading: true,
 };
 
 const categorySlice = createSlice({
@@ -15,8 +17,11 @@ const categorySlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload;
     },
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { setCategory } = categorySlice.actions;
+export const { setCategory, setLoading } = categorySlice.actions;
 export default categorySlice.reducer;

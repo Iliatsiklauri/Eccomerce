@@ -1,21 +1,5 @@
 import { ControllerRenderProps } from "react-hook-form";
-
-export type user = {
-  fullname: string;
-  email: string;
-  role: string;
-};
-
-export type SignUp = {
-  fullname?: string;
-  email: string;
-  password: string;
-};
-
-export type SignIn = {
-  email: string;
-  password: string;
-};
+import { SignUp } from "../types/User";
 
 export type inputType = {
   name: string;

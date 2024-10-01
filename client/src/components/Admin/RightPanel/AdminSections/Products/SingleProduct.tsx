@@ -1,4 +1,4 @@
-import { Product } from "@/src/utils/data";
+import { Product } from "@/src/types/Product";
 import Image from "next/image";
 import React from "react";
 

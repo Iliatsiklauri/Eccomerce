@@ -1,9 +1,12 @@
 import { fetchProducts } from "@/src/api/ProductsApi";
-import { Product } from "@/src/utils/data";
 import React, { useEffect, useState } from "react";
 import SingleProduct from "./SingleProduct";
-
-export default function ProductsList() {
+import AddProductsForm from "./AddProductForm";
+import { Product } from "@/src/types/Product";
+type PropType = {
+  mode: string | null;
+};
+export default function ProductsList({ mode }: PropType) {
   const [products, setProduct] = useState<null | Product[]>(null);
   useEffect(() => {
     async function getData() {
@@ -13,26 +16,30 @@ export default function ProductsList() {
     getData();
   }, []);
   return (
-    <div className="overflow-y-auto bg-white h-[85%] rounded-xl p-2">
-      <table className="table">
-        <thead className="border-b-opacity-35">
-          <tr className="text-[16px] text-black font-medium border-opacity-35">
-            <th>ID</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Pinned</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Sale Price</th>
-            <th>Posted At</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products?.map((el, key) => (
-            <SingleProduct product={el} key={key} />
-          ))}
-        </tbody>
-      </table>
+    <div className="overflow-y-auto bg-white rounded-xl p-2 h-full">
+      {mode === "read" ? (
+        <table className="table">
+          <thead className="border-b-opacity-35">
+            <tr className="text-[16px] text-black font-medium border-opacity-35">
+              <th>ID</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Pinned</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Sale Price</th>
+              <th>Posted At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products?.map((el, key) => (
+              <SingleProduct product={el} key={key} />
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <AddProductsForm />
+      )}
     </div>
   );
 }

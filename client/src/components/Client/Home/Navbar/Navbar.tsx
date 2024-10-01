@@ -1,31 +1,24 @@
 "use client";
-import { getCategories } from "@/src/api/CategoryApi";
+import { RootState } from "@/src/store/store";
+import { CategoryType } from "@/src/utils/data";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-
-type CategoryType = {
-  id: number;
-  title: string;
-  pinned: string;
-  image: string;
-  filePath: string;
-  link: string;
-};
+import React from "react";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
-  const [categories, setCategories] = useState<CategoryType[] | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { category, loading } = useSelector(
+    (state: RootState) => state.category
+  );
+  const updatedCategories = [
+    ...category,
+    {
+      link: "/",
+      title: "All",
+      image: "",
+    } as CategoryType,
+  ].reverse();
 
-  useEffect(() => {
-    async function getData() {
-      const res = await getCategories();
-      res[res.length - 1] = { link: "/", title: "All", image: "" };
-      setCategories(res.reverse());
-      setLoading(false);
-    }
-    getData();
-  }, []);
   return (
     <div className="w-full h-[48px] flex items-center justify-between overflow-x-auto bg-darkBrown rounded-3xl">
       {loading &&
@@ -37,16 +30,16 @@ export default function Navbar() {
               key={index}
             ></div>
           ))}
-      {categories?.map((category, key) => (
+      {updatedCategories?.map((category) => (
         <Link
-          className={`h-full px-5 flex items-center justify-center text-xs gap-1.5 rounded-3xl cursor-pointer text-white transition-all duration-200 ease-in-out hover:bg-lightBrown
+          className={`h-full px-4 flex items-center justify-center text-xs gap-1.5 rounded-3xl cursor-pointer text-white transition-all duration-200 ease-in-out hover:bg-lightBrown
            ${category.link === "/" && "bg-lightBrown"}  `}
           href={`${
             category.link === "/"
               ? "/"
               : `/products/?category=${category.id}&page=1`
           }`}
-          key={key}
+          key={category.id}
         >
           {category.title !== "All" && (
             <Image

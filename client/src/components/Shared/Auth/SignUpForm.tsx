@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AuthButton from "./AuthButton";
 import { useForm, Controller } from "react-hook-form";
-import { fields, SignUp, user } from "@/src/utils/auth";
+import { fields } from "@/src/utils/auth";
 import SingleInput from "./SingleInput";
 import { signUpUser } from "@/src/api/AuthApi";
 import { setCookie } from "cookies-next";
@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { logIn } from "@/src/store/features/authSlice";
+import { SignUp, user } from "@/src/types/User";
 export default function SignUpForm() {
   const [emailErr, setEmailErr] = useState("");
   const Router = useRouter();

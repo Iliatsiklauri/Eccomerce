@@ -1,25 +1,40 @@
-import Image from "next/image";
-import { useRef } from "react";
-import CreateUser from "../../../modals/CreateUser";
+import { useRouter } from "next/navigation";
+type PropType = {
+  mode: string | null;
+};
 
-export default function ProductSectionHeader() {
-  const createModalRef = useRef<HTMLDialogElement>(null);
+export default function ProductSectionHeader({ mode }: PropType) {
+  const router = useRouter();
   return (
-    <div className="w-full flex items-start justify-between p-4 bg bg-white rounded-xl h-[14%]">
-      <h2 className=" text-white font-sans font-bold">Products</h2>
+    <div
+      role="tablist"
+      className="tabs tabs-boxed  bg-white rounded-xl flex-shrink-0"
+    >
       <button
-        className="btn text-white px-3 flex items-center justify-center gap-2"
-        onClick={() => createModalRef.current?.showModal()}
+        className={`tab text-black text-lg ${
+          mode === "read" && "bg-lightBrown text-white"
+        } font-semibold font-sans `}
+        onClick={() => {
+          router.push(`/admin/Products?mode=read`, {
+            scroll: false,
+          });
+        }}
       >
-        <Image
-          alt="plus"
-          src={"/icons/adminPanel/plus.png"}
-          width={30}
-          height={30}
-        />
-        Add Product
+        List
       </button>
-      <CreateUser createModalRef={createModalRef} />
+      <button
+        role="tab"
+        className={`tab  text-black text-lg font-medium font-sans ${
+          mode === "add" && "bg-lightBrown text-white"
+        } `}
+        onClick={() => {
+          router.push(`/admin/Products?mode=add`, {
+            scroll: false,
+          });
+        }}
+      >
+        Add
+      </button>
     </div>
   );
 }
