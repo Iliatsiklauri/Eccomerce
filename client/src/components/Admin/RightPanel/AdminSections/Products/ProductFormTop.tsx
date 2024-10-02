@@ -13,7 +13,6 @@ type PropType = {
 
 export default function ProductFormTop({
   category,
-  loading,
   errors,
   control,
 }: PropType) {
@@ -29,7 +28,9 @@ export default function ProductFormTop({
             <input
               {...field}
               type="text"
-              className="w-full h-full bg-slate-200 border-[1px] pl-4 rounded-md input text-black"
+              className={`w-full h-full bg-slate-200 pl-4 rounded-md focus:outline-none text-black ${
+                errors.title && "border-red-500 border-[1px]"
+              } `}
               placeholder="title"
             />
 
@@ -48,7 +49,9 @@ export default function ProductFormTop({
         render={({ field }) => (
           <main className="dropdown relative w-[43%] max-w-[370px] h-[50px] z-10">
             <div
-              className="w-full flex items-center justify-between h-full bg-slate-200 border-none hover:bg-slate-300 rounded-md cursor-pointer pl-4 text-black text-md"
+              className={`w-full flex items-center justify-between h-full bg-slate-200  hover:bg-slate-300 rounded-md cursor-pointer pl-4 text-black text-md ${
+                errors.category && "border-red-500 border-[1px]"
+              }`}
               onClick={() => setShowDropdown((prev) => !prev)}
             >
               {field.value ? field.value : ("Select a category" as string)}

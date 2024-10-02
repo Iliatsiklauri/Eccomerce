@@ -16,7 +16,10 @@ export default function DescTextArea({ control, errors }: PropType) {
         <div className="w-full relative">
           <textarea
             {...field}
-            className="textarea textarea-bordered w-full h-[130px] bg-slate-200 resize-none text-black"
+            className={`textarea focus:outline-none w-full h-[130px] bg-slate-200 resize-none text-black ${
+              errors.description &&
+              "border-red-500 border-[1px] focus:border-red-500"
+            }`}
             placeholder=""
           ></textarea>
           {errors.description && (

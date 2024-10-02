@@ -1,6 +1,6 @@
 "use client";
 import { RootState } from "@/src/store/store";
-import { CategoryType } from "@/src/utils/data";
+import { CategoryType } from "@/src/types/Category";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -30,8 +30,9 @@ export default function Navbar() {
               key={index}
             ></div>
           ))}
-      {updatedCategories?.map((category) => (
+      {updatedCategories?.map((category, key) => (
         <Link
+          key={key}
           className={`h-full px-4 flex items-center justify-center text-xs gap-1.5 rounded-3xl cursor-pointer text-white transition-all duration-200 ease-in-out hover:bg-lightBrown
            ${category.link === "/" && "bg-lightBrown"}  `}
           href={`${
@@ -39,7 +40,6 @@ export default function Navbar() {
               ? "/"
               : `/products/?category=${category.id}&page=1`
           }`}
-          key={category.id}
         >
           {category.title !== "All" && (
             <Image

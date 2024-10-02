@@ -1,5 +1,4 @@
 import {
-  ChecksumAlgorithm,
   DeleteObjectCommand,
   PutObjectCommand,
   S3Client,

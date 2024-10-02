@@ -1,4 +1,4 @@
-import { CategoryType } from "@/src/utils/data";
+import { CategoryType } from "@/src/types/Category";
 import { createSlice } from "@reduxjs/toolkit";
 
 type categoryState = {

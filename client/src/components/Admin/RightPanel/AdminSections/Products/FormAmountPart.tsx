@@ -22,7 +22,10 @@ export default function FormAmountPart({ control, errors }: PropType) {
               {...field}
               value={field.value !== null ? field.value : ""}
               type="text"
-              className="w-full h-full bg-slate-200 border-[1px] pl-4 rounded-md input text-black"
+              className={`w-full h-full bg-slate-200 pl-4 focus:outline-none rounded-md text-black  ${
+                errors.inStock &&
+                "border-red-500 border-[1px] focus:border-red-500"
+              }`}
               placeholder="Amount"
             />
             {errors.inStock && (
@@ -46,7 +49,10 @@ export default function FormAmountPart({ control, errors }: PropType) {
               {...field}
               value={field.value !== null ? field.value : ""}
               type="text"
-              className="w-full h-full bg-slate-200 border-[1px] pl-4 rounded-md input text-black"
+              className={`w-full h-full bg-slate-200 border-[1px] pl-4 rounded-md input focus:outline-none text-black  ${
+                errors.price &&
+                "border-red-500 border-[1px] focus:border-red-500"
+              }`}
               placeholder="Initial Price"
             />
             {errors.price && (
@@ -70,7 +76,12 @@ export default function FormAmountPart({ control, errors }: PropType) {
               {...field}
               value={field.value !== null ? field.value : ""}
               type="text"
-              className="w-full h-full bg-slate-200 border-[1px] pl-4 rounded-md input text-black"
+              className={`w-full h-full bg-slate-200 pl-4 rounded-md input text-black focus:outline-none 
+                 ${
+                   errors.salePrice &&
+                   "border-red-500 border-[1px] focus:border-red-500"
+                 }
+                `}
               placeholder="Sale Price"
             />
             {errors.salePrice && (

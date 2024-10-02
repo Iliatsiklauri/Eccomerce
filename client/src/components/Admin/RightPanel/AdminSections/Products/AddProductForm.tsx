@@ -41,6 +41,7 @@ export default function AddProductsForm() {
   const price = watch("price");
   const salePrice = watch("salePrice");
   const inStock = watch("inStock");
+  const pinned = watch("pinned");
   const onSubmit = (data: createProductType) => {
     console.log(data);
     reset();
@@ -85,6 +86,7 @@ export default function AddProductsForm() {
         price={price}
         salePrice={salePrice}
         inStock={inStock}
+        pinned={pinned}
       />
     </div>
   );

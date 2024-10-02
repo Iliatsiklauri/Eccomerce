@@ -9,13 +9,14 @@ type PropType = {
   price: number | null;
   salePrice: number | null;
   inStock: number | null;
+  pinned: boolean;
 };
 export default function ProductPreview({
   selectedImage,
-  setSelectedImage,
   category1,
   description,
   inStock,
+  pinned,
   price,
   salePrice,
   title,
@@ -39,6 +40,7 @@ export default function ProductPreview({
         <p>Price: {price}</p>
         <p>salePrice: {salePrice}</p>
         <p>category: {category1}</p>
+        <p>pinned: {pinned ? "true" : "false"}</p>
       </div>
     </div>
   );

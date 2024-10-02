@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import PinnedHeader from "./PinnedHeader";
-import { Product, Category } from "@/src/utils/data";
 import { fetchProductsByCategory } from "@/src/api/ProductsApi";
 import Card from "../Card/Card";
+import { Product } from "@/src/types/Product";
+import { CategoryType } from "@/src/types/Category";
 
 type PropType = {
-  Category: Category;
+  Category: CategoryType;
 };
 
 export default function PinnedProductsWrapper({ Category }: PropType) {

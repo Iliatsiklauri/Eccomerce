@@ -32,7 +32,7 @@ export const LayoutWrapper = ({ children }: Props) => {
   const render = pathname.split("/")[1] !== "admin" && pathname !== "/auth";
 
   return (
-    <div className="flex items-center justify-center flex-col bg-[#E1E4E8] gap-10">
+    <div className="flex items-center justify-center flex-col bg-white gap-10">
       {render && <Header />}
       <main className={` flex items-center justify-center w-full`}>
         {children}

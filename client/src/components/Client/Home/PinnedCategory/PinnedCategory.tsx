@@ -1,17 +1,17 @@
 "use client";
 import { getCategories } from "@/src/api/CategoryApi";
-import { Category } from "@/src/utils/data";
 import React, { useEffect, useState } from "react";
 import PinnedProductsWrapper from "./PinnedProductsWrapper";
 import PinnedWrapperSkeleton from "../Card/PinnedWrapperSkeleton";
+import { CategoryType } from "@/src/types/Category";
 
 export default function PinnedCategory() {
-  const [pinned, setPinned] = useState<Category[] | null>(null);
+  const [pinned, setPinned] = useState<CategoryType[] | null>(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     async function getData() {
       const res = await getCategories();
-      const pinned = res.filter((el: Category) => el.pinned);
+      const pinned = res.filter((el: CategoryType) => el.pinned);
       setPinned(pinned);
       setLoading(false);
     }

@@ -5,7 +5,7 @@ import PinnedCategory from "../components/Client/Home/PinnedCategory/PinnedCateg
 
 export default function Home() {
   return (
-    <div className="flex items-center justify-center flex-col container1 gap-10 ">
+    <div className="flex items-center justify-center flex-col container1 gap-10">
       <Navbar />
       <Suspense>
         <Hero />

@@ -1,11 +1,11 @@
 "use client";
 import { fetchProductsByCategory } from "@/src/api/ProductsApi";
-import { Product } from "@/src/utils/data";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Card from "../Home/Card/Card";
 import Pagination from "../Home/Pagination/Pagination";
 import ProductsListSkeleton from "./ProductsListSkeleton";
+import { Product } from "@/src/types/Product";
 
 export default function ProductsList() {
   const [loading, setLoading] = useState(true);

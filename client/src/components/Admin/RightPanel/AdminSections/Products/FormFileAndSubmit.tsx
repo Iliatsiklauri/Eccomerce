@@ -9,7 +9,6 @@ type PropType = {
   errors: FieldErrors<createProductType>;
 };
 export default function FormFileAndSubmit({
-  selectedImage,
   setSelectedImage,
   control,
   errors,
@@ -24,7 +23,9 @@ export default function FormFileAndSubmit({
           <div className="w-[47%] relative h-full">
             <input
               type="file"
-              className="w-full h-full rounded-md file-input file-input-bordered bg-slate-200 text-black"
+              className={`w-full h-full rounded-md file-input file-input-bordered bg-slate-200 text-black focus:outline-none ${
+                errors.image && "border-red-500"
+              }`}
               onChange={(e) => {
                 const file = e.target.files?.[0] || null;
                 setSelectedImage(file);

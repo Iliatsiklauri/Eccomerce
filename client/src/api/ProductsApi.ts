@@ -1,3 +1,5 @@
+import { Product } from "../types/Product";
+
 export const fetchProducts = async ({ pinned }: { pinned: boolean | null }) => {
   const url = pinned
     ? `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/?pinned=true`
@@ -41,5 +43,24 @@ export const fetchProductsByCategory = async ({
     return data;
   } catch (er) {
     console.log(er);
+  }
+};
+
+export const getProductById = async (id: string): Promise<Product | null> => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const product = await res.json();
+    return product;
+  } catch (er) {
+    console.log("error while fetching single product");
+    return null;
   }
 };
