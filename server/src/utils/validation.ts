@@ -50,7 +50,12 @@ export class productType {
   title: string;
   description: string;
   price: number;
+  salePrice: number;
   image: string;
+  pinnedImage: string;
+  brand: string;
+  category: categoryType;
+  inStock: number;
   filepath: string;
   createdAt: string;
   pinned: boolean;

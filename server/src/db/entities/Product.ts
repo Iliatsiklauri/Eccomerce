@@ -31,6 +31,12 @@ export class Product {
   @Column()
   image: string;
 
+  @Column({ nullable: true })
+  pinnedImage: string;
+
+  @Column({ nullable: true })
+  brand: string;
+
   @Column({ default: "" })
   filepath: string;
 
@@ -46,7 +52,7 @@ export class Product {
   @Column({ default: false })
   pinned: boolean;
 
-  @Column({ default: 0 })
+  @Column({ default: 1 })
   inStock: number;
 
   @CreateDateColumn()
