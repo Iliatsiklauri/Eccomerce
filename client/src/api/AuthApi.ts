@@ -11,7 +11,7 @@ export const signUpUser = async (data: SignUp) => {
     });
     return await response.json();
   } catch (er) {
-    console.log("error", er);
+    console.log(er);
     throw er;
   }
 };
@@ -27,7 +27,7 @@ export const signInUser = async (data: SignIn) => {
     });
     return await response.json();
   } catch (er) {
-    console.log("error", er);
+    console.log(er);
     throw er;
   }
 };

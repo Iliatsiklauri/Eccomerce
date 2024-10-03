@@ -11,7 +11,7 @@ export const getCategories = async () => {
     );
     return await response.json();
   } catch (er) {
-    console.log("error", er);
+    console.log(er);
     throw er;
   }
 };

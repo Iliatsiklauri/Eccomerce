@@ -18,7 +18,6 @@ export class AuthService {
 
       const user: User = await UsersService.getUserByEmail(email);
       if (!user) return 404;
-      console.log(user);
       const isPassCorrect = await bcrypt.compare(password, user.password);
       if (!isPassCorrect) return 401;
 

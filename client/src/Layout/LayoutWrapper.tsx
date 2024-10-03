@@ -18,7 +18,6 @@ export const LayoutWrapper = ({ children }: Props) => {
       dispatch(setLoading(true));
       try {
         const res = await getCategories();
-        console.log(res, "ress");
         dispatch(setCategory(res));
       } catch (er) {
         console.log("error fetching categories", er);

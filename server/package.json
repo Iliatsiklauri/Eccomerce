@@ -10,7 +10,7 @@
     "start-server": "pg_ctl start -D \"C:\\Program Files\\PostgreSQL\\16\\data\"",
     "stop-server": "pg_ctl stop -D \"C:\\Program Files\\PostgreSQL\\16\\data\"",
     "typeorm": "ts-node ./node_modules/typeorm/cli.js",
-    "migration:create": "npm run typeorm migration:create",
+    "migration:create": "npm run typeorm migration:create -- -d src/db/database-connect.ts src/db/migrations",
     "migration:generate": "npm run typeorm migration:generate -- -d src/db/database-connect.ts",
     "migration:run": "npm run typeorm migration:run -- -d src/db/database-connect.ts",
     "migration:revert": "npm run typeorm migration:revert -- -d src/db/database-connect.ts"
