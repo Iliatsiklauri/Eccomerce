@@ -16,8 +16,24 @@ const productRouter = express.Router();
 
 productRouter.get("/", getAllProducts);
 productRouter.get("/:id", getProductById);
-productRouter.post("/", AdminGuard, upload.single("image"), createProduct);
-productRouter.put("/:id", AdminGuard, upload.single("image"), updateProduct);
+productRouter.post(
+  "/",
+  AdminGuard,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "pinnedImage", maxCount: 1 },
+  ]),
+  createProduct
+);
+productRouter.put(
+  "/:id",
+  AdminGuard,
+  upload.fields([
+    { name: "image", maxCount: 1 },
+    { name: "pinnedImage", maxCount: 1 },
+  ]),
+  updateProduct
+);
 productRouter.delete("/:id", AdminGuard, deleteProduct);
 
 export default productRouter;

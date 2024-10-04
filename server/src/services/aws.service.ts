@@ -27,8 +27,9 @@ export class awsService {
       };
       const command = new PutObjectCommand(config);
       await this.storageService.send(command);
-      return { filePath, imageUrl };
+      return [filePath, imageUrl];
     } catch (er) {
+      console.log(er, "error whilte uploading image to aws S3");
       return null;
     }
   }

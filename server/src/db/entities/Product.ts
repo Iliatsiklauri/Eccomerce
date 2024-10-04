@@ -35,6 +35,9 @@ export class Product {
   pinnedImage: string;
 
   @Column({ nullable: true })
+  pinnedImageFilePath: string;
+
+  @Column({ nullable: true })
   brand: string;
 
   @Column({ default: "" })

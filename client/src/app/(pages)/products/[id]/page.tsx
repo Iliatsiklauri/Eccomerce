@@ -15,19 +15,33 @@ type PropType = {
 };
 export default function Page({ params: { id } }: PropType) {
   const [product, setProduct] = useState<null | Product>(null);
+  const [error, setError] = useState<any>(null);
   useEffect(() => {
     async function getData() {
-      const product = await getProductById(id);
-      setProduct(product);
+      try {
+        const res = await getProductById(id);
+        if (!res?.category) {
+          setError(res);
+        }
+        setProduct(res);
+      } catch (er) {
+        console.log(er);
+      }
     }
     getData();
   }, [id]);
+  if (error) {
+    return (
+      <div className="h-full w-full flex items-center justify-center min-h-[500px] text-3xl text-black">
+        Product Not Found :)
+      </div>
+    );
+  }
   return (
-    <div className="w-full flex items-center justify-center py-20">
+    <div className="w-full flex items-center justify-center py-20 ">
       <div className="flex items-start justify-center container1 flex-col gap-20">
         <div className="flex items-center justify-between w-full ">
           <ProductImage product={product} />
-          {/* <ProductDetails product={product} /> */}
           <Pricebox product={product} />
         </div>
         <ProductDescription product={product} />

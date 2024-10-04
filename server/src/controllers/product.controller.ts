@@ -7,7 +7,6 @@ import {
   updateProductSchema,
 } from "../utils/validation";
 import { categoryService } from "../services/category.service";
-import { boolean } from "joi";
 
 const productsService = new productService();
 const categorysService = new categoryService();
@@ -18,7 +17,8 @@ export const getAllProducts = async (req: Request, res: Response) => {
     let limit = parseInt(req.query.limit as string) || 20;
     let pinned = req.query.pinned === "true";
     let skip = limit * (page - 1);
-    const category = parseInt(req.query.category as string);
+    let category = parseInt(req.query.category as string);
+
     const [products, total] = await productsService.getAllProducts(
       skip,
       limit,
@@ -45,8 +45,14 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 export const createProduct = async (req: Request, res: Response) => {
-  if (!req.file) {
-    return res.status(400).json(new ErrorRes(400, ["Image is required"]));
+  const image = req.files["image"];
+  const pinnedImage = req.files["pinnedImage"];
+
+  if (!image) {
+    return res.status(400).json(new ErrorRes(400, "image is required"));
+  }
+  if (!pinnedImage) {
+    return res.status(400).json(new ErrorRes(400, "pinnedImage is required"));
   }
   const { error } = productSchema.validate(req.body);
   if (error) {
@@ -63,18 +69,31 @@ export const createProduct = async (req: Request, res: Response) => {
   const category = await categorysService.getCategoryByTitle({
     title: req.body.category,
   });
+
   if (!category)
     return res.status(404).json(new ErrorRes(404, "Invalid category"));
-  await productsService.createProduct(
-    { ...req.body, categoryId: category.id },
-    req.file
-  );
+
+  const createdPoduct = await productsService.createProduct({
+    ...req.body,
+    categoryId: category.id,
+    image,
+    pinnedImage,
+  });
+  if (!createdPoduct)
+    return res
+      .status(401)
+      .json(new ErrorRes(401, "error while creating product"));
   return res
     .status(201)
     .json(new SuccessRes(201, "Product created successfully"));
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
+  const updateFilesDto = {
+    image: req.files["image"],
+    pinnedImage: req.files["pinnedImage"],
+  };
+
   const { error } = updateProductSchema.validate(req.body);
   if (error) {
     return res.status(400).json(
@@ -87,14 +106,12 @@ export const updateProduct = async (req: Request, res: Response) => {
     );
   }
 
-  if (req.file) {
-    req.body.image = req.file;
-  }
-  if (req.body.pinned !== undefined) {
-    req.body.pinned = req.body.pinned === "true";
-  }
+  const updated = await productsService.updateProduct(
+    req.body,
+    updateFilesDto,
+    req.params.id
+  );
 
-  const updated = await productsService.updateProduct(req.body, req.params.id);
   if (!updated) return res.status(400).json(new ErrorRes(400, "Bad request"));
   return res
     .status(200)

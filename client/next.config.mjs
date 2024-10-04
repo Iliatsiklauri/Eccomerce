@@ -18,6 +18,12 @@ const nextConfig = {
         port: "",
         pathname: "/category/**",
       },
+      {
+        protocol: "https",
+        hostname: "d31o8esktuui0e.cloudfront.net",
+        port: "",
+        pathname: "/pinnedImages/**",
+      },
     ],
   },
 };

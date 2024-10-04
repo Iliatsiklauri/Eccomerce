@@ -38,7 +38,7 @@ export class categoryService {
 
   async addCategory(createCategory: categoryType, file: Express.Multer.File) {
     try {
-      const { filePath, imageUrl } = await this.AWSService.uploadImage(
+      const [filePath, imageUrl] = await this.AWSService.uploadImage(
         file,
         "category"
       );

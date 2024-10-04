@@ -8,6 +8,7 @@ export type Product = {
   price: number;
   salePrice: number;
   image: string;
+  pinnedImage: string;
   filepath: string;
   category: CategoryType;
   inStock: number;

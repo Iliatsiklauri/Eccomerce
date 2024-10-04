@@ -20,19 +20,21 @@ export const productSchema = Joi.object({
   description: Joi.string().required(),
   price: Joi.number().required(),
   salePrice: Joi.number().required(),
+  brand: Joi.string().required(),
   category: Joi.string().required(),
   inStock: Joi.number().required(),
-  pinned: Joi.boolean(),
+  pinned: Joi.string().valid("true", "false"),
 }).options({ abortEarly: false });
 
 export const updateProductSchema = Joi.object({
-  title: Joi.string(),
-  description: Joi.string(),
-  price: Joi.number(),
-  salePrice: Joi.number(),
-  category: Joi.string(),
-  inStock: Joi.number(),
-  pinned: Joi.boolean(),
+  title: Joi.string().optional(),
+  description: Joi.string().optional(),
+  price: Joi.number().optional(),
+  salePrice: Joi.number().optional(),
+  brand: Joi.string().optional(),
+  category: Joi.string().optional(),
+  inStock: Joi.number().optional(),
+  pinned: Joi.string().valid("true", "false").optional(),
 }).options({ abortEarly: false });
 
 export const createCategorySchema = Joi.object({
@@ -44,23 +46,6 @@ export const createCategorySchema = Joi.object({
 export const createCommentSchema = Joi.object({
   content: Joi.string().required(),
 });
-
-export class productType {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-  salePrice: number;
-  image: string;
-  pinnedImage: string;
-  brand: string;
-  category: categoryType;
-  inStock: number;
-  filepath: string;
-  createdAt: string;
-  pinned: boolean;
-  comments: Comment[];
-}
 
 export class userType {
   fullname: string;
