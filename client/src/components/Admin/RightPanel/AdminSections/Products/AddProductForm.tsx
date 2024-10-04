@@ -10,6 +10,8 @@ import PinnedCheck from "./PinnedCheck";
 import ProductPreview from "./ProductPreview";
 import DescTextArea from "./DescTextArea";
 import { createProductType } from "@/src/types/Product";
+import FormFiles from "./FormFiles";
+import { createProduct } from "@/src/api/ProductsApi";
 
 export default function AddProductsForm() {
   const { category, loading } = useSelector(
@@ -25,9 +27,11 @@ export default function AddProductsForm() {
   } = useForm<createProductType>({
     defaultValues: {
       title: "",
+      brand: "",
       category: "",
       description: "",
       image: null,
+      pinnedImage: null,
       inStock: null,
       salePrice: null,
       price: null,
@@ -42,8 +46,9 @@ export default function AddProductsForm() {
   const salePrice = watch("salePrice");
   const inStock = watch("inStock");
   const pinned = watch("pinned");
-  const onSubmit = (data: createProductType) => {
-    console.log(data);
+  const onSubmit = async (data: createProductType) => {
+    const res = await createProduct(data);
+    console.log(res);
     reset();
   };
 
@@ -62,18 +67,23 @@ export default function AddProductsForm() {
             control={control}
           />
 
-          <DescTextArea control={control} errors={errors} />
-
-          <FormAmountPart control={control} errors={errors} />
+          <DescTextArea
+            control={control}
+            errors={errors}
+            description={description}
+          />
+          <div className="flex items-start justify-between w-full">
+            <FormAmountPart control={control} errors={errors} />
+            <FormFiles
+              control={control}
+              errors={errors}
+              setSelectedImage={setSelectedImage}
+            />
+          </div>
 
           <PinnedCheck control={control} />
 
-          <FormFileAndSubmit
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-            control={control}
-            errors={errors}
-          />
+          <FormFileAndSubmit />
         </form>
       </main>
       <div className="w-[1px] h-[80%] bg-black opacity-20"></div>

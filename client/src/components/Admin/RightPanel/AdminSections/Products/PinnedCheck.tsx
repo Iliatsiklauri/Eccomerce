@@ -12,7 +12,7 @@ export default function PinnedCheck({ control }: PropType) {
       render={({ field }) => (
         <label
           htmlFor="pinned"
-          className="text-xl text-black font-medium w-[250px] bg-slate-200 h-[50px] flex items-center justify-between rounded-md px-4 cursor-pointer font-sans"
+          className="text-xl text-black font-medium w-[30%] bg-slate-200 h-[50px] flex items-center justify-between rounded-md px-4 cursor-pointer font-sans"
         >
           Pinned
           <input

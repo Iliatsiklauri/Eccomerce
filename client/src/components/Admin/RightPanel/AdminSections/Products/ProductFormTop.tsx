@@ -24,7 +24,10 @@ export default function ProductFormTop({
         rules={createProductValidation.title}
         control={control}
         render={({ field }) => (
-          <section className="relative w-[43%] max-w-[370px] h-[50px]">
+          <section className="relative w-[30%] max-w-[370px] h-[50px]">
+            <p className="absolute text-black font-medium text-sm top-[-19px]">
+              Title
+            </p>
             <input
               {...field}
               type="text"
@@ -43,11 +46,37 @@ export default function ProductFormTop({
         )}
       />
       <Controller
+        name="brand"
+        rules={createProductValidation.brand}
+        control={control}
+        render={({ field }) => (
+          <section className="relative w-[30%] max-w-[370px] h-[50px]">
+            <p className="absolute text-black font-medium text-sm top-[-19px]">
+              Brand
+            </p>
+            <input
+              {...field}
+              type="text"
+              className={`w-full h-full bg-slate-200 pl-4 rounded-md focus:outline-none text-black ${
+                errors.title && "border-red-500 border-[1px]"
+              } `}
+              placeholder="Brand"
+            />
+
+            {errors.brand && (
+              <p className="text-red-500 text-xs bottom-[-16px] right-0 absolute">
+                {errors?.brand.message}
+              </p>
+            )}
+          </section>
+        )}
+      />
+      <Controller
         name="category"
         rules={createProductValidation.category}
         control={control}
         render={({ field }) => (
-          <main className="dropdown relative w-[43%] max-w-[370px] h-[50px] z-10">
+          <main className="dropdown relative w-[30%] max-w-[370px] h-[50px] z-10">
             <div
               className={`w-full flex items-center justify-between h-full bg-slate-200  hover:bg-slate-300 rounded-md cursor-pointer pl-4 text-black text-md ${
                 errors.category && "border-red-500 border-[1px]"

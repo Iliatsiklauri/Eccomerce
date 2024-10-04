@@ -8,14 +8,14 @@ type PropType = {
 };
 export default function FormAmountPart({ control, errors }: PropType) {
   return (
-    <div className="w-full flex justify-between items-center">
+    <div className="w-[30%] flex justify-between items-start flex-col gap-8">
       <Controller
         name="inStock"
         control={control}
         rules={createProductValidation.inStock}
         render={({ field }) => (
-          <section className="relative w-[30%] max-w-[250px] h-[50px]">
-            <p className="absolute text-black font-medium text-sm top-[-19px]">
+          <section className="relative w-full h-[50px]">
+            <p className="absolute text-black font-medium text-sm top-[-21px]">
               In Stock
             </p>
             <input
@@ -29,7 +29,7 @@ export default function FormAmountPart({ control, errors }: PropType) {
               placeholder="Amount"
             />
             {errors.inStock && (
-              <p className="text-red-500 text-xs bottom-[-15px] right-0 absolute">
+              <p className="text-red-500 text-xs bottom-[-17px] right-0 absolute">
                 {errors?.inStock.message}
               </p>
             )}
@@ -41,8 +41,8 @@ export default function FormAmountPart({ control, errors }: PropType) {
         control={control}
         rules={createProductValidation.price}
         render={({ field }) => (
-          <section className="relative w-[30%] max-w-[250px] h-[50px]">
-            <p className="absolute text-black font-medium text-sm top-[-19px]">
+          <section className="relative w-full h-[50px]">
+            <p className="absolute text-black font-medium text-sm top-[-21px]">
               Initial Price
             </p>
             <input
@@ -56,7 +56,7 @@ export default function FormAmountPart({ control, errors }: PropType) {
               placeholder="Initial Price"
             />
             {errors.price && (
-              <p className="text-red-500 text-xs bottom-[-14px] right-0 absolute">
+              <p className="text-red-500 text-xs bottom-[-17px] right-0 absolute">
                 {errors?.price.message}
               </p>
             )}
@@ -68,8 +68,8 @@ export default function FormAmountPart({ control, errors }: PropType) {
         control={control}
         rules={createProductValidation.salePrice}
         render={({ field }) => (
-          <section className="relative w-[30%] max-w-[250px] h-[50px]">
-            <p className="absolute text-black font-medium text-sm top-[-19px]">
+          <section className="relative w-full h-[50px]">
+            <p className="absolute text-black font-medium text-sm top-[-21px]">
               Sale Price
             </p>
             <input
@@ -85,7 +85,7 @@ export default function FormAmountPart({ control, errors }: PropType) {
               placeholder="Sale Price"
             />
             {errors.salePrice && (
-              <p className="text-red-500 text-xs bottom-[-14px] right-0 absolute">
+              <p className="text-red-500 text-xs bottom-[-17px] right-0 absolute">
                 {errors?.salePrice.message}
               </p>
             )}

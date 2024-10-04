@@ -15,7 +15,7 @@ type PropType = {
 };
 export default function Page({ params: { id } }: PropType) {
   const [product, setProduct] = useState<null | Product>(null);
-  const [error, setError] = useState<any>(null);
+  const [error, setError] = useState<null | Product>(null);
   useEffect(() => {
     async function getData() {
       try {

@@ -22,7 +22,7 @@ export default function ProductPreview({
   title,
 }: PropType) {
   return (
-    <div className="w-[30%]  h-full pr-6  flex flex-col items-center justify-start gap-10 pt-1">
+    <div className="w-[30%] h-full pr-6  flex flex-col items-center justify-start gap-10 pt-1">
       <h2 className="text-3xl text-black font-medium">Preview</h2>
       <div className="flex flex-col items-center justify-center w-full text-black">
         {selectedImage && (
@@ -35,7 +35,10 @@ export default function ProductPreview({
           </div>
         )}
         <p>title: {title}</p>
-        <p>description: {description}</p>
+        <p className={``}>
+          description: {description.slice(0, 40)}{" "}
+          {description.length > 40 && "..."}
+        </p>
         <p>inStock: {inStock}</p>
         <p>Price: {price}</p>
         <p>salePrice: {salePrice}</p>

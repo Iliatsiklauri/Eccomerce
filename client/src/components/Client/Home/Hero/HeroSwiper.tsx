@@ -24,7 +24,7 @@ export default function HeroSwiper({
         }}
         modules={[Pagination, Autoplay]}
         autoplay={{
-          delay: 2500,
+          delay: 3500,
           disableOnInteraction: false,
         }}
         className="w-full h-full"

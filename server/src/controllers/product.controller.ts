@@ -7,6 +7,7 @@ import {
   updateProductSchema,
 } from "../utils/validation";
 import { categoryService } from "../services/category.service";
+import { Product } from "../db/entities/Product";
 
 const productsService = new productService();
 const categorysService = new categoryService();
@@ -44,9 +45,11 @@ export const getProductById = async (req: Request, res: Response) => {
   res.json(product);
 };
 
+// create product
+
 export const createProduct = async (req: Request, res: Response) => {
-  const image = req.files["image"];
-  const pinnedImage = req.files["pinnedImage"];
+  let image = req.files?.["image"] || [];
+  let pinnedImage = req.files?.["pinnedImage"] || [];
 
   if (!image) {
     return res.status(400).json(new ErrorRes(400, "image is required"));
@@ -73,19 +76,17 @@ export const createProduct = async (req: Request, res: Response) => {
   if (!category)
     return res.status(404).json(new ErrorRes(404, "Invalid category"));
 
-  const createdPoduct = await productsService.createProduct({
+  const createdProduct: Product = await productsService.createProduct({
     ...req.body,
     categoryId: category.id,
     image,
     pinnedImage,
   });
-  if (!createdPoduct)
+  if (!createdProduct)
     return res
       .status(401)
       .json(new ErrorRes(401, "error while creating product"));
-  return res
-    .status(201)
-    .json(new SuccessRes(201, "Product created successfully"));
+  return res.status(201).json(createdProduct);
 };
 
 export const updateProduct = async (req: Request, res: Response) => {
@@ -113,6 +114,8 @@ export const updateProduct = async (req: Request, res: Response) => {
   );
 
   if (!updated) return res.status(400).json(new ErrorRes(400, "Bad request"));
+  if (updated === 404)
+    return res.status(404).json(new ErrorRes(404, "Product Not Found"));
   return res
     .status(200)
     .json(new SuccessRes(200, "Product updated successfully"));

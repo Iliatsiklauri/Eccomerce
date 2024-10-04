@@ -82,10 +82,10 @@ export class productService {
     updateProductDto: updateProductDto,
     updateProductFilesDto: updateProductFilesDto,
     id
-  ) {
+  ): Promise<Product | null | number> {
     try {
       let target = await this.productRepository.findOneBy({ id });
-      if (!target) return null;
+      if (!target) return 404;
 
       if (updateProductFilesDto.image) {
         await this.AWSService.deleteImage(target.filepath);
@@ -124,7 +124,7 @@ export class productService {
       };
 
       await this.productRepository.save(target);
-      return updateProductDto;
+      return target;
     } catch (er) {
       console.log(er, "error while updating product");
       return null;

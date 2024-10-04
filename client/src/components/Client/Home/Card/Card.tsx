@@ -26,7 +26,8 @@ export default function Card({ card }: { card: Product }) {
           {/* <p className="text-[12px]">ID :{card.id}</p> */}
           {/* <p className=" text-red-600">{card.pinned && "Pinned"}</p> */}
           <p className="text-sm opacity-50 tracking-tight">
-            {card.description}
+            {card.description.slice(0, 70)}
+            {card.description.length > 70 && "..."}
           </p>
         </div>
         <p className="text-lg font-medium">${card.price}</p>

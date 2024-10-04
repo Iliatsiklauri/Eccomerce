@@ -10,6 +10,7 @@ export type Product = {
   image: string;
   pinnedImage: string;
   filepath: string;
+  pinnedImageFilePath: string;
   category: CategoryType;
   inStock: number;
   pinned: boolean;
@@ -23,7 +24,10 @@ export type createProductType = {
   price: number | null;
   salePrice: number | null;
   image: File | null;
+  pinnedImage: File | null;
   category: string;
   inStock: number | null;
+  brand: string;
   pinned: boolean;
+  [key: string]: string | File | undefined | number | null | boolean;
 };
