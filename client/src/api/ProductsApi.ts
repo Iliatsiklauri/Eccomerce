@@ -1,9 +1,15 @@
 import { getCookie } from "cookies-next";
 import { createProductType, Product } from "../types/Product";
 
-export const fetchProducts = async ({ pinned }: { pinned: boolean | null }) => {
+export const fetchProducts = async ({
+  pinned,
+  page,
+}: {
+  pinned: boolean | null;
+  page?: number;
+}) => {
   const url = pinned
-    ? `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/?pinned=true`
+    ? `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/?pinned=true&page=${page}`
     : process.env.NEXT_PUBLIC_GETPRODUCTS_API;
   try {
     const data1 = await fetch(url as string, {
@@ -88,5 +94,26 @@ export const createProduct = async (createProduct: createProductType) => {
     return createdProduct;
   } catch (er) {
     console.log(er, "error creating product");
+  }
+};
+
+export const deleteProductbyId = async (id: number) => {
+  try {
+    const token = getCookie("authorization");
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token as string,
+        },
+      }
+    );
+    await res.json();
+    return "success";
+  } catch (er) {
+    console.log("error while deleting product");
+    return null;
   }
 };

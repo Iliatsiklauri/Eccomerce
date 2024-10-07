@@ -13,7 +13,7 @@ export default function LeftPanelSection({ image, name, isActive }: PropType) {
         name === "User management"
           ? "Users"
           : name === "Products"
-          ? "Products?mode=read"
+          ? "Products?mode=read&page=1"
           : name
       }`}
       className={` h-[10%] min-h-[50px] ${

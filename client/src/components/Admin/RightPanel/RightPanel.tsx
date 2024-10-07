@@ -12,7 +12,7 @@ const UsersSection = dynamic(
   () => import("./AdminSections/UsersSection/UsersSection")
 );
 const ProductsSection = dynamic(
-  () => import("./AdminSections/Products/ProductsSection")
+  () => import("./AdminSections/Products/ReadProducts/ProductsSection")
 );
 const NotificationSection = dynamic(
   () => import("./AdminSections/Notifications/NotificationSection")

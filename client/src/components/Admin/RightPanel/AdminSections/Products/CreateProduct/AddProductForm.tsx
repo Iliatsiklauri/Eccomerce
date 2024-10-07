@@ -12,6 +12,7 @@ import DescTextArea from "./DescTextArea";
 import { createProductType } from "@/src/types/Product";
 import FormFiles from "./FormFiles";
 import { createProduct } from "@/src/api/ProductsApi";
+import ApiInfoModal from "./ApiInfoModal";
 
 export default function AddProductsForm() {
   const { category, loading } = useSelector(
@@ -32,28 +33,51 @@ export default function AddProductsForm() {
       description: "",
       image: null,
       pinnedImage: null,
-      inStock: null,
-      salePrice: null,
-      price: null,
+      inStock: "",
+      salePrice: "",
+      price: "",
       pinned: false,
     },
   });
+
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [error, setError] = useState(false);
+  const [productId, setProductId] = useState(0);
+  const [success, setSuccess] = useState(false);
   const title = watch("title");
   const category1 = watch("category");
   const description = watch("description");
   const price = watch("price");
   const salePrice = watch("salePrice");
+  const brand = watch("brand");
   const inStock = watch("inStock");
   const pinned = watch("pinned");
   const onSubmit = async (data: createProductType) => {
-    const res = await createProduct(data);
-    console.log(res);
-    reset();
+    try {
+      const res = await createProduct(data);
+      if (res) {
+        setProductId(res.id);
+        setSuccess(true);
+        reset();
+        return;
+      }
+      setError(true);
+    } catch (er) {
+      setError(true);
+      console.log(error);
+      console.log(er, "error while creating product");
+    }
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-between">
+    <div className="w-full h-full flex items-center justify-between relative">
+      {success && (
+        <ApiInfoModal
+          id={productId}
+          setSuccess={setSuccess}
+          success={success}
+        />
+      )}
       <main className="w-[60%] h-full flex items-center justify-center flex-col pt-1 gap-10">
         <h2 className="text-3xl text-black font-medium">Create</h2>
         <form
@@ -66,12 +90,12 @@ export default function AddProductsForm() {
             loading={loading}
             control={control}
           />
-
           <DescTextArea
             control={control}
             errors={errors}
             description={description}
           />
+
           <div className="flex items-start justify-between w-full">
             <FormAmountPart control={control} errors={errors} />
             <FormFiles
@@ -86,6 +110,7 @@ export default function AddProductsForm() {
           <FormFileAndSubmit />
         </form>
       </main>
+
       <div className="w-[1px] h-[80%] bg-black opacity-20"></div>
       <ProductPreview
         selectedImage={selectedImage}
@@ -97,6 +122,7 @@ export default function AddProductsForm() {
         salePrice={salePrice}
         inStock={inStock}
         pinned={pinned}
+        brand={brand}
       />
     </div>
   );

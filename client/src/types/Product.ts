@@ -21,12 +21,12 @@ export type Product = {
 export type createProductType = {
   title: string;
   description: string;
-  price: number | null;
-  salePrice: number | null;
+  price: number | string;
+  salePrice: number | string;
   image: File | null;
   pinnedImage: File | null;
   category: string;
-  inStock: number | null;
+  inStock: number | string;
   brand: string;
   pinned: boolean;
   [key: string]: string | File | undefined | number | null | boolean;

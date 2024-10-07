@@ -3,6 +3,7 @@ import { createProductType } from "@/src/types/Product";
 import { createProductValidation } from "@/src/utils/CreateProductValidation";
 import React, { useState } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
+import ProductInput from "./ProductInput";
 
 type PropType = {
   category: [] | CategoryType[];
@@ -17,60 +18,27 @@ export default function ProductFormTop({
   control,
 }: PropType) {
   const [showDropdown, setShowDropdown] = useState(false);
+
   return (
     <div className="flex items-center justify-between w-full">
       <Controller
-        name="title"
+        name={"title"}
         rules={createProductValidation.title}
         control={control}
         render={({ field }) => (
-          <section className="relative w-[30%] max-w-[370px] h-[50px]">
-            <p className="absolute text-black font-medium text-sm top-[-19px]">
-              Title
-            </p>
-            <input
-              {...field}
-              type="text"
-              className={`w-full h-full bg-slate-200 pl-4 rounded-md focus:outline-none text-black ${
-                errors.title && "border-red-500 border-[1px]"
-              } `}
-              placeholder="title"
-            />
-
-            {errors.title && (
-              <p className="text-red-500 text-xs bottom-[-16px] right-0 absolute">
-                {errors?.title.message}
-              </p>
-            )}
-          </section>
+          <ProductInput error={errors.title} label="Title" field={field} />
         )}
       />
+
       <Controller
-        name="brand"
+        name={"brand"}
         rules={createProductValidation.brand}
         control={control}
         render={({ field }) => (
-          <section className="relative w-[30%] max-w-[370px] h-[50px]">
-            <p className="absolute text-black font-medium text-sm top-[-19px]">
-              Brand
-            </p>
-            <input
-              {...field}
-              type="text"
-              className={`w-full h-full bg-slate-200 pl-4 rounded-md focus:outline-none text-black ${
-                errors.title && "border-red-500 border-[1px]"
-              } `}
-              placeholder="Brand"
-            />
-
-            {errors.brand && (
-              <p className="text-red-500 text-xs bottom-[-16px] right-0 absolute">
-                {errors?.brand.message}
-              </p>
-            )}
-          </section>
+          <ProductInput field={field} error={errors.brand} label="Brand" />
         )}
       />
+
       <Controller
         name="category"
         rules={createProductValidation.category}

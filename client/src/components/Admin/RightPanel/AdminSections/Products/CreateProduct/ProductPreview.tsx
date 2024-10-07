@@ -6,15 +6,17 @@ type PropType = {
   title: string;
   category1: string;
   description: string;
-  price: number | null;
-  salePrice: number | null;
-  inStock: number | null;
+  price: number | string;
+  salePrice: number | string;
+  inStock: number | string;
+  brand: string;
   pinned: boolean;
 };
 export default function ProductPreview({
   selectedImage,
   category1,
   description,
+  brand,
   inStock,
   pinned,
   price,
@@ -40,6 +42,7 @@ export default function ProductPreview({
           {description.length > 40 && "..."}
         </p>
         <p>inStock: {inStock}</p>
+        <p>brand: {brand}</p>
         <p>Price: {price}</p>
         <p>salePrice: {salePrice}</p>
         <p>category: {category1}</p>
