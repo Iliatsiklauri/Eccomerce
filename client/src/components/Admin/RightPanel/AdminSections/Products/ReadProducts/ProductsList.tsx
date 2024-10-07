@@ -47,7 +47,7 @@ export default function ProductsList({ mode }: PropType) {
           />
         </div>
       ) : (
-        <AddProductsForm />
+        <AddProductsForm mode={mode} />
       )}
     </div>
   );

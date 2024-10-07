@@ -1,6 +1,7 @@
 import { deleteProductbyId } from "@/src/api/ProductsApi";
 import { Product } from "@/src/types/Product";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 type ProductType = {
@@ -59,9 +60,13 @@ export default function SingleProduct({
         />
         {productInfo === product.id && (
           <div className="absolute w-[120px] h-[80px] rounded-xl z-10 left-[-108px] top-[-5px]  bg-slate-100 shadow-xl overflow-hidden border-darkBrown border-[1px] border-opacity-30">
-            <div className="h-1/2 w-full hover:bg-slate-200 font-medium text-center p-2 border-b-[1px] border-darkBrown border-opacity-30 cursor-pointer">
+            <Link
+              href={`/admin/Products?mode=edit&id=${product.id}`}
+              className="w-full h-1/2 block text-center p-2 "
+            >
               Edit
-            </div>
+            </Link>
+
             <div
               className="h-1/2 w-full hover:bg-red-600 text-center p-2 cursor-pointer bg-red-500 font-medium "
               onClick={async () => {

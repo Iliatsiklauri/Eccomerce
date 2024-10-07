@@ -13,6 +13,7 @@ export type Product = {
   pinnedImageFilePath: string;
   category: CategoryType;
   inStock: number;
+  brand: string;
   pinned: boolean;
   createdAt: string;
   comments: commentType[];
@@ -25,9 +26,22 @@ export type createProductType = {
   salePrice: number | string;
   image: File | null;
   pinnedImage: File | null;
-  category: string;
+  category: string | null;
   inStock: number | string;
   brand: string;
   pinned: boolean;
   [key: string]: string | File | undefined | number | null | boolean;
+};
+
+export const defaultValues = {
+  title: "",
+  brand: "",
+  category: null,
+  description: "",
+  image: null,
+  pinnedImage: null,
+  inStock: "",
+  salePrice: "",
+  price: "",
+  pinned: false,
 };

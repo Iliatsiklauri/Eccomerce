@@ -6,6 +6,7 @@ type PropType = {
   label: string;
   field: InputHTMLAttributes<HTMLInputElement>;
 };
+
 export default function ProductInput({ error, label, field }: PropType) {
   return (
     <section className="relative w-full max-w-[300px] h-[50px]">

@@ -7,7 +7,6 @@ import ProductInput from "./ProductInput";
 
 type PropType = {
   category: [] | CategoryType[];
-  loading: boolean;
   control: Control<createProductType>;
   errors: FieldErrors<createProductType>;
 };

@@ -1,8 +1,10 @@
-import { createProductType } from "@/src/types/Product";
+import { createProductType, Product } from "@/src/types/Product";
 import React from "react";
 import { Control, Controller } from "react-hook-form";
 type PropType = {
   control: Control<createProductType>;
+  mode: string | null;
+  product: Product | null;
 };
 export default function PinnedCheck({ control }: PropType) {
   return (
@@ -19,7 +21,6 @@ export default function PinnedCheck({ control }: PropType) {
             type="checkbox"
             id="pinned"
             className="checkbox bg-white checkbox-success border-none"
-            checked={field.value}
             onChange={(e) => field.onChange(e.target.checked)}
             ref={field.ref}
           />

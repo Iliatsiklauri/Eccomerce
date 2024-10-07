@@ -25,7 +25,7 @@ export default function ProductSectionHeader({ mode }: PropType) {
       <button
         role="tab"
         className={`tab  text-black text-lg font-medium font-sans ${
-          mode === "add" && "bg-lightBrown text-white"
+          (mode === "add" || mode === "edit") && "bg-lightBrown text-white"
         } `}
         onClick={() => {
           router.push(`/admin/Products?mode=add`, {
@@ -33,7 +33,7 @@ export default function ProductSectionHeader({ mode }: PropType) {
           });
         }}
       >
-        Add
+        {mode === "edit" ? "Edit" : "Add"}
       </button>
     </div>
   );

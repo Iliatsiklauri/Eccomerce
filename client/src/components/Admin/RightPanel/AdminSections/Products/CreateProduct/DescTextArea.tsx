@@ -21,7 +21,7 @@ export default function DescTextArea({
         <div className="w-full relative flex items-end justify-center flex-col ">
           <p
             className={`${
-              description.length > 300 && "text-red-500"
+              description && description.length > 300 && "text-red-500"
             } justify-self-end absolute top-[-20px] text-sm`}
           >
             {description.length}/300
@@ -32,7 +32,6 @@ export default function DescTextArea({
               errors.description &&
               "border-red-500 border-[1px] focus:border-red-500"
             }`}
-            placeholder=""
           ></textarea>
           {errors.description && (
             <p className="text-red-500 text-xs bottom-[-17px] right-0 absolute">

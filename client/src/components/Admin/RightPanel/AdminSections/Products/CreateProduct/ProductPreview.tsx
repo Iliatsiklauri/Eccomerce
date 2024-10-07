@@ -4,7 +4,7 @@ type PropType = {
   selectedImage: File | null;
   setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
   title: string;
-  category1: string;
+  category1: string | null;
   description: string;
   price: number | string;
   salePrice: number | string;
