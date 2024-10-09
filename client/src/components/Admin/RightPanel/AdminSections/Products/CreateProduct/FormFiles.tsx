@@ -1,6 +1,6 @@
 import { CreateProductType, Product } from "@/src/types/Product";
 import { createProductValidation } from "@/src/utils/CreateProductValidation";
-import React from "react";
+import React, { useState } from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
 type PropType = {
@@ -8,6 +8,7 @@ type PropType = {
   control: Control<CreateProductType>;
   setImageForPrev: React.Dispatch<React.SetStateAction<string | null | File>>;
   product: Product | null;
+  imageForPrev: null | string | File;
 };
 
 export default function FormFiles({
@@ -15,7 +16,9 @@ export default function FormFiles({
   errors,
   control,
   setImageForPrev,
+  imageForPrev,
 }: PropType) {
+  const [pinnedImage, setPinnedImage] = useState<File | null>(null);
   return (
     <div className="flex items-center justify-center flex-col w-1/2 gap-7">
       <div className="w-full relative h-[50px]">
@@ -27,17 +30,33 @@ export default function FormFiles({
           control={control}
           rules={product ? undefined : createProductValidation.image}
           render={({ field: { onChange } }) => (
-            <input
-              type="file"
-              className={`w-full h-full rounded-md file-input file-input-bordered bg-slate-200 text-black focus:outline-none ${
-                errors.image ? "border-red-500" : ""
-              }`}
-              onChange={(e) => {
-                const file = e.target.files?.[0] || null;
-                setImageForPrev(file);
-                onChange(file);
-              }}
-            />
+            <label className={`w-full h-full cursor-pointer`}>
+              <div
+                className={`w-full h-full rounded-md flex items-center justify-start bg-slate-300 overflow-hidden
+                ${errors.image ? "border-red-500 border-[1px]" : ""}
+                `}
+              >
+                <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-md flex-shrink-0">
+                  CHOOSE FILE
+                </p>
+                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-5 text-black">
+                  {imageForPrev instanceof File
+                    ? imageForPrev?.name
+                    : product
+                    ? product.image
+                    : "No file chosen"}
+                </div>
+              </div>
+              <input
+                className="hidden"
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  setImageForPrev(file);
+                  onChange(file);
+                }}
+              />
+            </label>
           )}
         />
         {errors.image && (
@@ -56,17 +75,33 @@ export default function FormFiles({
           control={control}
           rules={product ? undefined : createProductValidation.pinnedImage}
           render={({ field: { onChange } }) => (
-            <input
-              type="file"
-              className={`w-full h-full rounded-md file-input file-input-bordered bg-slate-200 text-black focus:outline-none ${
-                errors.pinnedImage ? "border-red-500" : ""
-              }`}
-              onChange={(e) => {
-                const file = e.target.files?.[0] || null;
-
-                onChange(file);
-              }}
-            />
+            <label className={`w-full h-full cursor-pointer`}>
+              <div
+                className={`w-full h-full rounded-md flex items-center justify-start bg-slate-300 overflow-hidden
+              ${errors.pinnedImage ? "border-red-500 border-[1px]" : ""}
+              `}
+              >
+                <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-md flex-shrink-0">
+                  CHOOSE FILE
+                </p>
+                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-5 text-black">
+                  {pinnedImage instanceof File
+                    ? pinnedImage?.name
+                    : product
+                    ? product.pinnedImage
+                    : "No file chosen"}
+                </div>
+              </div>
+              <input
+                className="hidden"
+                type="file"
+                onChange={(e) => {
+                  const file = e.target.files?.[0] || null;
+                  setPinnedImage(file);
+                  onChange(file);
+                }}
+              />
+            </label>
           )}
         />
         {errors.pinnedImage && (

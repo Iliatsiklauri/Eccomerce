@@ -24,6 +24,7 @@ type PropType = {
 export default function CreateProductForm({
   product,
   setImageForPrev,
+  imageForPrev,
   description,
   category,
   control,
@@ -50,6 +51,7 @@ export default function CreateProductForm({
         <div className="flex items-end justify-between w-full">
           <FormAmountPart control={control} errors={errors} />
           <FormFiles
+            imageForPrev={imageForPrev}
             product={product}
             errors={errors}
             control={control}
