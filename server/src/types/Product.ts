@@ -41,6 +41,8 @@ export type updateProductDto = {
   category?: Category;
   inStock?: number;
   pinned?: boolean;
+  image?: string;
+  pinnedImage?: string;
 };
 export type updateProductFilesDto = {
   image?: Express.Multer.File;

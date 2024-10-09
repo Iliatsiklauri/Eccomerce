@@ -43,14 +43,8 @@ export class Product {
   @Column({ default: "" })
   filepath: string;
 
-  @ManyToOne(() => Category, {
-    nullable: false,
-  })
-  @JoinColumn({ name: "categoryId" })
+  @ManyToOne(() => Category, { nullable: false })
   category: Category;
-
-  @Column({ nullable: false })
-  categoryId: number;
 
   @Column({ default: false })
   pinned: boolean;

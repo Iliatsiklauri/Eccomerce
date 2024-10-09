@@ -19,19 +19,20 @@ export type Product = {
   comments: commentType[];
 };
 
-export type createProductType = {
+export type CreateProductType = {
   title: string;
   description: string;
   price: number | string;
   salePrice: number | string;
   image: File | null;
   pinnedImage: File | null;
-  category: string | null;
+  category: number | null;
   inStock: number | string;
   brand: string;
   pinned: boolean;
   [key: string]: string | File | undefined | number | null | boolean;
 };
+export type UpdateProductType = Partial<CreateProductType>;
 
 export const defaultValues = {
   title: "",

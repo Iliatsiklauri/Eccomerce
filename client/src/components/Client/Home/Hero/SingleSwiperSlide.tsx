@@ -14,7 +14,6 @@ export default function SingleSwiperSlide({
   loading,
   setLoading,
 }: PropType) {
-  console.log(product.image, "producttt");
   return (
     <>
       <Image

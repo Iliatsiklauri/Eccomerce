@@ -21,18 +21,20 @@ export const productSchema = Joi.object({
   price: Joi.number().required(),
   salePrice: Joi.number().required(),
   brand: Joi.string().required(),
-  category: Joi.string().required(),
+  category: Joi.number().required(),
   inStock: Joi.number().required(),
   pinned: Joi.string().valid("true", "false"),
 }).options({ abortEarly: false });
 
 export const updateProductSchema = Joi.object({
+  pinnedImage: Joi.string().optional(),
+  image: Joi.string().optional(),
   title: Joi.string().optional(),
   description: Joi.string().optional(),
   price: Joi.number().optional(),
   salePrice: Joi.number().optional(),
   brand: Joi.string().optional(),
-  category: Joi.string().optional(),
+  category: Joi.number().optional(),
   inStock: Joi.number().optional(),
   pinned: Joi.string().valid("true", "false").optional(),
 }).options({ abortEarly: false });

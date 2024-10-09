@@ -1,10 +1,10 @@
-import { createProductType } from "@/src/types/Product";
+import { CreateProductType } from "@/src/types/Product";
 import { createProductValidation } from "@/src/utils/CreateProductValidation";
 import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 type PropType = {
-  control: Control<createProductType>;
-  errors: FieldErrors<createProductType>;
+  control: Control<CreateProductType>;
+  errors: FieldErrors<CreateProductType>;
   description: string;
 };
 export default function DescTextArea({

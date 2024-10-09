@@ -1,11 +1,11 @@
-import { createProductType } from "@/src/types/Product";
+import { CreateProductType } from "@/src/types/Product";
 import { createProductValidation } from "@/src/utils/CreateProductValidation";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import ProductInput from "./ProductInput";
 
 type PropType = {
-  control: Control<createProductType>;
-  errors: FieldErrors<createProductType>;
+  control: Control<CreateProductType>;
+  errors: FieldErrors<CreateProductType>;
 };
 
 export default function FormAmountPart({ control, errors }: PropType) {
@@ -32,7 +32,11 @@ export default function FormAmountPart({ control, errors }: PropType) {
         rules={createProductValidation.salePrice}
         control={control}
         render={({ field }) => (
-          <ProductInput error={errors.title} label="Title" field={field} />
+          <ProductInput
+            error={errors.salePrice}
+            label="Sale Price"
+            field={field}
+          />
         )}
       />
     </div>

@@ -69,16 +69,13 @@ export const createProduct = async (req: Request, res: Response) => {
     );
   }
 
-  const category = await categorysService.getCategoryByTitle({
-    title: req.body.category,
-  });
+  const category = await categorysService.getById(req.body.category);
 
   if (!category)
     return res.status(404).json(new ErrorRes(404, "Invalid category"));
 
   const createdProduct: Product = await productsService.createProduct({
     ...req.body,
-    categoryId: category.id,
     image,
     pinnedImage,
   });
@@ -107,6 +104,12 @@ export const updateProduct = async (req: Request, res: Response) => {
     );
   }
 
+  if (req.body.category) {
+    const category = await categorysService.getById(req.body.category);
+    if (!category)
+      return res.status(404).json(new ErrorRes(404, "Invalid category"));
+  }
+
   const updated = await productsService.updateProduct(
     req.body,
     updateFilesDto,
@@ -114,6 +117,14 @@ export const updateProduct = async (req: Request, res: Response) => {
   );
 
   if (!updated) return res.status(400).json(new ErrorRes(400, "Bad request"));
+  if (updated === "imageEr")
+    return res
+      .status(409)
+      .json(new ErrorRes(409, "Choose one property for image"));
+  if (updated === "pinnedEr")
+    return res
+      .status(409)
+      .json(new ErrorRes(409, "Choose one property for pinned image"));
   if (updated === 404)
     return res.status(404).json(new ErrorRes(404, "Product Not Found"));
   return res

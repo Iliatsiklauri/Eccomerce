@@ -1,5 +1,9 @@
 import { getCookie } from "cookies-next";
-import { createProductType, Product } from "../types/Product";
+import {
+  CreateProductType,
+  Product,
+  UpdateProductType,
+} from "../types/Product";
 
 export const fetchProducts = async ({
   pinned,
@@ -72,7 +76,7 @@ export const getProductById = async (id: string): Promise<Product | null> => {
   }
 };
 
-export const createProduct = async (createProduct: createProductType) => {
+export const createProduct = async (createProduct: CreateProductType) => {
   try {
     const formData = new FormData();
     Object.keys(createProduct).forEach((key) => {
@@ -94,6 +98,39 @@ export const createProduct = async (createProduct: createProductType) => {
     return createdProduct;
   } catch (er) {
     console.log(er, "error creating product");
+  }
+};
+export const updateProduct = async (
+  updateProduct: UpdateProductType,
+  id: string
+) => {
+  try {
+    const formData = new FormData();
+
+    Object.keys(updateProduct).forEach((key) => {
+      const value = updateProduct[key];
+      if (value !== null && value !== undefined) {
+        formData.append(key, value as string | File);
+      }
+    });
+
+    const token = getCookie("authorization");
+
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          authorization: token as string,
+        },
+        body: formData,
+      }
+    );
+    const updatedProduct = await res.json();
+    return updatedProduct;
+  } catch (er) {
+    console.log(er, "error creating product");
+    return null;
   }
 };
 

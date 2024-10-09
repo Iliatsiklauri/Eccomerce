@@ -31,7 +31,7 @@ export default function ProductsList() {
     setLoading(false);
     getData();
   }, [category, page]);
-  if (!data?.products.length && !loading) {
+  if (data && data?.products.length === 0 && !loading) {
     return <h1 className="text-xl font-semibold text-black">No Products :)</h1>;
   }
   return (

@@ -4,8 +4,17 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import ProductPreview from "./ProductPreview";
-import { createProductType, defaultValues, Product } from "@/src/types/Product";
-import { createProduct, getProductById } from "@/src/api/ProductsApi";
+import {
+  CreateProductType,
+  defaultValues,
+  Product,
+  UpdateProductType,
+} from "@/src/types/Product";
+import {
+  createProduct,
+  getProductById,
+  updateProduct,
+} from "@/src/api/ProductsApi";
 import ApiInfoModal from "./ApiInfoModal";
 import { useSearchParams } from "next/navigation";
 import CreateProductForm from "./CreateProductForm";
@@ -23,15 +32,15 @@ export default function AddProductsForm({ mode }: PropType) {
     control,
     reset,
     watch,
-  } = useForm<createProductType>({
+  } = useForm<CreateProductType>({
     defaultValues: defaultValues,
   });
 
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [error, setError] = useState(false);
   const [productId, setProductId] = useState(0);
-  const [success, setSuccess] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [product, setProduct] = useState<null | Product>(null);
+  const [imageForPrev, setImageForPrev] = useState<null | string | File>(null);
 
   const title = watch("title");
   const category1 = watch("category");
@@ -45,6 +54,7 @@ export default function AddProductsForm({ mode }: PropType) {
   const params = useSearchParams();
 
   const id = params.get("id");
+
   useEffect(() => {
     async function getData() {
       if (mode === "edit") {
@@ -53,10 +63,10 @@ export default function AddProductsForm({ mode }: PropType) {
           setProduct(res);
           reset({
             title: res?.title,
-            brand: res?.brand,
-            category: res?.category.title,
+            brand: res?.brand || "brand",
+            category: res?.category.id,
             description: res?.description,
-            inStock: res?.inStock,
+            inStock: res?.inStock || 1,
             salePrice: res?.salePrice,
             price: res?.price,
             pinned: res?.pinned,
@@ -67,37 +77,62 @@ export default function AddProductsForm({ mode }: PropType) {
     getData();
   }, [id, reset, mode]);
 
-  const onSubmit = async (data: createProductType) => {
+  const onSubmit = async (data: CreateProductType | UpdateProductType) => {
+    setError(null);
+
     try {
-      const res = await createProduct(data);
-      if (res) {
-        setProductId(res.id);
-        setSuccess(true);
-        reset();
-        return;
+      let res;
+
+      if (mode === "add") {
+        res = await createProduct(data as CreateProductType);
+      } else if (mode === "edit" && id) {
+        console.log({
+          ...data,
+          image: data.image || product?.image,
+          pinnedImage: data.pinnedImage || product?.pinnedImage,
+        });
+        res = await updateProduct(
+          {
+            ...data,
+            image: data.image || product?.image,
+            pinnedImage: data.pinnedImage || product?.pinnedImage,
+          } as UpdateProductType,
+          id
+        );
       }
-      setError(true);
+
+      if (res.error) {
+        setError(res.error.message);
+      } else {
+        if (mode === "edit" && product) {
+          setProductId(product?.id);
+        } else {
+          setProductId(res.id);
+        }
+        reset();
+      }
+      setModal(true);
     } catch (er) {
-      setError(true);
-      console.log(error);
-      console.log(er, "error while creating product");
+      setError("Unexpected error occured");
+      console.error(er, "error while processing product");
     }
   };
 
   return (
     <div className="w-full h-full flex items-center justify-between relative">
-      {success && (
+      {modal && (
         <ApiInfoModal
           id={productId}
-          setSuccess={setSuccess}
-          success={success}
+          setModal={setModal}
+          mode={mode}
+          error={error}
         />
       )}
       <CreateProductForm
-        setSelectedImage={setSelectedImage}
+        imageForPrev={imageForPrev}
+        setImageForPrev={setImageForPrev}
         description={description}
-        handleSubmit={handleSubmit}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         product={product}
         category={category}
         control={control}
@@ -107,8 +142,8 @@ export default function AddProductsForm({ mode }: PropType) {
 
       <div className="w-[1px] h-[80%] bg-black opacity-20"></div>
       <ProductPreview
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
+        product={product}
+        imageForPrev={imageForPrev}
         title={title}
         category1={category1}
         description={description}

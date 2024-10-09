@@ -9,7 +9,7 @@ type PropType = {
 
 export default function ProductInput({ error, label, field }: PropType) {
   return (
-    <section className="relative w-full max-w-[300px] h-[50px]">
+    <section className="relative w-full h-[50px]">
       <p className="absolute text-black font-medium text-sm top-[-19px]">
         {label}
       </p>

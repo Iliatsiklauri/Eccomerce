@@ -23,6 +23,7 @@ export class productService {
         .leftJoinAndSelect("product.comments", "comments")
         .leftJoinAndSelect("comments.user", "user")
         .leftJoinAndSelect("product.category", "category");
+
       if (pinned) {
         query.orderBy("product.pinned", "DESC");
       }
@@ -82,12 +83,13 @@ export class productService {
     updateProductDto: updateProductDto,
     updateProductFilesDto: updateProductFilesDto,
     id
-  ): Promise<Product | null | number> {
+  ): Promise<Product | null | number | string> {
     try {
       let target = await this.productRepository.findOneBy({ id });
       if (!target) return 404;
 
       if (updateProductFilesDto.image) {
+        if (updateProductDto.image) return "imageEr";
         await this.AWSService.deleteImage(target.filepath);
         const [filepath, image] = await this.AWSService.uploadImage(
           updateProductFilesDto.image[0],
@@ -97,7 +99,8 @@ export class productService {
       }
 
       if (updateProductFilesDto.pinnedImage) {
-        if (target.pinnedImage) {
+        if (updateProductDto.pinnedImage) return "pinnedEr";
+        if (target.pinnedImageFilePath) {
           await this.AWSService.deleteImage(target.pinnedImageFilePath);
         }
         const [pinnedImageFilePath, pinnedImage] =

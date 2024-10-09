@@ -61,3 +61,5 @@ export const deleteCategory = async (req: Request, res: Response) => {
 
   return res.status(204).send();
 };
+
+export const updateCategory = async (req) => {};
