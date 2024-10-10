@@ -14,7 +14,7 @@ export default function Pagination({ total, activePage, onChange }: PropType) {
   };
 
   return (
-    <div className="join">
+    <div className="join justify-self-center">
       <button
         className="join-item btn"
         onClick={() => handlePageChange(activePage - 1)}

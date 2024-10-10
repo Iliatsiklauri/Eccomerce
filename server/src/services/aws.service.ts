@@ -17,7 +17,8 @@ export class awsService {
   async uploadImage(file: Express.Multer.File, folder: string) {
     try {
       const type = file.mimetype.split("/")[1];
-      const filePath = `${folder}/${new Date().getTime()}.${type}`;
+      const type2 = file.mimetype.split("/")[0];
+      const filePath = `${folder}/${new Date().getTime()}.${type2}.${type}`;
       const imageUrl = `https://d31o8esktuui0e.cloudfront.net/${filePath}`;
 
       const config = {

@@ -12,6 +12,7 @@ export default function Header() {
       >
         Eccomerce
       </Link>
+      <Link href={"/admin/Products?mode=read"}>ADMIN PANEL</Link>
       <div className="container1 flex justify-between items-center">
         <SearchInput />
         <HeaderCartSection />

@@ -39,7 +39,7 @@ export default function FormFiles({
                 <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-md flex-shrink-0">
                   CHOOSE FILE
                 </p>
-                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-5 text-black">
+                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-[-10px] text-black text-[11px]">
                   {imageForPrev instanceof File
                     ? imageForPrev?.name
                     : product
@@ -84,7 +84,7 @@ export default function FormFiles({
                 <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-md flex-shrink-0">
                   CHOOSE FILE
                 </p>
-                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-5 text-black">
+                <div className="w-full h-full flex items-center justify-start overflow-hidden pl-5 text-black text-[11px]">
                   {pinnedImage instanceof File
                     ? pinnedImage?.name
                     : product
