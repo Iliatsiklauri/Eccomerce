@@ -42,8 +42,10 @@ export class awsService {
         Bucket: this.bucketName,
       };
       const command = new DeleteObjectCommand(config);
-      return this.storageService.send(command);
+      const deleted = await this.storageService.send(command);
+      return deleted;
     } catch (er) {
+      console.log(er, "error while deleting image");
       return null;
     }
   }

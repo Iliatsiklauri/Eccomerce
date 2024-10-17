@@ -19,12 +19,16 @@ export const getAllProducts = async (req: Request, res: Response) => {
     let pinned = req.query.pinned === "true";
     let skip = limit * (page - 1);
     let category = parseInt(req.query.category as string);
+    let minPrice = parseInt(req.query.minPrice as string);
+    let maxPrice = parseInt(req.query.maxPrice as string);
 
     const [products, total] = await productsService.getAllProducts(
       skip,
       limit,
       category,
-      pinned
+      pinned,
+      minPrice,
+      maxPrice
     );
     if (!products) {
       return res
@@ -134,8 +138,13 @@ export const updateProduct = async (req: Request, res: Response) => {
 
 export const deleteProduct = async (req: Request, res: Response) => {
   const deletedProduct = await productsService.deletePost(req.params.id);
-  if (!deletedProduct) {
+  if (deletedProduct === 404) {
     return res.status(404).json(new ErrorRes(404, "Product not found"));
+  }
+  if (!deletedProduct) {
+    return res
+      .status(404)
+      .json(new ErrorRes(404, "Error while deleting product"));
   }
   res.status(204).send();
 };

@@ -1,8 +1,8 @@
-import { deleteProductbyId } from "@/src/api/ProductsApi";
-import { Product } from "@/src/types/Product";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
+import { deleteProductbyId } from '@/src/api/ProductsApi';
+import { Product } from '@/src/types/Product';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 
 type ProductType = {
   product: Product;
@@ -28,7 +28,7 @@ export default function SingleProduct({ product }: ProductType) {
       <td>
         {product.pinned && (
           <Image
-            src={"/icons/adminPanel/pin.png"}
+            src={'/icons/adminPanel/pin.png'}
             alt="pinned product"
             width={30}
             height={30}
@@ -37,7 +37,7 @@ export default function SingleProduct({ product }: ProductType) {
       </td>
       <td className="w-[180px] text-[13px]">
         {product.description.slice(0, 40)}
-        {product.description.length > 40 && "..."}
+        {product.description.length > 40 && '...'}
       </td>
       <td>₾{product.salePrice}</td>
       <td>₾{product.price}</td>
@@ -47,9 +47,9 @@ export default function SingleProduct({ product }: ProductType) {
           <button role="button" tabIndex={0}>
             <Image
               alt="more"
-              src={"/icons/adminPanel/more.png"}
-              width={20}
-              height={20}
+              src={'/icons/adminPanel/more.png'}
+              width={44}
+              height={44}
               className="cursor-pointer"
             />
           </button>
@@ -66,7 +66,7 @@ export default function SingleProduct({ product }: ProductType) {
               className="bg-red-500 rounded-lg"
               onClick={async () => {
                 const deleteProduct = await deleteProductbyId(product.id);
-                if (!deleteProduct) console.log("error");
+                if (!deleteProduct) console.log('error');
               }}
             >
               <p>Delete</p>

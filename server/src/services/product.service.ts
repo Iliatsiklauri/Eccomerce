@@ -15,7 +15,9 @@ export class productService {
     skip: number,
     limit: number,
     category?: number,
-    pinned?: boolean
+    pinned?: boolean,
+    minPrice?: number,
+    maxPrice?: number
   ): Promise<[Product[], number]> {
     try {
       const query = await this.productRepository
@@ -30,6 +32,13 @@ export class productService {
       if (category) {
         query.where("category.id = :category", { category });
       }
+      if (minPrice) {
+        query.andWhere("product.price >= :minPrice", { minPrice });
+      }
+      if (maxPrice) {
+        query.andWhere("product.price <= :maxPrice", { maxPrice });
+      }
+
       query.skip(skip).take(limit);
       const [products, total] = await query.getManyAndCount();
       return [products, total];
@@ -137,13 +146,15 @@ export class productService {
   async deletePost(id) {
     try {
       const target = await this.productRepository.findOneBy({ id });
-      if (!target) return null;
+      if (!target) return 404;
+
       await this.AWSService.deleteImage(target.filepath);
       if (target.pinnedImageFilePath) {
         await this.AWSService.deleteImage(target.pinnedImageFilePath);
       }
       const deletedProduct = await this.productRepository.delete({ id });
       if (deletedProduct.affected === 0) return null;
+
       return deletedProduct;
     } catch (er) {
       return null;

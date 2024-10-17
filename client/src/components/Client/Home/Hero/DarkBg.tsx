@@ -7,7 +7,7 @@ type PropType = {
 };
 export default function DarkBg({ product }: PropType) {
   return (
-    <Link href={`/products/${product.id}`} target="_blank">
+    <Link href={`/products/${product.id}`}>
       <div className="bg-black absolute h-full w-full opacity-0 group-hover:opacity-20 transition-opacity duration-300 ease-in-out"></div>
       <div
         className="w-[200px] h-[60px] bg-white rounded-2xl flex items-center justify-center gap-3 left-5

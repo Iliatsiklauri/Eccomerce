@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <header className="w-full h-[80px] bg-darkBrown flex items-center justify-center z-50 shadow-sm relative">
       <Link
-        className="text-white text-3xl left-[5%] absolute font-semibold cursor-pointer"
+        className="text-white text-2xl  2xl:text-3xl 2xl:left-[5%] left-[3%] absolute font-semibold cursor-pointer"
         href={'/'}
       >
         Eccomerce

@@ -6,7 +6,7 @@ import React from "react";
 
 export default function Card({ card }: { card: Product }) {
   return (
-    <div className=" w-[240px] gap-1 flex flex-col justify-between h-[280px] text-black p-1.5 rounded-lg transition-all duration-200 ease-in-out flex-shrink-0">
+    <div className=" w-[222px] 2xl:w-[240px] gap-1 flex flex-col justify-between h-[280px] text-black p-1.5 rounded-lg transition-all duration-200 ease-in-out flex-shrink-0">
       <Link
         href={`/products/${card.id}`}
         className="relative w-full h-44 overflow-hidden flex-shrink-0 rounded-md group"
@@ -23,9 +23,7 @@ export default function Card({ card }: { card: Product }) {
       <div className="flex items-start justify-between flex-col h-full p-0.5">
         <div className="flex flex-col items-start justify-center">
           <p className="text-lg font-medium">{card.title}</p>
-          {/* <p className="text-[12px]">ID :{card.id}</p> */}
-          {/* <p className=" text-red-600">{card.pinned && "Pinned"}</p> */}
-          <p className="text-sm opacity-50 tracking-tight">
+          <p className="text-xs opacity-50 tracking-tight leading-3">
             {card.description.slice(0, 70)}
             {card.description.length > 70 && "..."}
           </p>

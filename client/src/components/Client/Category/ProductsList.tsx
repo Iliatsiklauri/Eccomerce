@@ -6,7 +6,7 @@ import Card from "../Home/Card/Card";
 import Pagination from "../Home/Pagination/Pagination";
 import ProductsListSkeleton from "./ProductsListSkeleton";
 import { Product } from "@/src/types/Product";
-import Filters from "../../Shared/Filters/Filters";
+import FilterAccordion from "../../Shared/FilterAccordion/FilterAccordion";
 
 export default function ProductsList() {
   const [loading, setLoading] = useState(true);
@@ -38,8 +38,12 @@ export default function ProductsList() {
   }
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-20">
-      <div className="flex w-full gap-5 items-start">
-        <Filters />
+      <div
+        className={`flex w-full gap-5 items-start ${
+          loading ? "flex-col" : ""
+        } `}
+      >
+        {!loading && <FilterAccordion />}
         <div className="grid grid-cols-4 gap-y-8 w-[80%] flex-shrink-0">
           {data?.products.map((el: Product) => (
             <Card card={el} key={el.id} />

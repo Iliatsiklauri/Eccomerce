@@ -33,8 +33,12 @@ export const fetchProductsByCategory = async ({
   category,
   pinned,
   page,
+  minPrice,
+  maxPrice,
 }: {
   category: number;
+  minPrice?: number;
+  maxPrice?: number;
   pinned: boolean;
   page?: number;
 }) => {
@@ -42,7 +46,7 @@ export const fetchProductsByCategory = async ({
     const res = await fetch(
       `${
         process.env.NEXT_PUBLIC_GETPRODUCTS_API as string
-      }/?category=${category}&pinned=${pinned}&page=${page}` as string,
+      }/?category=${category}&pinned=${pinned}&page=${page}&minPrice=${minPrice}&maxPrice=${maxPrice}` as string,
       {
         method: "GET",
         headers: {

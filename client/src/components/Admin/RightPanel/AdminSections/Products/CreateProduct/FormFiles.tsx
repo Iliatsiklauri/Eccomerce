@@ -1,7 +1,7 @@
-import { CreateProductType, Product } from "@/src/types/Product";
-import { createProductValidation } from "@/src/utils/CreateProductValidation";
-import React, { useState } from "react";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { CreateProductType, Product } from '@/src/types/Product';
+import { createProductValidation } from '@/src/utils/CreateProductValidation';
+import React, { useState } from 'react';
+import { Control, Controller, FieldErrors } from 'react-hook-form';
 
 type PropType = {
   errors: FieldErrors<CreateProductType>;
@@ -33,18 +33,18 @@ export default function FormFiles({
             <label className={`w-full h-full cursor-pointer`}>
               <div
                 className={`w-full h-full rounded-md flex items-center justify-start bg-slate-300 overflow-hidden
-                ${errors.image ? "border-red-500 border-[1px]" : ""}
+                ${errors.image ? 'border-red-500 border-[1px]' : ''}
                 `}
               >
-                <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-md flex-shrink-0">
+                <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-xs flex-shrink-0">
                   CHOOSE FILE
                 </p>
-                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-[-10px] text-black text-[11px]">
+                <div className="w-full h-full  flex items-center justify-start overflow-hidden pl-3 text-black text-[11px]">
                   {imageForPrev instanceof File
                     ? imageForPrev?.name
                     : product
                     ? product.image
-                    : "No file chosen"}
+                    : 'No file chosen'}
                 </div>
               </div>
               <input
@@ -78,18 +78,18 @@ export default function FormFiles({
             <label className={`w-full h-full cursor-pointer`}>
               <div
                 className={`w-full h-full rounded-md flex items-center justify-start bg-slate-300 overflow-hidden
-              ${errors.pinnedImage ? "border-red-500 border-[1px]" : ""}
+              ${errors.pinnedImage ? 'border-red-500 border-[1px]' : ''}
               `}
               >
-                <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-md flex-shrink-0">
+                <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-xs flex-shrink-0">
                   CHOOSE FILE
                 </p>
-                <div className="w-full h-full flex items-center justify-start overflow-hidden pl-5 text-black text-[11px]">
+                <div className="w-full h-full flex items-center justify-start overflow-hidden pl-3 text-black text-[11px]">
                   {pinnedImage instanceof File
                     ? pinnedImage?.name
                     : product
                     ? product.pinnedImage
-                    : "No file chosen"}
+                    : 'No file chosen'}
                 </div>
               </div>
               <input
