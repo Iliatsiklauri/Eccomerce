@@ -1,8 +1,8 @@
-"use client";
-import React, { useState } from "react";
-import ModeChangeButton from "./ModeChangeButton";
-import SignInForm from "./SignInForm";
-import SignUpForm from "./SignUpForm";
+'use client';
+import React, { useState } from 'react';
+import ModeChangeButton from './ModeChangeButton';
+import SignInForm from './SignInForm';
+import SignUpForm from './SignUpForm';
 
 export default function AuthModal() {
   const [mode, setMode] = useState(true);

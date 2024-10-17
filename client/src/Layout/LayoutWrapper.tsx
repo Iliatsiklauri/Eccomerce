@@ -1,11 +1,11 @@
-"use client";
-import { usePathname } from "next/navigation";
-import Footer from "../components/Shared/Footer/Footer";
-import Header from "../components/Shared/Header/Header";
-import { useEffect } from "react";
-import { getCategories } from "../api/CategoryApi";
-import { useDispatch } from "react-redux";
-import { setCategory, setLoading } from "../store/features/categorySlice";
+'use client';
+import { usePathname } from 'next/navigation';
+import Footer from '../components/Shared/Footer/Footer';
+import Header from '../components/Shared/Header/Header';
+import { useEffect } from 'react';
+import { getCategories } from '../api/CategoryApi';
+import { useDispatch } from 'react-redux';
+import { setCategory, setLoading } from '../store/features/categorySlice';
 
 type Props = {
   children: React.ReactNode;
@@ -20,15 +20,16 @@ export const LayoutWrapper = ({ children }: Props) => {
         const res = await getCategories();
         dispatch(setCategory(res));
       } catch (er) {
-        console.log("error fetching categories", er);
+        console.log('error fetching categories', er);
       } finally {
         dispatch(setLoading(false));
       }
     }
     getData();
   }, [dispatch]);
+
   const pathname = usePathname();
-  const render = pathname.split("/")[1] !== "admin" && pathname !== "/auth";
+  const render = pathname.split('/')[1] !== 'admin' && pathname !== '/auth';
 
   return (
     <div className="flex items-center justify-center flex-col bg-white gap-10 ">

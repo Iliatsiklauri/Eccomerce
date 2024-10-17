@@ -1,17 +1,17 @@
-import React, { useState } from "react";
-import AuthButton from "./AuthButton";
-import { useForm, Controller } from "react-hook-form";
-import { fields } from "@/src/utils/auth";
-import SingleInput from "./SingleInput";
-import { signUpUser } from "@/src/api/AuthApi";
-import { setCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { logIn } from "@/src/store/features/authSlice";
-import { SignUp, user } from "@/src/types/User";
+import React, { useState } from 'react';
+import AuthButton from './AuthButton';
+import { useForm, Controller } from 'react-hook-form';
+import { fields } from '@/src/utils/auth';
+import SingleInput from './SingleInput';
+import { signUpUser } from '@/src/api/AuthApi';
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
+import { useDispatch } from 'react-redux';
+import { logIn } from '@/src/store/features/authSlice';
+import { SignUp, user } from '@/src/types/User';
 export default function SignUpForm() {
-  const [emailErr, setEmailErr] = useState("");
+  const [emailErr, setEmailErr] = useState('');
   const Router = useRouter();
   const dispatch = useDispatch();
   const {
@@ -19,7 +19,7 @@ export default function SignUpForm() {
     control,
     formState: { errors },
   } = useForm<SignUp>({
-    defaultValues: { email: "", fullname: "", password: "" },
+    defaultValues: { email: '', fullname: '', password: '' },
   });
 
   const handleFormSubmition = async (formData: SignUp) => {
@@ -29,8 +29,8 @@ export default function SignUpForm() {
       return setEmailErr(res.error.message);
     }
 
-    setCookie("authorization", res.success?.token, {
-      path: "/",
+    setCookie('authorization', res.success?.token, {
+      path: '/',
       maxAge: 7200,
       httpOnly: false,
     });
@@ -41,7 +41,7 @@ export default function SignUpForm() {
       logIn({ email: user.email, role: user.role, fullname: user.fullname })
     );
 
-    Router.push("/");
+    Router.push('/');
   };
   return (
     <form
@@ -61,11 +61,11 @@ export default function SignUpForm() {
                   name={el.name}
                   label={el.label}
                   type={el.type}
-                  hasEye={el.name === "password"}
+                  hasEye={el.name === 'password'}
                   placeholder={el.placeholder}
                   field={field}
                   displayError={
-                    el.name === "email" && emailErr
+                    el.name === 'email' && emailErr
                       ? emailErr
                       : errors[field.name]?.message
                   }
