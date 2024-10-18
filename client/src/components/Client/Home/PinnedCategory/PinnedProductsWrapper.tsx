@@ -24,9 +24,9 @@ export default function PinnedProductsWrapper({ Category }: PropType) {
   return (
     <div className="w-full flex flex-col items-center justify-center gap-3 min-h-[350px]">
       <PinnedHeader title={Category.title} id={Category.id} />
-      <div className="w-full flex items-start justify-start">
+      <div className="w-full flex items-start justify-start gap-2">
         {pinnedProducts?.map((el, key) => (
-          <Card card={el} key={key} />
+          <Card card={el} key={key} fixed />
         ))}
       </div>
     </div>
