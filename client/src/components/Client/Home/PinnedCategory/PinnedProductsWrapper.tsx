@@ -7,9 +7,13 @@ import { CategoryType } from "@/src/types/Category";
 
 type PropType = {
   Category: CategoryType;
+  removeSameItemById?: number;
 };
 
-export default function PinnedProductsWrapper({ Category }: PropType) {
+export default function PinnedProductsWrapper({
+  Category,
+  removeSameItemById,
+}: PropType) {
   const [pinnedProducts, setPinnedProducts] = useState<null | Product[]>(null);
   useEffect(() => {
     async function getData() {
@@ -17,6 +21,13 @@ export default function PinnedProductsWrapper({ Category }: PropType) {
         category: Category.id,
         pinned: true,
       });
+      if (removeSameItemById) {
+        return setPinnedProducts(
+          res.products
+            .filter((product: Product) => product.id !== removeSameItemById)
+            .slice(0, 5)
+        );
+      }
       setPinnedProducts(res.products.slice(0, 5));
     }
     getData();

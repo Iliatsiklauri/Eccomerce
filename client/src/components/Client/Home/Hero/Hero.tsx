@@ -23,7 +23,7 @@ export default function Hero() {
   if (active) return null;
 
   return (
-    <div className="w-full h-[550px] rounded-2xl flex items-end justify-end relative cursor-pointer group overflow-hidden ">
+    <div className="w-full h-[550px] rounded-2xl flex items-end justify-end shadow-lg relative cursor-pointer group overflow-hidden ">
       <div className="h-full relative w-full flex-shrink-0">
         {loading && (
           <div className="absolute inset-0 skeleton bg-black opacity-15"></div>

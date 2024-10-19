@@ -21,14 +21,15 @@ export const getAllProducts = async (req: Request, res: Response) => {
     let category = parseInt(req.query.category as string);
     let minPrice = parseInt(req.query.minPrice as string);
     let maxPrice = parseInt(req.query.maxPrice as string);
-
+    let sort = req.query.sort as string;
     const [products, total] = await productsService.getAllProducts(
       skip,
       limit,
       category,
       pinned,
       minPrice,
-      maxPrice
+      maxPrice,
+      sort
     );
     if (!products) {
       return res

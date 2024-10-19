@@ -42,9 +42,9 @@ export default function Page({ params: { id } }: PropType) {
   return (
     <div className="w-full h-full flex items-start justify-center container1 flex-col">
       <BackButton />
-      <div className="w-full flex items-center justify-center py-20 flex-col">
-        <div className="flex items-start justify-center container1 flex-col gap-20">
-          <div className="flex items-center justify-between w-full ">
+      <div className="w-full flex items-center justify-center py-12 flex-col">
+        <div className="flex items-start justify-center container1 flex-col gap-16">
+          <div className="flex items-center justify-between w-full">
             <ProductImage product={product} />
             <Pricebox product={product} />
           </div>
@@ -52,7 +52,10 @@ export default function Page({ params: { id } }: PropType) {
           <ProductComments product={product} />
           <div className="w-full h-[1px] bg-black opacity-15"></div>
           {product ? (
-            <PinnedProductsWrapper Category={product?.category} />
+            <PinnedProductsWrapper
+              Category={product?.category}
+              removeSameItemById={product.id}
+            />
           ) : (
             <ProductFooter />
           )}

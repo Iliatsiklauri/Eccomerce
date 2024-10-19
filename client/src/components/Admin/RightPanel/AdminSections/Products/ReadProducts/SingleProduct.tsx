@@ -1,8 +1,8 @@
-import { deleteProductbyId } from '@/src/api/ProductsApi';
-import { Product } from '@/src/types/Product';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
+import { deleteProductbyId } from "@/src/api/ProductsApi";
+import { Product } from "@/src/types/Product";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
 type ProductType = {
   product: Product;
@@ -21,14 +21,18 @@ export default function SingleProduct({ product }: ProductType) {
           </div>
         </div>
       </td>
-      <td className="font-medium text-cyan-500">{product.title}</td>
+      <td className="font-medium text-cyan-500">
+        <Link className="hover:underline" href={`/products/${product.id}`}>
+          {product.title}
+        </Link>
+      </td>
       <td className="font-medium text-md">{product.inStock}</td>
       <td className="">{product.category.title}</td>
 
       <td>
         {product.pinned && (
           <Image
-            src={'/icons/adminPanel/pin.png'}
+            src={"/icons/adminPanel/pin.png"}
             alt="pinned product"
             width={30}
             height={30}
@@ -37,19 +41,19 @@ export default function SingleProduct({ product }: ProductType) {
       </td>
       <td className="w-[180px] text-[13px]">
         {product.description.slice(0, 40)}
-        {product.description.length > 40 && '...'}
+        {product.description.length > 40 && "..."}
       </td>
       <td>₾{product.salePrice}</td>
       <td>₾{product.price}</td>
       <td className="font-normal">{product.createdAt.slice(0, 10)}</td>
       <td className="relative">
         <div className="dropdown dropdown-end">
-          <button role="button" tabIndex={0}>
+          <button role="button" tabIndex={0} className="w-[40px] h-[40px]">
             <Image
               alt="more"
-              src={'/icons/adminPanel/more.png'}
-              width={44}
-              height={44}
+              src={"/icons/adminPanel/more.png"}
+              width={23}
+              height={23}
               className="cursor-pointer"
             />
           </button>
@@ -66,7 +70,7 @@ export default function SingleProduct({ product }: ProductType) {
               className="bg-red-500 rounded-lg"
               onClick={async () => {
                 const deleteProduct = await deleteProductbyId(product.id);
-                if (!deleteProduct) console.log('error');
+                if (!deleteProduct) console.log("error");
               }}
             >
               <p>Delete</p>

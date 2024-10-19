@@ -34,8 +34,8 @@ export default function Navbar() {
         <Link
           key={key}
           className={`h-full  ${
-            category.title === "All" ? "px-4" : "px-3"
-          } 2xl:px-4 flex items-center justify-center text-xs rounded-3xl cursor-pointer gap-1 2xl:gap-1.5 text-white transition-all duration-200 ease-in-out hover:bg-lightBrown
+            category.title === "All" ? "px-4" : "px-2"
+          } 2xl:px-3 flex items-center justify-center text-xs rounded-3xl cursor-pointer gap-1 2xl:gap-1.5 text-white transition-all duration-200 ease-in-out hover:bg-lightBrown
            ${category.link === "/" && "bg-lightBrown"}  `}
           href={`${
             category.link === "/"

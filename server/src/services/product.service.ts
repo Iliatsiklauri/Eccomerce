@@ -17,7 +17,8 @@ export class productService {
     category?: number,
     pinned?: boolean,
     minPrice?: number,
-    maxPrice?: number
+    maxPrice?: number,
+    sort?: string
   ): Promise<[Product[], number]> {
     try {
       const query = await this.productRepository
@@ -25,7 +26,7 @@ export class productService {
         .leftJoinAndSelect("product.comments", "comments")
         .leftJoinAndSelect("comments.user", "user")
         .leftJoinAndSelect("product.category", "category");
-
+      console.log(sort);
       if (pinned) {
         query.orderBy("product.pinned", "DESC");
       }
@@ -37,6 +38,11 @@ export class productService {
       }
       if (maxPrice) {
         query.andWhere("product.price <= :maxPrice", { maxPrice });
+      }
+      if (sort === "ASC") {
+        query.addOrderBy("product.price", "ASC");
+      } else if (sort === "DESC") {
+        query.addOrderBy("product.price", "DESC");
       }
 
       query.skip(skip).take(limit);

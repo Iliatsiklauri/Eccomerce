@@ -17,7 +17,6 @@ export default function BreadCrumbs({ mainLink, category }: PropType) {
       if (category !== null) {
         const res = await getCategoryByid(category);
         setTitle(res);
-        console.log(res);
       }
     }
     getData();

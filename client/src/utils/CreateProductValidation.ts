@@ -7,7 +7,7 @@ export const createProductValidation = {
   brand: {
     required: "Brand is required",
     minLength: { value: 3, message: "Minimum 3 characters" },
-    maxLength: { value: 40, message: "Maximum 40 characters" },
+    maxLength: { value: 50, message: "Maximum 50 characters" },
   },
   category: {
     required: "Category is required",

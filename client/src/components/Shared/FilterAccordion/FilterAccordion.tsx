@@ -18,7 +18,7 @@ export default function FilterAccordion() {
   };
 
   return (
-    <div className=" flex flex-col items-start justify-center gap-2 filterform w-[18%] flex-shrink-0">
+    <div className=" flex flex-col items-start justify-center gap-2 w-[18%] flex-shrink-0 mt-10">
       <div
         className="w-full flex items-start
        justify-center flex-col border-b-[1px] pb-2 border-opacity-5 border-black"

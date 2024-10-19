@@ -38,10 +38,10 @@ export default function Card({
             {card.description.length > 70 && "..."}
           </p>
         </div>
-        <div className="w-full flex items-center justify-between pr-2.5">
+        <div className="w-full flex items-center justify-between ">
           <p className="text-lg font-medium">${card.price}</p>
           {card.brand && (
-            <div className="badge badge-primary badge-outline text-xs font-medium">
+            <div className="badge badge-primary badge-outline text-[11px] font-medium">
               {card.brand}
             </div>
           )}

@@ -82,15 +82,11 @@ export default function AddProductsForm({ mode }: PropType) {
 
     try {
       let res;
+      data.description = data?.description?.replace(/\s+/g, " ");
 
       if (mode === "add") {
         res = await createProduct(data as CreateProductType);
       } else if (mode === "edit" && id) {
-        console.log({
-          ...data,
-          image: data.image || product?.image,
-          pinnedImage: data.pinnedImage || product?.pinnedImage,
-        });
         res = await updateProduct(
           {
             ...data,
