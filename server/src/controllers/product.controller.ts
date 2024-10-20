@@ -50,6 +50,17 @@ export const getProductById = async (req: Request, res: Response) => {
   res.json(product);
 };
 
+export const searchProduct = async (req: Request, res: Response) => {
+  const search = req.query.keyword.toString().toLocaleLowerCase();
+  const products = await productsService.searchProductBySearch(search);
+  if (products === 400) {
+    return res
+      .status(products)
+      .json(new ErrorRes(products, "Error while searching for product"));
+  }
+  return res.json(products);
+};
+
 // create product
 
 export const createProduct = async (req: Request, res: Response) => {

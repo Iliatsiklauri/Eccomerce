@@ -29,6 +29,23 @@ export const fetchProducts = async ({
   }
 };
 
+export const fetchSearchedProducts = async (search: string) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SEARCHPRODUCTS_API}?keyword=${search}` as string,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const product = await res.json();
+    return product;
+  } catch (er) {
+    console.log(er, "Error while searching for product API");
+  }
+};
 export const fetchProductsByCategory = async ({
   category,
   pinned,

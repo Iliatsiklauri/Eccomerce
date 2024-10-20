@@ -1,10 +1,12 @@
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 type PropType = {
   mode: string | null;
 };
 
 export default function ProductSectionHeader({ mode }: PropType) {
+  const params = useSearchParams();
   const router = useRouter();
+
   return (
     <div
       role="tablist"
@@ -15,7 +17,9 @@ export default function ProductSectionHeader({ mode }: PropType) {
           mode === "read" && "bg-lightBrown text-white"
         } font-semibold font-sans `}
         onClick={() => {
-          router.push(`/admin/Products?mode=read`, {
+          const currentParams = new URLSearchParams(params.toString());
+          currentParams.set("mode", "read");
+          router.push(`/admin/Products?${currentParams.toString()}`, {
             scroll: false,
           });
         }}
@@ -28,9 +32,13 @@ export default function ProductSectionHeader({ mode }: PropType) {
           (mode === "add" || mode === "edit") && "bg-lightBrown text-white"
         } `}
         onClick={() => {
-          router.push(`/admin/Products?mode=add`, {
-            scroll: false,
-          });
+          if (mode !== "edit") {
+            const currentParams = new URLSearchParams(params.toString());
+            currentParams.set("mode", "add");
+            router.push(`/admin/Products?${currentParams.toString()}`, {
+              scroll: false,
+            });
+          }
         }}
       >
         {mode === "edit" ? "Edit" : "Add"}

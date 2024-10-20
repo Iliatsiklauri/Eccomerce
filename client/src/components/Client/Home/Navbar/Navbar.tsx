@@ -20,7 +20,7 @@ export default function Navbar() {
   ].reverse();
 
   return (
-    <div className="w-full h-[48px] flex items-center justify-between overflow-x-auto bg-darkBrown rounded-3xl">
+    <div className="w-full h-[48px] flex items-center justify-between overflow-x-auto bg-darkBrown rounded-3xl shadow-xl">
       {loading &&
         Array(10)
           .fill(null)

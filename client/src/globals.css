@@ -12,8 +12,8 @@ input[type="number"]::-webkit-inner-spin-button {
   border: 10px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   border-top: 10px solid #3498db;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   animation: spin 1s linear infinite;
   margin: auto;
   z-index: 100;

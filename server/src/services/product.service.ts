@@ -1,3 +1,4 @@
+import { QueryBuilder } from "typeorm";
 import { AppDataSource } from "../db/database-connect";
 import { Product } from "../db/entities/Product";
 import {
@@ -62,6 +63,20 @@ export class productService {
       });
     } catch (er) {
       return null;
+    }
+  }
+  async searchProductBySearch(query) {
+    try {
+      const products = await this.productRepository
+        .createQueryBuilder("product")
+        .where("product.title ILIKE :query", { query: `%${query}%` })
+        .orWhere("product.description ILIKE :query", { query: `%${query}%` })
+        .orWhere("product.brand ILIKE :query", { query: `%${query}%` })
+        .take(8)
+        .getMany();
+      return products;
+    } catch (er) {
+      return 400;
     }
   }
 

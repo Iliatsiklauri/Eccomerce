@@ -31,7 +31,7 @@ export default function PinnedProductsWrapper({
       setPinnedProducts(res.products.slice(0, 5));
     }
     getData();
-  }, [Category.id]);
+  }, [Category.id, removeSameItemById]);
   return (
     <div className="w-full flex flex-col items-center justify-center gap-3 min-h-[350px]">
       <PinnedHeader title={Category.title} id={Category.id} />

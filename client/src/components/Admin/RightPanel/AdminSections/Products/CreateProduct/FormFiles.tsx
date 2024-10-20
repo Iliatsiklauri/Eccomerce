@@ -1,7 +1,7 @@
-import { CreateProductType, Product } from '@/src/types/Product';
-import { createProductValidation } from '@/src/utils/CreateProductValidation';
-import React, { useState } from 'react';
-import { Control, Controller, FieldErrors } from 'react-hook-form';
+import { CreateProductType, Product } from "@/src/types/Product";
+import { createProductValidation } from "@/src/utils/CreateProductValidation";
+import React from "react";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 
 type PropType = {
   errors: FieldErrors<CreateProductType>;
@@ -9,6 +9,8 @@ type PropType = {
   setImageForPrev: React.Dispatch<React.SetStateAction<string | null | File>>;
   product: Product | null;
   imageForPrev: null | string | File;
+  setPinnedImage: React.Dispatch<React.SetStateAction<File | null>>;
+  pinnedImage: File | null;
 };
 
 export default function FormFiles({
@@ -17,8 +19,9 @@ export default function FormFiles({
   control,
   setImageForPrev,
   imageForPrev,
+  pinnedImage,
+  setPinnedImage,
 }: PropType) {
-  const [pinnedImage, setPinnedImage] = useState<File | null>(null);
   return (
     <div className="flex items-center justify-center flex-col w-1/2 gap-7">
       <div className="w-full relative h-[50px]">
@@ -33,7 +36,7 @@ export default function FormFiles({
             <label className={`w-full h-full cursor-pointer`}>
               <div
                 className={`w-full h-full rounded-md flex items-center justify-start bg-slate-300 overflow-hidden
-                ${errors.image ? 'border-red-500 border-[1px]' : ''}
+                ${errors.image ? "border-red-500 border-[1px]" : ""}
                 `}
               >
                 <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-xs flex-shrink-0">
@@ -44,7 +47,7 @@ export default function FormFiles({
                     ? imageForPrev?.name
                     : product
                     ? product.image
-                    : 'No file chosen'}
+                    : "No file chosen"}
                 </div>
               </div>
               <input
@@ -78,7 +81,7 @@ export default function FormFiles({
             <label className={`w-full h-full cursor-pointer`}>
               <div
                 className={`w-full h-full rounded-md flex items-center justify-start bg-slate-300 overflow-hidden
-              ${errors.pinnedImage ? 'border-red-500 border-[1px]' : ''}
+              ${errors.pinnedImage ? "border-red-500 border-[1px]" : ""}
               `}
               >
                 <p className="w-[30%] h-full bg-slate-900 flex items-center justify-center font-medium text-xs flex-shrink-0">
@@ -89,7 +92,7 @@ export default function FormFiles({
                     ? pinnedImage?.name
                     : product
                     ? product.pinnedImage
-                    : 'No file chosen'}
+                    : "No file chosen"}
                 </div>
               </div>
               <input

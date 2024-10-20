@@ -19,9 +19,13 @@ type PropType = {
   description: string;
   setImageForPrev: React.Dispatch<React.SetStateAction<string | File | null>>;
   imageForPrev: null | string | File;
+  setPinnedImage: React.Dispatch<React.SetStateAction<File | null>>;
+  pinnedImage: File | null;
 };
 
 export default function CreateProductForm({
+  pinnedImage,
+  setPinnedImage,
   product,
   setImageForPrev,
   imageForPrev,
@@ -51,6 +55,8 @@ export default function CreateProductForm({
         <div className="flex items-end justify-between w-full">
           <FormAmountPart control={control} errors={errors} />
           <FormFiles
+            pinnedImage={pinnedImage}
+            setPinnedImage={setPinnedImage}
             imageForPrev={imageForPrev}
             product={product}
             errors={errors}

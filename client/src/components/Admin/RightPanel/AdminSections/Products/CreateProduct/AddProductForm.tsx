@@ -41,6 +41,7 @@ export default function AddProductsForm({ mode }: PropType) {
   const [error, setError] = useState<string | null>(null);
   const [product, setProduct] = useState<null | Product>(null);
   const [imageForPrev, setImageForPrev] = useState<null | string | File>(null);
+  const [pinnedImage, setPinnedImage] = useState<File | null>(null);
 
   const title = watch("title");
   const category1 = watch("category");
@@ -105,6 +106,8 @@ export default function AddProductsForm({ mode }: PropType) {
         } else {
           setProductId(res.id);
         }
+        setImageForPrev(null);
+        setPinnedImage(null);
         reset();
       }
       setModal(true);
@@ -125,6 +128,8 @@ export default function AddProductsForm({ mode }: PropType) {
         />
       )}
       <CreateProductForm
+        pinnedImage={pinnedImage}
+        setPinnedImage={setPinnedImage}
         imageForPrev={imageForPrev}
         setImageForPrev={setImageForPrev}
         description={description}
