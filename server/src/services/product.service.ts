@@ -19,7 +19,8 @@ export class productService {
     pinned?: boolean,
     minPrice?: number,
     maxPrice?: number,
-    sort?: string
+    sort?: string,
+    promotion?: boolean
   ): Promise<[Product[], number]> {
     try {
       const query = await this.productRepository
@@ -39,6 +40,9 @@ export class productService {
       }
       if (maxPrice) {
         query.andWhere("product.price <= :maxPrice", { maxPrice });
+      }
+      if (promotion) {
+        query.andWhere("product.price > product.salePrice");
       }
       if (sort === "ASC") {
         query.addOrderBy("product.price", "ASC");

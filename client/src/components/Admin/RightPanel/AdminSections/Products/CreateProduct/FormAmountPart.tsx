@@ -24,7 +24,11 @@ export default function FormAmountPart({ control, errors }: PropType) {
         rules={createProductValidation.price}
         control={control}
         render={({ field }) => (
-          <ProductInput error={errors.price} label="price" field={field} />
+          <ProductInput
+            error={errors.price}
+            label="Initial Price"
+            field={field}
+          />
         )}
       />
       <Controller

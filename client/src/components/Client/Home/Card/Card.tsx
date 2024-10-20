@@ -11,6 +11,9 @@ export default function Card({
   card: Product;
   fixed?: boolean;
 }) {
+  const isPromotion = card.salePrice < card.price;
+  const diff = card.price - card.salePrice;
+  const promotion = Math.floor((diff / card.price) * 100);
   return (
     <div
       className={`2xl:w-[240px] gap-1 flex flex-col p-1 justify-between h-[300px] text-black transition-all duration-200 ease-in-out flex-shrink-0 ${
@@ -29,6 +32,11 @@ export default function Card({
           fill
           className="object-fill transition-transform duration-200 ease-in-out transform group-hover:scale-105 "
         />
+        {isPromotion && (
+          <div className="absolute bg-customRed bottom-1 right-3 py-0.5 px-1 rounded-md shadow-lg text-white text-xs font-medium">
+            -{promotion}%
+          </div>
+        )}
       </div>
       <div className="flex items-center justify-between flex-col h-full px-0.5 ">
         <div className="flex flex-col items-start justify-center">
@@ -38,10 +46,17 @@ export default function Card({
             {card.description.length > 70 && "..."}
           </p>
         </div>
-        <div className="w-full flex items-center justify-between ">
-          <p className="text-lg font-medium">${card.price}</p>
+        <div className="w-full flex items-center justify-between">
+          <div className="flex items-center justify-center gap-2">
+            <p className="font-medium text-lg">${card.salePrice}</p>
+            {isPromotion && (
+              <p className="font line-through text-sm text-opacity-60 text-black">
+                ${card.price}
+              </p>
+            )}
+          </div>
           {card.brand && (
-            <div className="badge badge-primary badge-outline text-[11px] font-medium">
+            <div className="badge badge-primary badge-outline text-[10px] font-medium">
               {card.brand}
             </div>
           )}

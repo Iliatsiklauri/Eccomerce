@@ -22,6 +22,7 @@ export default function ProductsList() {
   const maxPrice = params.get("maxPrice");
   const category = params.get("category");
   const sort = params.get("sort");
+  const promotion = params.get("promotion");
 
   const page = params.get("page") ? Number(params.get("page")) : 1;
 
@@ -34,13 +35,14 @@ export default function ProductsList() {
         minPrice: Number(minPrice),
         maxPrice: Number(maxPrice),
         sort: sort || "",
+        promotion: promotion || "false",
       });
       setData(res);
       document.querySelector("header")?.scrollIntoView();
     }
     setLoading(false);
     getData();
-  }, [category, page, minPrice, maxPrice, sort]);
+  }, [category, page, minPrice, maxPrice, sort, promotion]);
 
   if (data && data?.products.length === 0 && !loading) {
     return <h1 className="text-xl font-semibold text-black">No Products :)</h1>;

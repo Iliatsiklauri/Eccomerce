@@ -12,6 +12,7 @@ const config: Config = {
         darkBrown: "#171717",
         lightBrown: "#393939",
         lightWhite: "#E1E4E8",
+        customRed: "rgb(234, 86, 81)",
       },
     },
   },

@@ -23,12 +23,16 @@ export default function PinnedProductsWrapper({
       });
       if (removeSameItemById) {
         return setPinnedProducts(
-          res.products
-            .filter((product: Product) => product.id !== removeSameItemById)
-            .slice(0, 5)
+          res.products.filter(
+            (product: Product) => product.id !== removeSameItemById
+          )
         );
       }
-      setPinnedProducts(res.products.slice(0, 5));
+      setPinnedProducts(
+        res.products.filter(
+          (product: Product) => product.price === product.salePrice
+        )
+      );
     }
     getData();
   }, [Category.id, removeSameItemById]);
@@ -36,7 +40,7 @@ export default function PinnedProductsWrapper({
     <div className="w-full flex flex-col items-center justify-center gap-3 min-h-[350px]">
       <PinnedHeader title={Category.title} id={Category.id} />
       <div className="w-full flex items-start justify-start gap-2">
-        {pinnedProducts?.map((el, key) => (
+        {pinnedProducts?.slice(0, 5).map((el, key) => (
           <Card card={el} key={key} fixed />
         ))}
       </div>
