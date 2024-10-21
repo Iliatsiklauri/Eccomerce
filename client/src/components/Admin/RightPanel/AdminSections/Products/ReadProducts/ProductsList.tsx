@@ -1,4 +1,4 @@
-import { fetchProducts } from "@/src/api/ProductsApi";
+import { fetchProductsByCategory } from "@/src/api/ProductsApi";
 import React, { useEffect, useState } from "react";
 import AddProductsForm from "../CreateProduct/AddProductForm";
 import { Product } from "@/src/types/Product";
@@ -14,16 +14,22 @@ export default function ProductsList({ mode }: PropType) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const params = useSearchParams();
+  const category = params.get("category");
   const page = params.get("page") ? Number(params.get("page")) : 1;
   useEffect(() => {
     async function getData() {
-      const res = await fetchProducts({ pinned: true, page: Number(page) });
+      const res = await fetchProductsByCategory({
+        pinned: true,
+        page: Number(page),
+        category: Number(category),
+      });
       setProduct(res.products);
       setTotal(res.total);
       setLoading(false);
     }
     getData();
-  }, [page]);
+  }, [page, category]);
+
   return (
     <div className="overflow-y-auto bg-white rounded-xl p-2 h-full">
       {loading ? (
@@ -36,7 +42,7 @@ export default function ProductsList({ mode }: PropType) {
           ))}
         </div>
       ) : mode === "read" ? (
-        <div className="w-full h-full flex items-center justify-start flex-col overflow-y-auto pb-3 gap-3">
+        <div className="w-full h-full flex items-center justify-between flex-col overflow-y-auto pb-3 gap-3 ">
           <ProductsTable products={products} />
           <Pagination
             total={total}

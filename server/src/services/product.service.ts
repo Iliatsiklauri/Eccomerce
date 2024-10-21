@@ -28,11 +28,10 @@ export class productService {
         .leftJoinAndSelect("product.comments", "comments")
         .leftJoinAndSelect("comments.user", "user")
         .leftJoinAndSelect("product.category", "category");
-      console.log(sort);
       if (pinned) {
         query.orderBy("product.pinned", "DESC");
       }
-      if (category) {
+      if (category && category !== null) {
         query.where("category.id = :category", { category });
       }
       if (minPrice) {
@@ -69,13 +68,16 @@ export class productService {
       return null;
     }
   }
+
   async searchProductBySearch(query) {
     try {
       const products = await this.productRepository
         .createQueryBuilder("product")
+        .leftJoinAndSelect("product.category", "category")
         .where("product.title ILIKE :query", { query: `%${query}%` })
         .orWhere("product.description ILIKE :query", { query: `%${query}%` })
         .orWhere("product.brand ILIKE :query", { query: `%${query}%` })
+        .orWhere("category.title ILIKE :query", { query: `%${query}%` })
         .take(8)
         .getMany();
       return products;

@@ -53,6 +53,7 @@ export default function Page({ params: { id } }: PropType) {
           <div className="w-full h-[1px] bg-black opacity-15"></div>
           {product ? (
             <PinnedProductsWrapper
+              title={"Simmilar Products"}
               Category={product?.category}
               removeSameItemById={product.id}
             />

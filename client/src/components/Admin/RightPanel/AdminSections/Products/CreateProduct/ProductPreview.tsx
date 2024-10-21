@@ -1,6 +1,6 @@
-import { Product } from '@/src/types/Product';
-import Image from 'next/image';
-import React from 'react';
+import { Product } from "@/src/types/Product";
+import Image from "next/image";
+import React from "react";
 type PropType = {
   title: string;
   category1: string | null | number;
@@ -22,7 +22,7 @@ export default function ProductPreview({
   title,
 }: PropType) {
   return (
-    <div className="w-[34%] h-full pr-6  flex flex-col items-center justify-start gap-10 pt-1">
+    <div className="w-[34%] max-w-[450px] h-full pr-6  flex flex-col items-center justify-start gap-10 pt-1">
       <h2 className="text-3xl text-black font-medium">Preview</h2>
       <div className="w-full gap-5 flex flex-col justify-between text-black p-1.5 rounded-lg border-[1px] border-black border-opacity-15">
         <div className="relative w-full h-[300px] overflow-hidden flex-shrink-0 rounded-md group cursor-pointer">
@@ -49,7 +49,7 @@ export default function ProductPreview({
             <p className="text-lg font-medium">{title}</p>
             <p className="text-md opacity-50 tracking-tight">
               {description.slice(0, 70)}
-              {description.length > 70 && '...'}
+              {description.length > 70 && "..."}
             </p>
           </div>
           <div className="flex items-center justify-between w-full">

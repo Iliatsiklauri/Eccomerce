@@ -18,7 +18,7 @@ export default function PromotionWrapper() {
   return (
     <div className="w-full flex flex-col items-center justify-center gap-3 min-h-[350px]">
       <PinnedHeader title={"Promotions"} id={12} isPromotion />
-      <div className="w-full flex items-start justify-start gap-2">
+      <div className="w-full flex items-start justify-start">
         {products?.slice(0, 5).map((el, key) => (
           <Card card={el} key={key} fixed />
         ))}

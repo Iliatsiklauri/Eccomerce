@@ -11,6 +11,7 @@ export default function Home() {
       <Suspense>
         <Hero />
         <PromotionWrapper />
+        <div className="w-full h-[50px] bg-slate-500 rounded-md"></div>
         <PinnedCategory />
       </Suspense>
     </div>

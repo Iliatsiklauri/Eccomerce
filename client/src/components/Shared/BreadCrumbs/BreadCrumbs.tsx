@@ -31,10 +31,12 @@ export default function BreadCrumbs({ mainLink, category }: PropType) {
         </li>
         {pathNames.map((el, key) => (
           <li key={key}>
-            {title && (
-              <Link href={`/products?category=${title?.id}`}>
+            {title ? (
+              <Link href={`/products?category=${title?.id}&page=1`}>
                 {el === "products" && title?.title}
               </Link>
+            ) : (
+              <Link href={`/products?promotion=true&page=1`}>Promotions</Link>
             )}
           </li>
         ))}

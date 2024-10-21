@@ -1,6 +1,15 @@
+import { RootState } from "@/src/store/store";
+import { CategoryType } from "@/src/types/Category";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
+import { useSelector } from "react-redux";
 
 export default function TableHeader() {
+  const { category } = useSelector((state: RootState) => state.category);
+  const params = useSearchParams();
+  const currentParams = new URLSearchParams(params.toString());
+  const router = useRouter();
   return (
     <thead className="border-b-opacity-35">
       <tr className="text-[16px] text-black font-medium border-opacity-35">
@@ -8,7 +17,40 @@ export default function TableHeader() {
         <th>Image</th>
         <th>Title</th>
         <th>In Stock</th>
-        <th>Category</th>
+        <th>
+          <div className="dropdown dropdown-bottom">
+            <div
+              tabIndex={0}
+              role="button"
+              className="flex items-center justify-center gap-2"
+            >
+              <p>Category</p>
+              <Image
+                src={"/icons/adminPanel/arrow-down.png"}
+                width={22}
+                height={22}
+                alt="arrow"
+              />
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-lightWhite rounded-box z-[1] w-52 p-2 shadow mt-3"
+            >
+              {category.map((el: CategoryType) => (
+                <li
+                  key={el.id}
+                  className="h-[30px]"
+                  onClick={() => {
+                    currentParams.set("category", `${el.id}`);
+                    router.push(`/admin/Products?${currentParams.toString()}`);
+                  }}
+                >
+                  <p>{el.title}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </th>
         <th>Pinned</th>
         <th>Description</th>
         <th>Price</th>

@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import AuthButton from './AuthButton';
-import { Controller, useForm } from 'react-hook-form';
-import { fields } from '@/src/utils/auth';
-import SingleInput from './SingleInput';
-import { signInUser } from '@/src/api/AuthApi';
-import { useRouter } from 'next/navigation';
-import { setCookie } from 'cookies-next';
-import { jwtDecode } from 'jwt-decode';
-import { useDispatch } from 'react-redux';
-import { logIn } from '@/src/store/features/authSlice';
-import { SignIn, user } from '@/src/types/User';
+import React, { useState } from "react";
+import AuthButton from "./AuthButton";
+import { Controller, useForm } from "react-hook-form";
+import { fields } from "@/src/utils/auth";
+import SingleInput from "./SingleInput";
+import { signInUser } from "@/src/api/AuthApi";
+import { useRouter } from "next/navigation";
+import { setCookie } from "cookies-next";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { logIn } from "@/src/store/features/authSlice";
+import { SignIn, user } from "@/src/types/User";
 
 export default function SignInForm() {
-  const [emailErr, setEmailErr] = useState('');
-  const [passErr, setPassErr] = useState('');
+  const [emailErr, setEmailErr] = useState("");
+  const [passErr, setPassErr] = useState("");
   const dispatch = useDispatch();
   const Router = useRouter();
   const {
@@ -21,7 +21,7 @@ export default function SignInForm() {
     control,
     formState: { errors },
   } = useForm<SignIn>({
-    defaultValues: { email: '', password: '' },
+    defaultValues: { email: "", password: "" },
   });
 
   const handleFormSubmition = async (formData: SignIn) => {
@@ -30,15 +30,15 @@ export default function SignInForm() {
     if (res.status > 299 && res.error) {
       switch (res.status) {
         case 401:
-          setEmailErr('');
+          setEmailErr("");
           setPassErr(res.error.message);
           break;
         case 404:
-          setPassErr('');
+          setPassErr("");
           setEmailErr(res.error.message);
           break;
         default: {
-          setPassErr('An unexpected error occurred');
+          setPassErr("An unexpected error occurred");
           break;
         }
       }
@@ -46,18 +46,23 @@ export default function SignInForm() {
     }
     const user: user = jwtDecode(res.success?.token);
     dispatch(
-      logIn({ email: user.email, role: user.role, fullname: user.fullname })
+      logIn({
+        email: user.email,
+        role: user.role,
+        fullname: user.fullname,
+        id: user.id,
+      })
     );
 
-    setCookie('authorization', res.success?.token, {
-      path: '/',
+    setCookie("authorization", res.success?.token, {
+      path: "/",
       maxAge: 7200,
       httpOnly: false,
     });
-    if (user.role === 'ADMIN') {
-      return Router.push('/admin/Dashboard');
+    if (user.role === "ADMIN") {
+      return Router.push("/admin/Products?mode=read&page=1");
     }
-    Router.push('/');
+    Router.push("/");
   };
 
   return (
@@ -79,12 +84,12 @@ export default function SignInForm() {
                   label={el.label}
                   type={el.type}
                   placeholder={el.placeholder}
-                  hasEye={el.name === 'password'}
+                  hasEye={el.name === "password"}
                   field={field}
                   displayError={
-                    el.name === 'email' && emailErr
+                    el.name === "email" && emailErr
                       ? emailErr
-                      : el.name === 'password' && passErr
+                      : el.name === "password" && passErr
                       ? passErr
                       : errors[field.name]?.message
                   }

@@ -4,21 +4,18 @@ type panelDataType = {
 };
 export const panelData: panelDataType[] = [
   {
-    name: "Dashboard",
-    imageUrl: "/icons/adminPanel/dashboard.png",
-  },
-  {
     name: "Products",
     imageUrl: "/icons/adminPanel/box.png",
+  },
+  {
+    name: "Orders",
+    imageUrl: "/icons/adminPanel/clipboard.png",
   },
   {
     name: "User management",
     imageUrl: "/icons/adminPanel/multiple-users-silhouette.png",
   },
-  {
-    name: "Notifications",
-    imageUrl: "/icons/adminPanel/notification.png",
-  },
+
   {
     name: "Messages",
     imageUrl: "/icons/adminPanel/email.png",

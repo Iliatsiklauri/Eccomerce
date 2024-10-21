@@ -23,6 +23,7 @@ export class AuthService {
 
       return await generateToken({
         email,
+        id: user.id,
         role: user.role,
         fullname: user.fullname,
         initialAdmin: user.initialAdmin,

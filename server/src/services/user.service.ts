@@ -23,7 +23,7 @@ export class UserService {
     try {
       const user = await this.userRepository.findOne({
         where: { email },
-        select: ["email", "password", "role", "fullname", "initialAdmin"],
+        select: ["email", "password", "role", "fullname", "initialAdmin", "id"],
       });
       return user ?? null;
     } catch {

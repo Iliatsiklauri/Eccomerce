@@ -1,9 +1,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
+import Orders from "./AdminSections/Orders/Orders";
 
-const DashboardSection = dynamic(
-  () => import("./AdminSections/Dashboard/DashboardSection")
-);
 const Settings = dynamic(() => import("./AdminSections/Settings/Settings"));
 const MessagesSection = dynamic(
   () => import("./AdminSections/Messages/MessagesSection")
@@ -14,9 +12,6 @@ const UsersSection = dynamic(
 const ProductsSection = dynamic(
   () => import("./AdminSections/Products/ReadProducts/ProductsSection")
 );
-const NotificationSection = dynamic(
-  () => import("./AdminSections/Notifications/NotificationSection")
-);
 
 export default function RightPanel({
   currentSection,
@@ -25,12 +20,11 @@ export default function RightPanel({
 }) {
   return (
     <>
-      {currentSection === "Dashboard" && <DashboardSection />}
       {currentSection === "Settings" && <Settings />}
+      {currentSection === "Orders" && <Orders />}
       {currentSection === "Users" && <UsersSection />}
       {currentSection === "Messages" && <MessagesSection />}
       {currentSection === "Products" && <ProductsSection />}
-      {currentSection === "Notifications" && <NotificationSection />}
     </>
   );
 }

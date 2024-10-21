@@ -8,11 +8,13 @@ import { CategoryType } from "@/src/types/Category";
 type PropType = {
   Category: CategoryType;
   removeSameItemById?: number;
+  title?: string;
 };
 
 export default function PinnedProductsWrapper({
   Category,
   removeSameItemById,
+  title,
 }: PropType) {
   const [pinnedProducts, setPinnedProducts] = useState<null | Product[]>(null);
   useEffect(() => {
@@ -37,9 +39,9 @@ export default function PinnedProductsWrapper({
     getData();
   }, [Category.id, removeSameItemById]);
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-3 min-h-[350px]">
-      <PinnedHeader title={Category.title} id={Category.id} />
-      <div className="w-full flex items-start justify-start gap-2">
+    <div className="w-full flex flex-col items-center justify-center gap-0 min-h-[350px]">
+      <PinnedHeader title={Category.title} id={Category.id} simmilar={title} />
+      <div className="w-full flex items-start justify-start gap-2 2xl:gap-1">
         {pinnedProducts?.slice(0, 5).map((el, key) => (
           <Card card={el} key={key} fixed />
         ))}

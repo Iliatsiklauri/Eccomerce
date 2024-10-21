@@ -5,10 +5,16 @@ import Image from "next/image";
 type PinnedType = {
   title: string;
   id: number;
+  simmilar?: string;
   isPromotion?: boolean;
 };
 
-export default function PinnedHeader({ title, id, isPromotion }: PinnedType) {
+export default function PinnedHeader({
+  title,
+  id,
+  isPromotion,
+  simmilar,
+}: PinnedType) {
   return (
     <div className="w-full flex items-center justify-between">
       <div className="flex items-center justify-center gap-3">
@@ -20,7 +26,9 @@ export default function PinnedHeader({ title, id, isPromotion }: PinnedType) {
             height={36}
           />
         )}
-        <p className="text-black text-2xl font-medium ml-1">{title}</p>
+        <p className="text-black text-2xl font-medium ml-1">
+          {simmilar ? simmilar : title}
+        </p>
       </div>
       <ViewMoreButton id={id} isPromotion={isPromotion} />
     </div>

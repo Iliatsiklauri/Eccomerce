@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export default function ModeChangeButton({
@@ -7,13 +8,17 @@ export default function ModeChangeButton({
   mode: boolean;
   setMode: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const router = useRouter();
   return (
     <div className="w-full h-[48px] bg-gray-200 rounded-3xl flex items-center justify-center text-black relative flex-shrink-0">
       <div
         className={`flex items-center justify-center w-1/2 cursor-pointer h-full rounded-3xl z-10 transition-all ease-in-out duration-300 text-md font-medium ${
           mode ? "text-white" : ""
         }`}
-        onClick={() => setMode(true)}
+        onClick={() => {
+          router.push("/auth?mode=register");
+          setMode(true);
+        }}
       >
         Sign up
       </div>
@@ -21,7 +26,10 @@ export default function ModeChangeButton({
         className={`flex items-center rounded-3xl justify-center w-1/2 cursor-pointer h-full z-10 transition-all ease-in-out duration-300 font-medium ${
           mode ? "" : "text-white"
         } `}
-        onClick={() => setMode(false)}
+        onClick={() => {
+          router.push("/auth?mode=login");
+          setMode(false);
+        }}
       >
         Sign in
       </div>

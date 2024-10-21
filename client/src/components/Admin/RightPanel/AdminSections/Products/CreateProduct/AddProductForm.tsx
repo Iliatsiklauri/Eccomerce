@@ -15,7 +15,7 @@ import {
   getProductById,
   updateProduct,
 } from "@/src/api/ProductsApi";
-import ApiInfoModal from "./ApiInfoModal";
+import ApiInfoModal from "./ApiInfoModal/ApiInfoModal";
 import { useSearchParams } from "next/navigation";
 import CreateProductForm from "./CreateProductForm";
 
@@ -42,6 +42,7 @@ export default function AddProductsForm({ mode }: PropType) {
   const [product, setProduct] = useState<null | Product>(null);
   const [imageForPrev, setImageForPrev] = useState<null | string | File>(null);
   const [pinnedImage, setPinnedImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const title = watch("title");
   const category1 = watch("category");
@@ -80,6 +81,8 @@ export default function AddProductsForm({ mode }: PropType) {
 
   const onSubmit = async (data: CreateProductType | UpdateProductType) => {
     setError(null);
+    setLoading(true);
+    setModal(true);
 
     try {
       let res;
@@ -106,11 +109,13 @@ export default function AddProductsForm({ mode }: PropType) {
         } else {
           setProductId(res.id);
         }
+
+        setLoading(false);
         setImageForPrev(null);
         setPinnedImage(null);
+        setLoading(false);
         reset();
       }
-      setModal(true);
     } catch (er) {
       setError("Unexpected error occured");
       console.error(er, "error while processing product");
@@ -121,6 +126,7 @@ export default function AddProductsForm({ mode }: PropType) {
     <div className="w-full h-full flex items-center justify-between relative">
       {modal && (
         <ApiInfoModal
+          loading={loading}
           id={productId}
           setModal={setModal}
           mode={mode}

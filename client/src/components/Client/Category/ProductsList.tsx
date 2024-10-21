@@ -60,27 +60,37 @@ export default function ProductsList() {
       >
         {!loading && <FilterAccordion />}
         <div className="flex flex-col justify-center items-start w-full gap-6 flex-shrink-0">
-          <SortingBy />
+          {!loading && <SortingBy />}
           <div className="grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0">
-            {data?.products.map((el: Product) => (
+            {data?.products.map((el: Product, index) => (
               <div
-                className="border-[1px] border-black border-opacity-5 p-2"
+                className={`border-[1px] border-black border-opacity-5 p-2  border-b-0 border-l-0
+                ${index < 4 ? "border-t-0" : ""} 
+                ${index % 4 === 3 ? "border-r-0" : ""}  
+              `}
                 key={el.id}
               >
-                <Card card={el} />
+                <Card card={el} listedCard />
               </div>
             ))}
           </div>
-          {loading && <ProductsListSkeleton showheader />}
+          {loading && <ProductsListSkeleton showheader less />}
         </div>
       </div>
       <div className="mt-10">
         <Pagination
           total={data?.total}
           onChange={(newPage) => {
-            router.push(`/products?category=${category}&page=${newPage}`, {
-              scroll: false,
-            });
+            router.push(
+              `${
+                promotion === "true"
+                  ? `/products?page=${newPage}&promotion=true`
+                  : `/products?category=${category}&page=${newPage}`
+              }`,
+              {
+                scroll: false,
+              }
+            );
           }}
           activePage={Number(page)}
         />
