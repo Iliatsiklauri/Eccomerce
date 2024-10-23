@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
+import { Address } from "./Address";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -15,6 +22,10 @@ export class User {
 
   @Column()
   email: string;
+
+  @OneToOne(() => Address, { cascade: true, onDelete: "SET NULL" })
+  @JoinColumn()
+  Address: Address;
 
   @Column({ select: false })
   password: string;

@@ -11,13 +11,11 @@ import { jwtDecode } from "jwt-decode";
 import { logIn } from "@/src/store/features/authSlice";
 
 export default function HeaderCartSection() {
-  const [loading, setLoading] = useState(true);
   const [user1, setUser] = useState<null | user>(null);
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setLoading(true);
     const authorization = getCookie("authorization");
     if (authorization) {
       const user: user = jwtDecode(authorization as string);
@@ -31,7 +29,6 @@ export default function HeaderCartSection() {
         })
       );
     }
-    setLoading(false);
   }, [dispatch]);
 
   return (
@@ -46,15 +43,7 @@ export default function HeaderCartSection() {
         </div>
         <p className="text-white font-normal text-[16px]">Cart</p>
       </button>
-      {!isLoggedIn ? (
-        loading ? (
-          <div className="skeleton bg-white  w-[110px] h-[20px] bg-opacity-20"></div>
-        ) : (
-          <LogInButton />
-        )
-      ) : (
-        user1 && <UserProfile id={user1.id} />
-      )}
+      {!isLoggedIn ? <LogInButton /> : user1 && <UserProfile id={user1.id} />}
     </div>
   );
 }

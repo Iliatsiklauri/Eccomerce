@@ -1,6 +1,7 @@
 import Joi from "joi";
 import { UserRole } from "../db/entities/User";
 import { Comment } from "../db/entities/Comment";
+import { Address } from "../db/entities/Address";
 
 export const userSchema = Joi.object({
   fullname: Joi.string()
@@ -24,6 +25,22 @@ export const productSchema = Joi.object({
   category: Joi.number().required(),
   inStock: Joi.number().required(),
   pinned: Joi.string().valid("true", "false"),
+}).options({ abortEarly: false });
+
+export const createAddressSchema = Joi.object({
+  name: Joi.string().required(),
+  additionalInfo: Joi.string().required(),
+  street: Joi.string().required(),
+  lng: Joi.number().required(),
+  lat: Joi.number().required(),
+}).options({ abortEarly: false });
+
+export const updateAddressSchema = Joi.object({
+  name: Joi.string(),
+  additionalInfo: Joi.string(),
+  street: Joi.string(),
+  lng: Joi.number(),
+  lat: Joi.number(),
 }).options({ abortEarly: false });
 
 export const updateProductSchema = Joi.object({
@@ -52,6 +69,7 @@ export const createCommentSchema = Joi.object({
 export class userType {
   fullname: string;
   email: string;
+  address: Address;
   password: string;
   role: UserRole;
 }

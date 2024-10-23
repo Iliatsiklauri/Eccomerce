@@ -8,12 +8,19 @@ export class UserService {
   private readonly userRepository = AppDataSource.getRepository(User);
 
   async getAllUsers(): Promise<User[]> {
-    return this.userRepository.find();
+    return this.userRepository.find({
+      relations: {
+        Address: true,
+      },
+    });
   }
 
-  async getUserById(id): Promise<User | string> {
+  async getUserById(id): Promise<User | null> {
     try {
-      return await this.userRepository.findOneBy({ id });
+      return await this.userRepository.findOne({
+        where: { id },
+        relations: { Address: true },
+      });
     } catch {
       return null;
     }
@@ -53,7 +60,7 @@ export class UserService {
     email: string,
     role: string,
     updateUserDto: Partial<userType>
-  ): Promise<null | userType | number> {
+  ): Promise<null | User | number> {
     try {
       const existingUser = await this.userRepository.findOneBy({ id });
 

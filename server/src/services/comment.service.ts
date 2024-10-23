@@ -32,6 +32,7 @@ export class commentService {
     try {
       const product = await this.productsService.getProductById(id);
       const user = await this.usersService.getUserByEmail(email);
+
       if (!user || !product) {
         return null;
       }

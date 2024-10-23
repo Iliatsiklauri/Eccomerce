@@ -19,6 +19,7 @@ export const getSingleComment = async (req: Request, res: Response) => {
 
 export const createComment = async (req: Request, res: Response) => {
   const { error } = await createCommentSchema.validate(req.body);
+
   if (error) {
     return res
       .status(404)
@@ -31,8 +32,10 @@ export const createComment = async (req: Request, res: Response) => {
     req.user.email,
     req.body.content
   );
+
   if (!comment)
     return res.status(400).json(new ErrorRes(400, "post not found"));
+
   return res
     .status(201)
     .json(new SuccessRes(201, "Comment created successfully"));

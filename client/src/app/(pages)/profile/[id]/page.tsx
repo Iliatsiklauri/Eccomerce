@@ -1,5 +1,7 @@
 "use client";
 import { getUserApi } from "@/src/api/UsersApi";
+import ChooseSection from "@/src/components/Client/Profile/ChooseSection";
+import ContentDispay from "@/src/components/Client/Profile/ContentDispay";
 import { user } from "@/src/types/User";
 import React, { useEffect, useState } from "react";
 type PropType = {
@@ -9,6 +11,7 @@ type PropType = {
 };
 export default function Page({ params: { id } }: PropType) {
   const [user, setUser] = useState<null | user>(null);
+  console.log(user);
   useEffect(() => {
     async function getData() {
       const data = await getUserApi(id);
@@ -17,8 +20,10 @@ export default function Page({ params: { id } }: PropType) {
     getData();
   }, [id]);
   return (
-    <div className="h-[500px] flex items-center justify-center">
-      <h1 className="text-black">{user?.email}</h1>
+    <div className="flex items-start justify-between w-full h-[500px] container1">
+      <ChooseSection id={id} />
+      <div className="h-full bg-black w-[1px] opacity-10 ml-3"></div>
+      <ContentDispay />
     </div>
   );
 }
