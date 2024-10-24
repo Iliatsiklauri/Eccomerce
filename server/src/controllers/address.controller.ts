@@ -56,7 +56,7 @@ export const createAddress = async (req: Request, res: Response) => {
 
   return res
     .status(201)
-    .json(new SuccessRes(201, "Address created successfully"));
+    .json(new SuccessRes(201, "Address created successfully !"));
 };
 
 export const updateAddress = async (req: Request, res: Response) => {
@@ -82,8 +82,9 @@ export const updateAddress = async (req: Request, res: Response) => {
     return res.status(404).json(new ErrorRes(404, "Address not found"));
   if (!udpatedAddress)
     return res.status(404).json(new ErrorRes(400, "Cannot update product"));
-
-  return res.json(updateAddress);
+  return res
+    .status(301)
+    .json(new SuccessRes(201, "Address updated successfully !"));
 };
 
 export const deleteAddress = async (req: Request, res: Response) => {

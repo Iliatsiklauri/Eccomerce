@@ -11,19 +11,19 @@ type PropType = {
 };
 export default function Page({ params: { id } }: PropType) {
   const [user, setUser] = useState<null | user>(null);
-  console.log(user);
+  const [submitted, setSubmitted] = useState(false);
   useEffect(() => {
     async function getData() {
       const data = await getUserApi(id);
       setUser(data);
     }
     getData();
-  }, [id]);
+  }, [id, submitted]);
   return (
     <div className="flex items-start justify-between w-full h-[500px] container1">
       <ChooseSection id={id} />
       <div className="h-full bg-black w-[1px] opacity-10 ml-3"></div>
-      <ContentDispay />
+      <ContentDispay user={user} setSubmitted={setSubmitted} />
     </div>
   );
 }

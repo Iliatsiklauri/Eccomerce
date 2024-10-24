@@ -43,7 +43,9 @@ export default function AddressForm({
         )}
       />
 
-      <button className="w-full btn btn-success">Submit</button>
+      <button className="w-full btn btn-success text-xl font-medium text-white">
+        SAVE
+      </button>
     </form>
   );
 }

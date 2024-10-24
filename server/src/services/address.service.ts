@@ -22,11 +22,13 @@ export class AddressService {
     }
   }
 
-  async createAddress(id, createAddress: Address) {
+  async createAddress(id, createAddressDTo: Address) {
     try {
       const user: User = await this.usersService.getUserById(id);
-      const createdAddress = await this.AddressRepository.create(createAddress);
-      user.Address = createAddress;
+      const createdAddress = await this.AddressRepository.create(
+        createAddressDTo
+      );
+      user.Address = createdAddress;
 
       await this.UsersRepository.save(user);
       await this.AddressRepository.save(createdAddress);

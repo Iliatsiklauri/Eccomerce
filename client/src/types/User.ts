@@ -1,8 +1,11 @@
+import { Address } from "./Address";
+
 export type user = {
   fullname: string;
   email: string;
   id: string;
   role: string;
+  Address: Address;
 };
 
 export type SignUp = {

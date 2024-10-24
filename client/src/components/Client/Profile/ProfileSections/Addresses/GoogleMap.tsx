@@ -8,55 +8,48 @@ type PropType = {
   mapBorder: boolean;
   setSelectedAddress: React.Dispatch<
     React.SetStateAction<{
+      street: string;
       lat: number;
       lng: number;
-      address: string;
     } | null>
   >;
+  selectedAddress: {
+    street: string;
+    lat: number;
+    lng: number;
+  } | null;
 };
 
 export default function GoogleMapComponent({
+  setMapBorder,
   setSelectedAddress,
+  selectedAddress,
   mapBorder,
 }: PropType) {
+  const [loading, setLoading] = useState(true);
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [userHasClicked, setUserClicked] = useState(false);
   const [marker, setMarker] =
     useState<google.maps.marker.AdvancedMarkerElement | null>(null);
 
-  const [markerPosition, setMarkerPosition] = useState({
-    lat: 41.7151,
-    lng: 44.8271,
-  });
+  const fetchAddress = async (lat: number, lng: number) => {
+    const geocoder = new google.maps.Geocoder();
+    const response = await geocoder.geocode({ location: { lat, lng } });
+    const [result] = response.results;
 
-  const [addr, setAddr] = useState("");
+    if (result) {
+      setSelectedAddress({ lat, lng, street: result.formatted_address });
+    }
+  };
 
-  useEffect(() => {
-    if (!map) return;
-    const fetchAddr = async () => {
-      const geocoder = new google.maps.Geocoder();
-      const response = await geocoder.geocode({ location: markerPosition });
-      const [result] = response.results;
-
-      if (!result) return;
-      setAddr(result.formatted_address);
-
-      if (!userHasClicked) return;
-      setSelectedAddress({
-        lng: markerPosition.lng,
-        lat: markerPosition.lat,
-        address: addr,
-      });
-    };
-    fetchAddr();
-  }, [markerPosition, map, addr, userHasClicked, setSelectedAddress]);
-
-  const onMapClick = async (event: google.maps.MapMouseEvent) => {
+  const onMapClick = (event: google.maps.MapMouseEvent) => {
+    if (mapBorder) {
+      setMapBorder(false);
+    }
     if (event.latLng) {
-      setUserClicked(true);
       const lat = event.latLng.lat();
       const lng = event.latLng.lng();
-      setMarkerPosition({ lat, lng });
+      setSelectedAddress({ lat, lng, street: "" });
+      fetchAddress(lat, lng);
 
       if (marker) {
         marker.position = new google.maps.LatLng(lat, lng);
@@ -66,41 +59,63 @@ export default function GoogleMapComponent({
           map,
           title: "Selected Location",
         });
-
         setMarker(newMarker);
       }
     }
   };
 
   useEffect(() => {
-    if (map && marker) {
-      marker.map = map;
+    if (map && selectedAddress && selectedAddress.lat && selectedAddress.lng) {
+      if (marker) {
+        marker.position = new google.maps.LatLng(
+          selectedAddress.lat,
+          selectedAddress.lng
+        );
+      } else {
+        const newMarker = new google.maps.marker.AdvancedMarkerElement({
+          position: new google.maps.LatLng(
+            selectedAddress.lat,
+            selectedAddress.lng
+          ),
+          map,
+          title: "Selected Location",
+        });
+        setMarker(newMarker);
+      }
     }
-  }, [map, marker]);
+  }, [map, selectedAddress, marker]);
 
   return (
-    <div
-      className={` w-[55%] h-[300px] ${
-        mapBorder && "border-red-500 border-[1px]"
-      } `}
-    >
-      <LoadScript
-        googleMapsApiKey="AIzaSyBML4x9kmQdrWm_XsQ4QshKo19FuWQPm6g"
-        libraries={libraries}
+    <div className="flex flex-col items-center justify-center flex-shrink-0 gap-2 w-[55%]">
+      <div
+        className={` h-[320px] w-full rounded-lg overflow-hidden ${
+          loading && "skeleton bg-black bg-opacity-15"
+        } ${mapBorder && "border-red-500 border-[1px]"}`}
       >
-        <GoogleMap
-          mapContainerStyle={{ height: "100%", width: "100%" }}
-          center={markerPosition}
-          zoom={12}
-          onLoad={(mapInstance: google.maps.Map) => setMap(mapInstance)}
-          onClick={onMapClick}
-          options={{ mapId: "DEMO_MAP_ID" }}
-        />
-      </LoadScript>
-
-      <h1>x{markerPosition.lat}</h1>
-      <h1>y{markerPosition.lng}</h1>
-      <h1>{addr}</h1>
+        <LoadScript
+          googleMapsApiKey="AIzaSyBML4x9kmQdrWm_XsQ4QshKo19FuWQPm6g"
+          libraries={libraries}
+        >
+          <GoogleMap
+            mapContainerStyle={{ height: "100%", width: "100%" }}
+            center={{
+              lat: selectedAddress?.lat || 41.69406,
+              lng: selectedAddress?.lng || 44.8047,
+            }}
+            zoom={15}
+            onLoad={(mapInstance: google.maps.Map) => {
+              setMap(mapInstance);
+              setLoading(false);
+            }}
+            onClick={onMapClick}
+            options={{ mapId: "DEMO_MAP_ID" }}
+          />
+        </LoadScript>
+      </div>
+      <div className="w-full h-[40px] px-1">
+        <span className="font-medium text-black">Selected Address : </span>
+        <span className="text-black">{selectedAddress?.street}</span>
+      </div>
     </div>
   );
 }

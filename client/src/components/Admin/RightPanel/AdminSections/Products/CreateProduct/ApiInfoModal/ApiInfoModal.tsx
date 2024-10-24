@@ -17,7 +17,7 @@ export default function ApiInfoModal({
   loading,
 }: propType) {
   return (
-    <div className="absolute w-full h-full flex items-center justify-center pr-60  z-20 ">
+    <div className="absolute w-full h-full flex items-center justify-center pr-60 z-20 ">
       <div className="modal-box z-10 w-[45%] max-w-[500px]  h-[220px] flex flex-col items-center justify-between pt-6">
         <>
           {loading ? (

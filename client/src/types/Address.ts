@@ -1,9 +1,8 @@
 export type Address = {
+  id: number;
   name: string;
   additionalInfo: string;
   street: string;
-  map: {
-    lat: number;
-    lng: number;
-  };
+  lat: number;
+  lng: number;
 };
