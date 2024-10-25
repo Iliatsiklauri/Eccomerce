@@ -49,7 +49,7 @@ export class commentService {
   async deleteComment(id) {
     try {
       const comment = await this.commentRepository.delete({ id });
-      if (!comment) return null;
+      if (comment.affected === 0) return null;
       return comment;
     } catch (er) {
       return null;

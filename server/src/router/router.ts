@@ -14,7 +14,7 @@ const Router = express.Router();
 Router.use("/users", AuthGuard, usersRouter);
 Router.use("/admin", AdminGuard, adminRouter);
 Router.use("/comments", AuthGuard, commentRouter);
-Router.use("/address", AuthGuard, addressRouter);
+Router.use("/address", addressRouter);
 Router.use("/category", categoryRouter);
 Router.use("/products", productRouter);
 Router.use("/auth", authRouter);

@@ -49,7 +49,7 @@ export default function Page({ params: { id } }: PropType) {
             <Pricebox product={product} />
           </div>
           <ProductDescription product={product} />
-          <ProductComments product={product} />
+          <ProductComments product={product} id={id} />
           <div className="w-full h-[1px] bg-black opacity-15"></div>
           {product ? (
             <PinnedProductsWrapper

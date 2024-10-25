@@ -1,3 +1,4 @@
+import { Address } from "@/src/types/Address";
 import { createSlice } from "@reduxjs/toolkit";
 export type userType = {
   id: number;
@@ -6,6 +7,7 @@ export type userType = {
   password: string;
   role: "ADMIN" | "USER";
   initialAdmin: boolean;
+  Address: Address;
 };
 type UsersState = {
   users: userType[] | undefined;

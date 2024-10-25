@@ -1,5 +1,5 @@
 import { CategoryType } from "./Category";
-import { commentType } from "./Comment";
+import { Comment } from "./Comment";
 
 export type Product = {
   id: number;
@@ -16,7 +16,7 @@ export type Product = {
   brand: string;
   pinned: boolean;
   createdAt: string;
-  comments: commentType[];
+  comments: Comment[];
 };
 
 export type CreateProductType = {

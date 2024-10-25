@@ -44,10 +44,6 @@ export default function ProductsList() {
     getData();
   }, [category, page, minPrice, maxPrice, sort, promotion]);
 
-  if (data && data?.products.length === 0 && !loading) {
-    return <h1 className="text-xl font-semibold text-black">No Products :)</h1>;
-  }
-
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-10">
       <div className="self-start">
@@ -61,18 +57,30 @@ export default function ProductsList() {
         {!loading && <FilterAccordion />}
         <div className="flex flex-col justify-center items-start w-full gap-6 flex-shrink-0">
           {!loading && <SortingBy />}
-          <div className="grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0">
-            {data?.products.map((el: Product, index) => (
-              <div
-                className={`border-[1px] border-black border-opacity-5 p-2  border-b-0 border-l-0
+          <div
+            className={` ${
+              data && data?.products.length > 0
+                ? `grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0`
+                : "flex items-center justify-start w-full h-[300px]"
+            }`}
+          >
+            {data && data?.products.length > 0 ? (
+              data?.products.map((el: Product, index) => (
+                <div
+                  className={`border-[1px] border-black border-opacity-5 p-2  border-b-0 border-l-0
                 ${index < 4 ? "border-t-0" : ""} 
                 ${index % 4 === 3 ? "border-r-0" : ""}  
               `}
-                key={el.id}
-              >
-                <Card card={el} listedCard />
-              </div>
-            ))}
+                  key={el.id}
+                >
+                  <Card card={el} listedCard />
+                </div>
+              ))
+            ) : (
+              <h1 className="text-3xl text-black ml-[20%]">
+                No Products found
+              </h1>
+            )}
           </div>
           {loading && <ProductsListSkeleton showheader less />}
         </div>

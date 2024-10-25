@@ -44,7 +44,7 @@ export const createComment = async (req: Request, res: Response) => {
 export const deleteComment = async (req: Request, res: Response) => {
   const deleteComment = await commentsService.deleteComment(req.params.id);
   if (!deleteComment)
-    return res.status(404).json(new ErrorRes(404, "Cannot delete comment"));
+    return res.status(404).json(new ErrorRes(404, "Comment does not exist"));
   res.status(204).send();
 };
 
@@ -62,7 +62,7 @@ export const updateComment = async (req: Request, res: Response) => {
     req.body.content
   );
   if (!updateComment)
-    return res.status(404).json(new ErrorRes(404, "Cannot update comment"));
+    return res.status(404).json(new ErrorRes(404, "Comment not found"));
   return res
     .status(201)
     .json(new SuccessRes(201, "Comment udpated successfully"));

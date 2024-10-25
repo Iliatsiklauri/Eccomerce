@@ -1,14 +1,13 @@
 import { getCookie } from "cookies-next";
-import { Address } from "../types/Address";
 
-export const createAddress = async ({
+export const createComment = async ({
   id,
-  createAddressDTO,
+  content,
 }: {
   id: string;
-  createAddressDTO: Address;
+  content: string;
 }) => {
-  const url = `${process.env.NEXT_PUBLIC_ADDRESS_API}/${id}`;
+  const url = `${process.env.NEXT_PUBLIC_COMMENTS_API}/${id}`;
   try {
     const authorization = getCookie("authorization");
     const data = await fetch(url as string, {
@@ -17,7 +16,7 @@ export const createAddress = async ({
         "Content-Type": "application/json",
         authorization: authorization as string,
       },
-      body: JSON.stringify(createAddressDTO),
+      body: JSON.stringify({ content }),
     });
     const res = await data.json();
     return res;
@@ -25,24 +24,16 @@ export const createAddress = async ({
     console.log(er);
   }
 };
-
-export const updateAddress = async ({
-  id,
-  updateAddressDTO,
-}: {
-  id: number;
-  updateAddressDTO: Partial<Address>;
-}) => {
-  const url = `${process.env.NEXT_PUBLIC_ADDRESS_API}/${id}`;
+export const deleteComment = async ({ id }: { id: number }) => {
+  const url = `${process.env.NEXT_PUBLIC_COMMENTS_API}/${id}`;
   try {
     const authorization = getCookie("authorization");
     const data = await fetch(url as string, {
-      method: "PUT",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         authorization: authorization as string,
       },
-      body: JSON.stringify(updateAddressDTO),
     });
     const res = await data.json();
     return res;
