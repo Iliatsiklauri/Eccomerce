@@ -45,3 +45,29 @@ export const fields = [
     },
   },
 ];
+
+export const updateUser = {
+  fullname: {
+    required: "Fullname is required",
+    minLength: { value: 3, message: "Minimum 3 characters" },
+    pattern: {
+      value: /^[A-Za-z]+(?: [A-Za-z]+)+$/,
+      message: "Invalid Full name",
+    },
+  },
+  email: {
+    required: "Email is required",
+    pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" },
+  },
+
+  password: {
+    required: "Password is required",
+    minLength: { value: 8, message: "Minimum 8 characters" },
+  },
+};
+
+export type UpdateUserType = {
+  fullname: string;
+  email: string;
+  password: string;
+};

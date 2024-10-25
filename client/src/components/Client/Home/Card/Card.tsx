@@ -51,17 +51,17 @@ export default function Card({
           </p>
         </div>
         <div className="w-full flex items-center justify-between">
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-1">
             <p className="font-medium text-lg">${card.salePrice}</p>
             {isPromotion && (
-              <p className="font line-through text-sm text-opacity-60 text-black">
+              <p className="font line-through text-[13px] text-opacity-60 text-black">
                 ${card.price}
               </p>
             )}
           </div>
           {card.brand && (
             <div
-              className={`badge  badge-outline text-[11px] font-medium  ${
+              className={`badge  badge-outline text-[10px] font-medium  ${
                 card.category.id === 43
                   ? "border-red-500 text-red-500 bg-red-100"
                   : card.category.id === 39
@@ -73,7 +73,7 @@ export default function Card({
                   : "border-black bg-black bg-opacity-10"
               } `}
             >
-              {card.brand}
+              {card.brand.slice(0, 14)}
             </div>
           )}
         </div>

@@ -14,6 +14,8 @@ export default function LeftPanelSection({ image, name, isActive }: PropType) {
           ? "Users"
           : name === "Products"
           ? "Products?mode=read&page=1"
+          : name === "Home"
+          ? "/"
           : name
       }`}
       className={` h-[10%] min-h-[50px] ${

@@ -22,7 +22,7 @@ export default function AddressApiModal({ loading, setModal, res }: PropType) {
         className="w-full h-full bg-black absolute bg-opacity-15 z-20"
         onClick={() => setModal(false)}
       ></div>
-      <div className="w-1/3 h-1/3 z-30 bg-white mt-[7%] modal-box flex items-center justify-center p-3 gap-4 flex-col">
+      <div className="w-1/4 h-1/4 z-30 bg-white mt-[7%] modal-box flex items-center justify-center p-3 gap-4 flex-col">
         {loading ? (
           <div className="flex items-center justify-center flex-col gap-10">
             <h1 className="text-2xl text-white">Please Wait</h1>

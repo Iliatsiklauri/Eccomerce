@@ -3,6 +3,7 @@ import Hero from "../components/Client/Home/Hero/Hero";
 import { Suspense } from "react";
 import PinnedCategory from "../components/Client/Home/PinnedCategory/PinnedCategory";
 import PromotionWrapper from "../components/Client/Home/PromotionWrapper";
+import BrowseProductsLine from "../components/Client/Home/BrowseLine/BrowseProductsLine";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
       <Suspense>
         <Hero />
         <PromotionWrapper />
-        <div className="w-full h-[50px] bg-slate-500 rounded-md"></div>
+        <BrowseProductsLine />
         <PinnedCategory />
       </Suspense>
     </div>

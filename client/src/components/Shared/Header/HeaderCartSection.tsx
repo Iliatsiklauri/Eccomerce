@@ -12,7 +12,7 @@ import { logIn } from "@/src/store/features/authSlice";
 
 export default function HeaderCartSection() {
   const [user1, setUser] = useState<null | user>(null);
-  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const { isLoggedIn, role } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -33,9 +33,20 @@ export default function HeaderCartSection() {
 
   return (
     <div className="flex gap-3 items-center justify-center">
-      <Link href={"/admin/Products?mode=read"} className="text-md text-white">
-        ADMIN PANEL
-      </Link>
+      {role === "ADMIN" && (
+        <Link
+          href={"/admin/Products?mode=read"}
+          className=" text-white text-sm font-medium flex items-center justify-center gap-2"
+        >
+          <Image
+            alt="adminIcon"
+            src={"/icons/adminPanel/administrator-24.ico"}
+            width={20}
+            height={20}
+          />
+          <p>ADMIN PANEL</p>
+        </Link>
+      )}
 
       <button className="btn btn-ghost" id="cart">
         <div className="w-[20px] h-[20px] relative">

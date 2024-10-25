@@ -16,7 +16,7 @@ export default function ContentDispay({ user, setSubmitted }: PropType) {
 
   return (
     <div className="w-[80%] h-full flex-shrink-0">
-      {section === "settings" && <Settings />}
+      {section === "settings" && <Settings user={user} />}
       {section === "delivery" && (
         <Addresses user={user} setSubmitted={setSubmitted} />
       )}

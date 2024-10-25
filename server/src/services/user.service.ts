@@ -66,7 +66,7 @@ export class UserService {
 
       if (!existingUser) return null;
 
-      if (role !== "ADMIN" && existingUser.email !== email) {
+      if (role !== "ADMIN" && existingUser.id !== id) {
         return 401;
       }
 
@@ -87,7 +87,7 @@ export class UserService {
   ): Promise<null | boolean | number> {
     try {
       const targetUser = await this.userRepository.findOneBy({ id });
-      if (role !== "ADMIN" && targetUser.email !== email) {
+      if (role !== "ADMIN" && targetUser.id !== id) {
         return 401;
       }
 

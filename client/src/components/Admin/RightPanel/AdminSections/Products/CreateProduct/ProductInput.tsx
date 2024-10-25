@@ -18,8 +18,9 @@ export default function ProductInput({ error, label, field }: PropType) {
         type="text"
         className={`w-full h-full bg-slate-200 pl-4 rounded-md focus:outline-none text-black ${
           error && "border-red-500 border-[1px]"
-        } `}
-        placeholder={label}
+        } 
+        `}
+        placeholder={label === "New password" ? "Type a new password" : label}
       />
 
       {error && (

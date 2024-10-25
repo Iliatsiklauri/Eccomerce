@@ -3,7 +3,6 @@ import LeftPanelSection from "./LeftPanelSection";
 import LeftHeader from "./LeftHeader";
 import LogOutPanel from "./LogOutPanel";
 import { panelData } from "@/src/utils/data";
-import Link from "next/link";
 
 export default function LeftPanel({
   currentSection,
@@ -27,9 +26,6 @@ export default function LeftPanel({
           />
         ))}
       </div>
-      <Link href={"/"} className="text-xl font-bold pl-4">
-        Home
-      </Link>
       <LogOutPanel />
     </aside>
   );

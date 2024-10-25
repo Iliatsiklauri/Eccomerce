@@ -1,4 +1,5 @@
 import { getCookie } from "cookies-next";
+import { UpdateUserType } from "../utils/auth";
 
 export const getUsersApi = async (token: string) => {
   try {
@@ -32,5 +33,24 @@ export const getUserApi = async (id: string) => {
   } catch (er) {
     console.log("Error fetching users", er);
     throw er;
+  }
+};
+
+export const updateUserApi = async (id: string, updateUser: UpdateUserType) => {
+  try {
+    const token = getCookie("authorization");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_GETUSERS_API}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token as string,
+      },
+      body: JSON.stringify(updateUser),
+    });
+
+    const createdProduct = await res.json();
+    return createdProduct;
+  } catch (er) {
+    console.log(er, "error creating product");
   }
 };
