@@ -44,6 +44,7 @@ export class UserService {
       const newUser = (await this.userRepository.create(createUserDto)) as any;
       const savedUser: User = await this.userRepository.save(newUser);
       const token = generateToken({
+        id: savedUser.id,
         email: savedUser.email,
         role: savedUser.role,
         fullname: savedUser.fullname,
