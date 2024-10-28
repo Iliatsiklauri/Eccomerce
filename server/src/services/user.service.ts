@@ -89,7 +89,10 @@ export class UserService {
     role: string
   ): Promise<null | boolean | number> {
     try {
-      const targetUser = await this.userRepository.findOneBy({ id });
+      const targetUser = await this.userRepository.findOne({
+        where: { id },
+        relations: { Address: true },
+      });
       if (role !== "ADMIN" && targetUser.id !== id) {
         return 401;
       }

@@ -16,6 +16,7 @@ export default function ProductImage({ product }: PropType) {
             src={product?.image}
             alt="product image"
             fill
+            sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw, (min-width: 1024px) 100vw"
             className="object-fill"
           />
         ) : (

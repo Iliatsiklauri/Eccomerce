@@ -4,8 +4,9 @@ import SingleCardSkeleton from "./SingleCardSkeleton";
 type PropType = {
   showHeader?: boolean;
   less?: boolean;
+  width?: boolean;
 };
-export default function CardSkeleton({ showHeader, less }: PropType) {
+export default function CardSkeleton({ showHeader, less, width }: PropType) {
   return (
     <div
       className={`flex ${
@@ -20,7 +21,7 @@ export default function CardSkeleton({ showHeader, less }: PropType) {
       )}
       <div
         className={` flex items-center justify-center ${
-          less ? "w-[80%]" : "w-full"
+          less && !width ? "w-[80%]" : "w-full"
         } `}
       >
         {Array(less ? 4 : 5)

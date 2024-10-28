@@ -44,9 +44,9 @@ export class productService {
         query.andWhere("product.price > product.salePrice");
       }
       if (sort === "ASC") {
-        query.addOrderBy("product.price", "ASC");
+        query.addOrderBy("product.salePrice", "ASC");
       } else if (sort === "DESC") {
-        query.addOrderBy("product.price", "DESC");
+        query.addOrderBy("product.salePrice", "DESC");
       }
 
       query.skip(skip).take(limit);

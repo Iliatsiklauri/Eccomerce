@@ -54,3 +54,20 @@ export const updateUserApi = async (id: string, updateUser: UpdateUserType) => {
     console.log(er, "error creating product");
   }
 };
+
+export const deleteUserApi = async (id: number) => {
+  try {
+    const token = getCookie("authorization");
+    await fetch(`${process.env.NEXT_PUBLIC_GETUSERS_API}/${id}` as string, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: token as string,
+      },
+    });
+    return;
+  } catch (er) {
+    console.log("Error deleting user", er);
+    throw er;
+  }
+};

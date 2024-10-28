@@ -49,22 +49,21 @@ export default function ProductsList() {
       <div className="self-start">
         <BreadCrumbs mainLink="Home" category={category} />
       </div>
-      <div
-        className={`flex w-full gap-5 items-start justify-between ${
-          loading ? "flex-col" : ""
-        } `}
-      >
-        {!loading && <FilterAccordion />}
+      <div className={`flex w-full gap-5 items-start justify-between  `}>
+        <FilterAccordion />
+
         <div className="flex flex-col justify-center items-start w-full gap-6 flex-shrink-0">
           {!loading && <SortingBy />}
           <div
             className={` ${
               data && data?.products.length > 0
                 ? `grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0`
+                : loading
+                ? "flex flex-col w-[82%]"
                 : "flex items-center justify-start w-full h-[300px]"
             }`}
           >
-            {data && data?.products.length > 0 ? (
+            {data && !loading && data?.products.length > 0 ? (
               data?.products.map((el: Product, index) => (
                 <div
                   className={`border-[1px] border-black border-opacity-5 p-2  border-b-0 border-l-0
@@ -77,12 +76,9 @@ export default function ProductsList() {
                 </div>
               ))
             ) : (
-              <h1 className="text-3xl text-black ml-[20%]">
-                No Products found
-              </h1>
+              <ProductsListSkeleton showheader less width />
             )}
           </div>
-          {loading && <ProductsListSkeleton showheader less />}
         </div>
       </div>
       <div className="mt-10">

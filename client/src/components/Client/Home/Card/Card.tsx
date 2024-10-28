@@ -24,7 +24,7 @@ export default function Card({
         fixed ? "w-[215px]" : "w-full"
       }`}
     >
-      <div className="relative w-full h-40 overflow-hidden flex-shrink-0 rounded-md group">
+      <div className="relative w-full h-40 overflow-hidden flex-shrink-0 rounded-md group ">
         <Link
           href={`/products/${card.id}`}
           className="h-full w-full absolute z-10"
@@ -33,6 +33,8 @@ export default function Card({
         <Image
           src={`${card.image}`}
           alt={card.title || "Product Image"}
+          loading="lazy"
+          sizes="(max-width: 640px) 100vw, (min-width: 641px) 50vw, (min-width: 1024px) 100vw"
           fill
           className="object-fill transition-transform duration-200 ease-in-out transform group-hover:scale-105 "
         />
@@ -42,8 +44,8 @@ export default function Card({
           </div>
         )}
       </div>
-      <div className="flex items-center justify-between flex-col h-full px-0.5 ">
-        <div className="flex flex-col items-start justify-center">
+      <div className="flex items-center justify-between flex-col h-full px-0.5">
+        <div className="flex flex-col items-start justify-start w-full">
           <p className="font-medium leading-5">{card.title}</p>
           <p className="text-xs opacity-50 tracking-tight leading-3 mt-2">
             {card.description.slice(0, 70)}

@@ -97,6 +97,7 @@ export const createProduct = async (req: Request, res: Response) => {
     image,
     pinnedImage,
   });
+
   if (!createdProduct)
     return res
       .status(401)
@@ -160,5 +161,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
       .status(404)
       .json(new ErrorRes(404, "Error while deleting product"));
   }
-  res.status(204).send();
+  return res
+    .status(201)
+    .json(new SuccessRes(204, "Product deleted Successfully"));
 };

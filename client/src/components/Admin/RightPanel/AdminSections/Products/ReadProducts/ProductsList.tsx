@@ -12,6 +12,7 @@ export default function ProductsList({ mode }: PropType) {
   const [products, setProduct] = useState<[] | Product[]>([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [loading1, setLoading1] = useState(false);
   const router = useRouter();
   const params = useSearchParams();
   const category = params.get("category");
@@ -28,7 +29,7 @@ export default function ProductsList({ mode }: PropType) {
       setLoading(false);
     }
     getData();
-  }, [page, category]);
+  }, [page, category, loading1]);
 
   return (
     <div className="overflow-y-auto bg-white rounded-xl p-2 h-full">
@@ -43,7 +44,11 @@ export default function ProductsList({ mode }: PropType) {
         </div>
       ) : mode === "read" ? (
         <div className="w-full h-full flex items-center justify-between flex-col overflow-y-auto pb-3 gap-3 ">
-          <ProductsTable products={products} />
+          <ProductsTable
+            products={products}
+            setLoading={setLoading1}
+            loading={loading1}
+          />
           <Pagination
             total={total}
             activePage={page}

@@ -1,6 +1,7 @@
 import { userType } from "@/src/store/features/usersSlice";
 import React from "react";
 import EditUser from "./EditUser";
+import { deleteUserApi } from "@/src/api/UsersApi";
 
 type propType = {
   UserModalRef: React.RefObject<HTMLDialogElement>;
@@ -38,6 +39,9 @@ export default function UserModal({ UserModalRef, el, modalType }: propType) {
             className={`flex-1 btn ${
               modalType == "DELETE" ? "bg-red-600" : "btn-success"
             } text-white `}
+            onClick={async () => {
+              await deleteUserApi(el.id);
+            }}
           >
             {modalType === "EDIT" ? "SAVE" : modalType}
           </button>

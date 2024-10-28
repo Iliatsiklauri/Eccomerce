@@ -36,13 +36,12 @@ export default function SearchInput({
           setFocused(!focused);
         }}
       >
-        <div className="w-[19px] h-[19px] relative">
-          <Image
-            alt="user"
-            src={"/icons/header/search-interface-symbol.png"}
-            fill
-          />
-        </div>
+        <Image
+          alt="user"
+          src={"/icons/header/search-interface-symbol.png"}
+          width={20}
+          height={20}
+        />
         <input
           type="text"
           className="w-full rounded-[20px] text-lg bg-transparent pl-4 pt-1 focus:outline-none flex text-black "

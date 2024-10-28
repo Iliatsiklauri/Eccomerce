@@ -49,9 +49,12 @@ export default function HeaderCartSection() {
       )}
 
       <button className="btn btn-ghost" id="cart">
-        <div className="w-[20px] h-[20px] relative">
-          <Image alt="user" src={"/icons/header/trolley.png"} fill />
-        </div>
+        <Image
+          alt="user"
+          src={"/icons/header/trolley.png"}
+          width={20}
+          height={20}
+        />
         <p className="text-white font-normal text-[16px]">Cart</p>
       </button>
       {!isLoggedIn ? <LogInButton /> : user1 && <UserProfile id={user1.id} />}

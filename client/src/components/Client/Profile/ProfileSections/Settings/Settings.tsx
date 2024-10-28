@@ -40,15 +40,23 @@ export default function Settings({ user }: PropType) {
     reset({
       email: user?.email,
       fullname: user?.fullname,
-      password: "*********",
+      password: "********",
     });
   }, [user, reset]);
 
   const handleSubmition = async (data: UpdateUserType) => {
+    let newData = data;
+    if (data.password === "********") {
+      newData = {
+        email: data.email,
+        fullname: data.fullname,
+      };
+    }
     let res;
     setLoading(true);
+    console.log(newData);
     if (user?.id) {
-      res = await updateUserApi(user.id, data);
+      res = await updateUserApi(user.id, newData);
     }
     setLoading(false);
     setResponse(res);

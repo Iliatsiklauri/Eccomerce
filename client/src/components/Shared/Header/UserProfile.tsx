@@ -10,9 +10,13 @@ export default function UserProfile({ id }: PropType) {
   return (
     <div className="dropdown dropdown-end">
       <button className="btn btn-ghost" role="button" tabIndex={0}>
-        <div className="w-[20px] h-[20px] relative ">
-          <Image alt="user" src={"/icons/header/profile-user.png"} fill />
-        </div>
+        <Image
+          alt="user"
+          src={"/icons/header/profile-user.png"}
+          width={20}
+          height={20}
+        />
+
         <p className="text-white font-normal text-[16px]">Account</p>
       </button>
       <div

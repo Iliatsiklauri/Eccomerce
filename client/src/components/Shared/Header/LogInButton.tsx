@@ -6,9 +6,14 @@ export default function LogInButton() {
   return (
     <>
       <Link className="btn btn-ghost" href={"/auth?mode=login"}>
-        <div className="w-[20px] h-[20px] relative mr-2">
-          <Image alt="user" src={"/icons/header/profile-user.png"} fill />
-        </div>
+        <Image
+          alt="user"
+          src={"/icons/header/profile-user.png"}
+          width={20}
+          height={20}
+          className="mr-2"
+        />
+
         <p className="text-white font-normal text-[16px]">Sign in</p>
       </Link>
     </>

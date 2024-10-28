@@ -69,5 +69,5 @@ export const updateUser = {
 export type UpdateUserType = {
   fullname: string;
   email: string;
-  password: string;
+  password?: string;
 };

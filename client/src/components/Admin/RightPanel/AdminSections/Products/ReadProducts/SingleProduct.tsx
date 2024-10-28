@@ -5,10 +5,28 @@ import Link from "next/link";
 import React from "react";
 
 type ProductType = {
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
   product: Product;
+  setRes: React.Dispatch<
+    React.SetStateAction<{
+      status: number;
+      success?: {
+        message: string;
+      };
+      error?: {
+        message: string;
+      };
+    } | null>
+  >;
 };
 
-export default function SingleProduct({ product }: ProductType) {
+export default function SingleProduct({
+  product,
+  setLoading,
+  setModal,
+  setRes,
+}: ProductType) {
   return (
     <tr className="border-opacity-35 text-black text-[14px]">
       <td>{product.id}</td>
@@ -28,7 +46,6 @@ export default function SingleProduct({ product }: ProductType) {
       </td>
       <td className="font-medium text-md">{product.inStock}</td>
       <td className="">{product.category.title}</td>
-
       <td>
         {product.pinned && (
           <Image
@@ -69,8 +86,11 @@ export default function SingleProduct({ product }: ProductType) {
             <li
               className="bg-red-500 rounded-lg"
               onClick={async () => {
+                setLoading(true);
                 const deleteProduct = await deleteProductbyId(product.id);
-                if (!deleteProduct) console.log("error");
+                setRes(deleteProduct);
+                setModal(true);
+                setLoading(false);
               }}
             >
               <p>Delete</p>

@@ -172,10 +172,9 @@ export const deleteProductbyId = async (id: number) => {
         },
       }
     );
-    await res.json();
-    return "success";
+    return await res.json();
   } catch (er) {
-    console.log("error while deleting product");
+    console.log(er, "error while deleting product");
     return null;
   }
 };

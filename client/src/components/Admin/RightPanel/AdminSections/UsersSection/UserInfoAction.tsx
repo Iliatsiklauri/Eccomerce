@@ -9,19 +9,9 @@ export default function UserInfoAction({
   setModalType,
 }: propType) {
   return (
-    <div className="absolute w-[120px] h-[80px] rounded-xl bg-slate-100 shadow-lg top-[-88px] right-0 overflow-hidden border-darkBrown border-[1px] border-opacity-30">
+    <div className="absolute w-[120px] h-[40px] rounded-xl bg-red-500 shadow-lg top-[-40px] right-0 overflow-hidden border-darkBrown border-[1px] border-opacity-30">
       <div
-        className="h-1/2 w-full hover:bg-slate-200 text-center p-2 border-b-[1px] border-darkBrown border-opacity-30"
-        onClick={() => {
-          setUserInfo(null);
-          setModalType("EDIT");
-          UserModalRef.current?.showModal();
-        }}
-      >
-        Edit
-      </div>
-      <div
-        className="h-1/2 w-full hover:bg-slate-200 text-center p-2"
+        className="h-full w-full hover:bg-red-600 text-center p-2"
         onClick={() => {
           setUserInfo(null);
           setModalType("DELETE");
