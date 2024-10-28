@@ -1,4 +1,5 @@
 import { AppDataSource } from "../db/database-connect";
+import { Address } from "../db/entities/Address";
 import { User } from "../db/entities/User";
 import { generateToken } from "../utils/jwt";
 import { userType } from "../utils/validation";
@@ -6,6 +7,7 @@ import bcrypt from "bcrypt";
 
 export class UserService {
   private readonly userRepository = AppDataSource.getRepository(User);
+  private readonly addressRepo = AppDataSource.getRepository(Address);
 
   async getAllUsers(): Promise<User[]> {
     return this.userRepository.find({
@@ -91,7 +93,9 @@ export class UserService {
       if (role !== "ADMIN" && targetUser.id !== id) {
         return 401;
       }
-
+      if (targetUser?.Address) {
+        await this.addressRepo.delete(targetUser.Address.id);
+      }
       const deletedUser = await this.userRepository.delete({ id });
       if (deletedUser.affected === 0) return 404;
 
