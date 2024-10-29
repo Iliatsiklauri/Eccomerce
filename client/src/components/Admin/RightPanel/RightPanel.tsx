@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import React from "react";
 import Orders from "./AdminSections/Orders/Orders";
+import CategoryList from "./AdminSections/Category/CategoryList";
 
 const MessagesSection = dynamic(
   () => import("./AdminSections/Messages/MessagesSection")
@@ -23,6 +24,7 @@ export default function RightPanel({
       {currentSection === "Users" && <UsersSection />}
       {currentSection === "Messages" && <MessagesSection />}
       {currentSection === "Products" && <ProductsSection />}
+      {currentSection === "Categories" && <CategoryList />}
     </>
   );
 }

@@ -107,4 +107,11 @@ export class UserService {
       return null;
     }
   }
+
+  async AddAdmin() {
+    try {
+    } catch (er) {
+      console.log(er, "error while adding admin");
+    }
+  }
 }

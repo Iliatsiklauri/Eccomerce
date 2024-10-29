@@ -12,6 +12,10 @@ export const panelData: panelDataType[] = [
     imageUrl: "/icons/adminPanel/multiple-users-silhouette.png",
   },
   {
+    name: "Categories",
+    imageUrl: "/icons/adminPanel/icons8-category-48.png",
+  },
+  {
     name: "Orders",
     imageUrl: "/icons/adminPanel/clipboard.png",
   },

@@ -45,6 +45,6 @@ export type updateProductDto = {
   pinnedImage?: string;
 };
 export type updateProductFilesDto = {
-  image?: Express.Multer.File;
-  pinnedImage?: Express.Multer.File;
+  image?: Express.Multer.File | null;
+  pinnedImage?: Express.Multer.File | null;
 };

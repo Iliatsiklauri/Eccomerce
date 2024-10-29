@@ -7,6 +7,11 @@ import { useSelector } from "react-redux";
 
 export default function TableHeader() {
   const { category } = useSelector((state: RootState) => state.category);
+  const updatedCategories = [
+    { title: "All", id: 20 } as CategoryType,
+    ...category,
+  ];
+
   const params = useSearchParams();
   const currentParams = new URLSearchParams(params.toString());
   const router = useRouter();
@@ -36,17 +41,20 @@ export default function TableHeader() {
               tabIndex={0}
               className="dropdown-content menu bg-lightWhite rounded-box z-[1] w-52 p-2 shadow mt-3"
             >
-              {category.map((el: CategoryType) => (
-                <li
+              {updatedCategories.map((el: CategoryType) => (
+                <div
                   key={el.id}
-                  className="h-[30px]"
+                  className="h-[30px] hover:bg-black hover:bg-opacity-10 rounded-md p-2 cursor-pointer"
                   onClick={() => {
+                    if (el.title === "All") {
+                      return router.push("/admin/Products");
+                    }
                     currentParams.set("category", `${el.id}`);
                     router.push(`/admin/Products?${currentParams.toString()}`);
                   }}
                 >
                   <p>{el.title}</p>
-                </li>
+                </div>
               ))}
             </ul>
           </div>

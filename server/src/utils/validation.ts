@@ -62,6 +62,12 @@ export const createCategorySchema = Joi.object({
   pinned: Joi.boolean(),
 }).options({ abortEarly: false });
 
+export const updateCategoryShema = Joi.object({
+  title: Joi.string(),
+  link: Joi.string(),
+  pinned: Joi.boolean(),
+}).options({ abortEarly: false });
+
 export const createCommentSchema = Joi.object({
   content: Joi.string().required(),
 });
@@ -76,6 +82,13 @@ export class userType {
 
 export class categoryType {
   id: number;
+  pinned: boolean;
+  title: string;
+  image: string;
+}
+export class updateCategoryType {
+  id: number;
+  pinned: string | boolean;
   title: string;
   image: string;
 }

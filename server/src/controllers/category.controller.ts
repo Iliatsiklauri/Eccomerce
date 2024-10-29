@@ -4,6 +4,7 @@ import {
   createCategorySchema,
   ErrorRes,
   SuccessRes,
+  updateCategoryShema,
 } from "../utils/validation";
 
 const categorysService = new categoryService();
@@ -62,4 +63,29 @@ export const deleteCategory = async (req: Request, res: Response) => {
   return res.status(204).send();
 };
 
-export const updateCategory = async (req) => {};
+export const updateCategory = async (req: Request, res: Response) => {
+  const category = await categorysService.getById(req.params.id);
+  if (!category)
+    return res.status(404).json(new ErrorRes(404, "Category not found"));
+
+  const { error } = updateCategoryShema.validate(req.body);
+  if (error) {
+    return res.status(400).json(
+      new ErrorRes(
+        400,
+        error.details.map((detail) =>
+          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+        )
+      )
+    );
+  }
+
+  const updatedCategory = await categorysService.updateCategory(
+    req.body,
+    req.params.id
+  );
+
+  return res
+    .status(200)
+    .json(new SuccessRes(200, "Category updated successfully !"));
+};

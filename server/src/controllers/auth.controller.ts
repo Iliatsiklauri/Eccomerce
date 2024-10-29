@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import { ErrorRes, logInSchema, SuccessRes } from "../utils/validation";
 import { AuthService } from "../services/auth.service";
+import { UserService } from "../services/user.service";
 
 const authService = new AuthService();
+const UsersService = new UserService();
 
 export const signIn = async (req: Request, res: Response) => {
   const { error } = logInSchema.validate(req.body);
@@ -32,6 +34,7 @@ export const signIn = async (req: Request, res: Response) => {
 };
 
 export const addAdmin = async (req: Request, res: Response) => {
+  console.log(req.user);
   res.send("add admin");
 };
 

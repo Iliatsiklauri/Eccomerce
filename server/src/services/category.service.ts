@@ -1,6 +1,6 @@
 import { AppDataSource } from "../db/database-connect";
 import { Category } from "../db/entities/Category";
-import { categoryType } from "../utils/validation";
+import { categoryType, updateCategoryType } from "../utils/validation";
 import { awsService } from "./aws.service";
 
 export class categoryService {
@@ -51,6 +51,25 @@ export class categoryService {
       return category;
     } catch (er) {
       throw new Error("Failed to create category");
+    }
+  }
+
+  async updateCategory(updateCategory: updateCategoryType, id) {
+    try {
+      const category = await this.categoryRepository.findOne({
+        where: { id },
+      });
+      if (updateCategory.pinned !== undefined) {
+        if (updateCategory.pinned === "true") {
+          updateCategory.pinned = true;
+        } else {
+          updateCategory.pinned = false;
+        }
+      }
+      Object.assign(category, updateCategory);
+      return await this.categoryRepository.save(category);
+    } catch (er) {
+      console.log(er, "error while updating product");
     }
   }
 

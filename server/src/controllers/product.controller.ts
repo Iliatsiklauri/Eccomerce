@@ -107,8 +107,8 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const updateProduct = async (req: Request, res: Response) => {
   const updateFilesDto = {
-    image: req.files["image"],
-    pinnedImage: req.files["pinnedImage"],
+    image: req.files?.["image"] || null,
+    pinnedImage: req.files?.["pinnedImage"] || null,
   };
 
   const { error } = updateProductSchema.validate(req.body);
