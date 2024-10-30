@@ -32,6 +32,7 @@ export class categoryService {
       });
       return category || null;
     } catch (er) {
+      console.log(er);
       throw new Error("Failed to fetch category");
     }
   }

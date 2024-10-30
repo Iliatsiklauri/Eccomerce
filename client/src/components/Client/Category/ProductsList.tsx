@@ -58,9 +58,7 @@ export default function ProductsList() {
             className={` ${
               data && data?.products.length > 0
                 ? `grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0`
-                : loading
-                ? "flex flex-col w-[82%]"
-                : "flex items-center justify-start w-full h-[300px]"
+                : "flex flex-col w-[82%]"
             }`}
           >
             {data && !loading && data?.products.length > 0 ? (

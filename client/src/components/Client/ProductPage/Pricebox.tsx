@@ -7,10 +7,27 @@ type PropType = {
 };
 export default function Pricebox({ product }: PropType) {
   const [amount, setAmount] = useState(0);
+  let promotion;
+  let dif;
+  let percentage;
+  if (product) {
+    promotion = product?.price > product?.salePrice;
+    dif = product?.price - product?.salePrice;
+    percentage = Math.floor((dif / product.price) * 100);
+  }
   return (
     <div className="h-[290px] w-[30%] bg-opacity-60 bg-slate-50 p-4 rounded-md shadow-md flex items-center justify-between flex-col ">
       <div className="flex items-start justify-between w-full">
-        <h1 className="text-black text-3xl font-medium">${product?.price}</h1>
+        <div className="flex items-center justify-center gap-3">
+          <h1 className="text-black text-3xl font-medium">
+            ${product?.salePrice}
+          </h1>
+          {promotion && (
+            <p className="line-through text-lg text-black opacity-30">
+              {product?.price}
+            </p>
+          )}
+        </div>
         <p
           className={`text-black text-sm  ${
             product?.inStock && product?.inStock <= 0
@@ -24,7 +41,14 @@ export default function Pricebox({ product }: PropType) {
         </p>
       </div>
       <section className="flex flex-col gap-2 w-full">
-        <SetAmountBox amount={amount} setAmount={setAmount} />
+        <div className="w-full flex justify-between">
+          <SetAmountBox amount={amount} setAmount={setAmount} />
+          {promotion && (
+            <div className="bg-customRed  px-3 rounded-md shadow-lg text-white text-sm font-medium flex items-center justify-center h-[30px]">
+              -{percentage}%
+            </div>
+          )}
+        </div>
         <button className="btn w-full text-white btn-success">
           Add to Cart
           <Image
