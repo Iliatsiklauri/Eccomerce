@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { commentService } from "../services/comment.service";
-import { productService } from "../services/product.service";
 import { createCommentSchema, ErrorRes, SuccessRes } from "../utils/validation";
 
 const commentsService = new commentService();

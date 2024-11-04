@@ -21,7 +21,7 @@ export class UserService {
     try {
       return await this.userRepository.findOne({
         where: { id },
-        relations: { Address: true },
+        relations: { Address: true, cart: { products: true } },
       });
     } catch {
       return null;

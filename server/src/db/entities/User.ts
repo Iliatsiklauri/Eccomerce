@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from "typeorm";
 import { Address } from "./Address";
+import { Cart } from "./Cart";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -39,4 +40,8 @@ export class User {
     default: false,
   })
   initialAdmin: boolean;
+
+  @OneToOne(() => Cart, (Cart) => Cart.user)
+  @JoinColumn()
+  cart: Cart;
 }

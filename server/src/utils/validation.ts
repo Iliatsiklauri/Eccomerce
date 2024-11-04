@@ -73,6 +73,7 @@ export const createCommentSchema = Joi.object({
 });
 
 export class userType {
+  id: number;
   fullname: string;
   email: string;
   address: Address;
