@@ -21,7 +21,7 @@ export default function UserProfile({ id }: PropType) {
       </button>
       <div
         tabIndex={0}
-        className="menu menu-md dropdown-content bg-darkBrown rounded-box z-[1] mt-5 w-52 p-2 shadow"
+        className="menu menu-md dropdown-content bg-darkBrown rounded-box z-[1] mt-5 w-52 p-2 shadow text-white text-lg"
       >
         <li>
           <Link href={`/profile/${id}?section=orders`}>My orders</Link>

@@ -67,3 +67,14 @@ input:-webkit-autofill:active {
     max-width: 1200px;
   }
 }
+
+.triangle {
+  position: absolute;
+  top: 74px;
+  margin-left: 120px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid white;
+}
