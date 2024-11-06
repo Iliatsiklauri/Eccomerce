@@ -72,5 +72,6 @@ export const deleteUser = async (req: Request, res: Response) => {
       .json(new ErrorRes(401, "User Unauthorized to delete others accaunt"));
   if (deletedUser === 404)
     return res.status(404).json(new ErrorRes(404, "User not Found"));
-  res.status(204).send();
+
+  return res.status(204).send();
 };

@@ -4,15 +4,15 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
   JoinColumn,
+  OneToMany,
 } from "typeorm";
 import { Address } from "./Address";
-import { Cart } from "./Cart";
+import { CartItem } from "./CartItem";
 
 export enum UserRole {
   ADMIN = "ADMIN",
   USER = "USER",
 }
-
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -41,7 +41,6 @@ export class User {
   })
   initialAdmin: boolean;
 
-  @OneToOne(() => Cart, (Cart) => Cart.user)
-  @JoinColumn()
-  cart: Cart;
+  @OneToMany(() => CartItem, (CartItem) => CartItem.user)
+  cartItems: CartItem[];
 }

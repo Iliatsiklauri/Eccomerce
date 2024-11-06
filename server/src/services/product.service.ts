@@ -1,4 +1,3 @@
-import { QueryBuilder } from "typeorm";
 import { AppDataSource } from "../db/database-connect";
 import { Product } from "../db/entities/Product";
 import {
@@ -8,7 +7,7 @@ import {
 } from "../types/Product";
 import { awsService } from "./aws.service";
 
-export class productService {
+export class ProductService {
   private readonly productRepository = AppDataSource.getRepository(Product);
   private AWSService = new awsService();
 

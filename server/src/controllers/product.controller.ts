@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { productService } from "../services/product.service";
+import { ProductService } from "../services/product.service";
 import {
   ErrorRes,
   productSchema,
@@ -9,7 +9,7 @@ import {
 import { categoryService } from "../services/category.service";
 import { Product } from "../db/entities/Product";
 
-const productsService = new productService();
+const productsService = new ProductService();
 const categorysService = new categoryService();
 
 export const getAllProducts = async (req: Request, res: Response) => {

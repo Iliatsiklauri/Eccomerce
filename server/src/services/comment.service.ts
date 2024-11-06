@@ -1,12 +1,12 @@
 import { AppDataSource } from "../db/database-connect";
 import { Comment } from "../db/entities/Comment";
-import { productService } from "./product.service";
+import { ProductService } from "./product.service";
 import { UserService } from "./user.service";
 
 export class commentService {
   private readonly commentRepository = AppDataSource.getRepository(Comment);
   private usersService = new UserService();
-  private productsService = new productService();
+  private productsService = new ProductService();
 
   async getComments() {
     try {

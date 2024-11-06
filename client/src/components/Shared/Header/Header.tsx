@@ -5,12 +5,16 @@ import SearchInput from "./SearchInput";
 import Link from "next/link";
 import { Product } from "@/src/types/Product";
 import { fetchSearchedProducts } from "@/src/api/ProductsApi";
+import { getUserCart } from "@/src/api/CartItemsApi";
+import { useDispatch } from "react-redux";
+import { setCart } from "@/src/store/features/cartSlice";
 
 export default function Header() {
   const [focused, setFocused] = useState(false);
   const [loading, setLoading] = useState(false);
   const [query, setQuery] = useState("");
   const [products, setProducts] = useState<null | Product[]>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const debounceSearching = setTimeout(async () => {
@@ -23,6 +27,15 @@ export default function Header() {
     }, 400);
     return () => clearTimeout(debounceSearching);
   }, [query]);
+
+  useEffect(() => {
+    const getCart = async () => {
+      const usersCart = await getUserCart();
+      dispatch(setCart(usersCart));
+      console.log(usersCart);
+    };
+    getCart();
+  }, [dispatch]);
 
   return (
     <header className="w-full h-[80px] bg-darkBrown flex items-center justify-center z-20 shadow-lg ">

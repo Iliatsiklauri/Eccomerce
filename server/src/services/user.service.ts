@@ -21,7 +21,7 @@ export class UserService {
     try {
       return await this.userRepository.findOne({
         where: { id },
-        relations: { Address: true, cart: { products: true } },
+        relations: { Address: true, cartItems: { product: true } },
       });
     } catch {
       return null;
@@ -99,11 +99,13 @@ export class UserService {
       if (targetUser?.Address) {
         await this.addressRepo.delete(targetUser.Address.id);
       }
+
       const deletedUser = await this.userRepository.delete({ id });
       if (deletedUser.affected === 0) return 404;
 
       return true;
-    } catch {
+    } catch (er) {
+      console.log(er, "eror while deleting user");
       return null;
     }
   }
