@@ -1,4 +1,3 @@
-import { Q } from "@faker-js/faker/dist/airline-BBTAAfHZ";
 import { AppDataSource } from "../db/database-connect";
 import { CartItem } from "../db/entities/CartItem";
 import { Product } from "../db/entities/Product";
@@ -60,8 +59,10 @@ export class CartItemService {
 
   async updateCartItem(id, quantity) {
     const cartItem = await this.CartItemRepository.findOne({ where: { id } });
+
     if (!cartItem) return null;
     cartItem.quantity = quantity;
+
     await this.CartItemRepository.save(cartItem);
     return cartItem;
   }

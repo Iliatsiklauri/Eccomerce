@@ -19,6 +19,7 @@ export default function SingleSwiperSlide({
       <Image
         src={product.pinnedImage ? product.pinnedImage : product.image}
         fill
+        priority
         alt="hero"
         className={`object-fit absolute transition-opacity duration-300 ${
           loading ? "opacity-0" : "opacity-100"

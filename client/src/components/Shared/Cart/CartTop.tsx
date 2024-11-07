@@ -5,7 +5,7 @@ type PropType = {
 };
 export default function CartTop({ setCartMode }: PropType) {
   return (
-    <div className="w-full p-4 flex items-center justify-between ">
+    <div className="w-full px-4 py-3 flex items-center justify-between flex-shrink-0 ">
       <h2 className="text-xl text-black font-normal">My cart</h2>
 
       <div

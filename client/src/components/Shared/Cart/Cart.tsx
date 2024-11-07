@@ -1,7 +1,6 @@
-import { RootState } from "@/src/store/store";
-import React from "react";
 import { useSelector } from "react-redux";
 import CartBox from "./CartBox";
+import { RootState } from "@/src/store/store";
 type PropType = {
   setCartMode: React.Dispatch<React.SetStateAction<boolean>>;
   cartMode: boolean;

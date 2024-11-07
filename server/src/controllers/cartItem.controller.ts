@@ -36,14 +36,23 @@ export const getCartByUserId = async (req: Request, res: Response) => {
 export const addCartItem = async (req: Request, res: Response) => {
   const target = req.user as userType;
   const quantity = req.body.quantity;
+  if (!quantity)
+    return res.status(400).json(new ErrorRes(400, "quantity is required"));
 
   const product = await productService.getProductById(req.params.productId);
   const user = await userService.getUserById(target.id);
+
+  if (quantity > product.inStock) {
+    return res
+      .status(400)
+      .json(new ErrorRes(400, `There is only ${product.inStock} product left`));
+  }
 
   if (!product)
     return res.status(404).json(new ErrorRes(404, "Product not found"));
 
   const addedItem = await cartItemService.addCartItem(product, user, quantity);
+  const usersCart = await cartItemService.getWholeCartByUserId(user.id);
 
   if (addedItem === 400) {
     return res
@@ -51,14 +60,26 @@ export const addCartItem = async (req: Request, res: Response) => {
       .json(new ErrorRes(addedItem, "Product already exists in your cart"));
   }
 
-  return res
-    .status(200)
-    .json(new SuccessRes(200, "CartItem added created Successfully"));
+  return res.json(usersCart);
 };
 
 export const updateCartItem = async (req: Request, res: Response) => {
   const cartItemId = req.params.cartItemId;
   let quantity = req.body.quantity;
+
+  const cartItem = await cartItemService.getCartItemById(Number(cartItemId));
+  if (!cartItem)
+    return res.status(404).json(new ErrorRes(404, "Cart Item not found"));
+
+  if (cartItem.product.inStock < quantity)
+    return res
+      .status(400)
+      .json(
+        new ErrorRes(
+          400,
+          `There is only ${cartItem.product.inStock} product left`
+        )
+      );
 
   if (!quantity)
     return res.status(400).json(new ErrorRes(400, "Quantity is required"));
@@ -76,9 +97,9 @@ export const updateCartItem = async (req: Request, res: Response) => {
   if (!updatedCartItem)
     return res.status(404).json(new ErrorRes(404, "Cart Item not found"));
 
-  return res
-    .status(200)
-    .json(new SuccessRes(200, "Cart Item updated successfully"));
+  const usersCart = await cartItemService.getWholeCartByUserId(req.user.id);
+
+  return res.json(usersCart);
 };
 
 export const removeCartItem = async (req: Request, res: Response) => {
@@ -86,5 +107,8 @@ export const removeCartItem = async (req: Request, res: Response) => {
   const deletedCartItem = await cartItemService.removeCartItem(productId);
   if (!deletedCartItem)
     return res.status(404).json(new ErrorRes(404, "CartItem not found"));
-  res.status(200).json(new SuccessRes(200, "CartItem deleted successfully"));
+
+  const usersCart = await cartItemService.getWholeCartByUserId(req.user.id);
+
+  res.json(usersCart);
 };

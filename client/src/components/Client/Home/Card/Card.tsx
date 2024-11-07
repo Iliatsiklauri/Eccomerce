@@ -1,8 +1,13 @@
+import { addItemToCart, updateCartItem } from "@/src/api/CartItemsApi";
 import CartButton from "@/src/components/Shared/CartButton/CartButton";
+import { setCart } from "@/src/store/features/cartSlice";
+import { RootState } from "@/src/store/store";
+import { CartItem } from "@/src/types/CartItem";
 import { Product } from "@/src/types/Product";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Card({
   card,
@@ -13,6 +18,8 @@ export default function Card({
   fixed?: boolean;
   listedCard?: boolean;
 }) {
+  const dispatch = useDispatch();
+  const { cart } = useSelector((state: RootState) => state.cart);
   const isPromotion = card.salePrice < card.price;
   const diff = card.price - card.salePrice;
   const promotion = Math.floor((diff / card.price) * 100);
@@ -29,7 +36,32 @@ export default function Card({
           href={`/products/${card.id}`}
           className="h-full w-full absolute z-10"
         ></Link>
-        <CartButton />
+        <div
+          onClick={async () => {
+            const existingCartItem = cart.find(
+              (cartItem: CartItem) =>
+                cartItem.product.pinnedImage === card.pinnedImage
+            );
+            if (existingCartItem) {
+              if (
+                existingCartItem.quantity !== existingCartItem.product.inStock
+              ) {
+                const cartItems = await updateCartItem(
+                  existingCartItem.id,
+                  existingCartItem.quantity + 1
+                );
+                dispatch(setCart(cartItems));
+              }
+            } else {
+              const cartItems = await addItemToCart(card.id, 1);
+              if (!cartItems.message) {
+                dispatch(setCart(cartItems));
+              }
+            }
+          }}
+        >
+          <CartButton />
+        </div>
         <Image
           src={`${card.image}`}
           alt={card.title || "Product Image"}
