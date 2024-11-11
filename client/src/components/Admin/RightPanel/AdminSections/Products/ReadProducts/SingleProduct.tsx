@@ -34,7 +34,7 @@ export default function SingleProduct({
         <div className="flex items-center gap-3">
           <div className="avatar">
             <div className="h-[45px] w-[45px] relative shadow-xl border-[2px] border-black">
-              <Image alt="product" src={product.image} fill />
+              <Image alt="product" src={product.image} fill sizes="45px" />
             </div>
           </div>
         </div>

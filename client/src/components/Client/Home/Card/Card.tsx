@@ -20,9 +20,14 @@ export default function Card({
 }) {
   const dispatch = useDispatch();
   const { cart } = useSelector((state: RootState) => state.cart);
-  const isPromotion = card.salePrice < card.price;
-  const diff = card.price - card.salePrice;
-  const promotion = Math.floor((diff / card.price) * 100);
+  let promotion;
+  let diff;
+  let isPromotion;
+  if (card) {
+    isPromotion = card.salePrice < card.price;
+    diff = card.price - card.salePrice;
+    promotion = Math.floor((diff / card.price) * 100);
+  }
   return (
     <div
       className={`2xl:w-[240px] gap-2 flex flex-col ${

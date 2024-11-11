@@ -35,12 +35,12 @@ export default function HeaderCartSection() {
           id: user.id,
         })
       );
+      const getCart = async () => {
+        const usersCart = await getUserCart();
+        dispatch(setCart(usersCart));
+      };
+      getCart();
     }
-    const getCart = async () => {
-      const usersCart = await getUserCart();
-      dispatch(setCart(usersCart));
-    };
-    getCart();
   }, [dispatch]);
 
   return (

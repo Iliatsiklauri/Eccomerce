@@ -16,6 +16,7 @@ export const getUsersApi = async (token: string) => {
     throw er;
   }
 };
+
 export const getUserApi = async (id: string) => {
   try {
     const token = getCookie("authorization");

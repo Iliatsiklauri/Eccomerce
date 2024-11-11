@@ -26,7 +26,13 @@ export default function LeftPanelSection({ image, name, isActive }: PropType) {
         isActive && "bg-slate-200"
       } w-full flex items-center justify-start px-4 cursor-pointer gap-6 rounded-2xl hover:bg-slate-200`}
     >
-      <Image src={image} alt="admin" width={27} height={20} />
+      <Image
+        src={image}
+        alt="admin"
+        width={27}
+        height={27}
+        className="h-auto"
+      />
       <p>{name}</p>
     </Link>
   );

@@ -7,6 +7,7 @@ import { RootState } from "@/src/store/store";
 import { setCart } from "@/src/store/features/cartSlice";
 import { addItemToCart, updateCartItem } from "@/src/api/CartItemsApi";
 import { CartItem } from "@/src/types/CartItem";
+import { addOrderById } from "@/src/api/OrdersApi";
 type PropType = {
   product: null | Product;
 };
@@ -99,7 +100,14 @@ export default function Pricebox({ product }: PropType) {
             alt="cart"
           />
         </button>
-        <button className="btn w-full text-white btn-neutral">Buy</button>
+        <button
+          className="btn w-full text-white btn-neutral"
+          onClick={async () => {
+            if (product) await addOrderById([product?.id], amount);
+          }}
+        >
+          Buy
+        </button>
       </section>
     </div>
   );
