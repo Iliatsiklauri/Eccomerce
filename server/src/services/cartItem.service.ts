@@ -43,6 +43,7 @@ export class CartItemService {
       const checkIfExists = await this.CartItemRepository.findOne({
         where: { user: { id: user.id }, product: { id: product.id } },
       });
+
       if (checkIfExists) return 400;
 
       const cartItem = new CartItem();

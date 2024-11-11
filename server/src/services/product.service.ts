@@ -125,7 +125,6 @@ export class ProductService {
 
       if (updateProductFilesDto.image) {
         if (updateProductDto.image) return "imageEr";
-        await this.AWSService.deleteImage(target.filepath);
         const [filepath, image] = await this.AWSService.uploadImage(
           updateProductFilesDto.image[0],
           "products"
@@ -135,9 +134,7 @@ export class ProductService {
 
       if (updateProductFilesDto.pinnedImage) {
         if (updateProductDto.pinnedImage) return "pinnedEr";
-        if (target.pinnedImageFilePath) {
-          await this.AWSService.deleteImage(target.pinnedImageFilePath);
-        }
+
         const [pinnedImageFilePath, pinnedImage] =
           await this.AWSService.uploadImage(
             updateProductFilesDto.pinnedImage[0],
@@ -169,20 +166,27 @@ export class ProductService {
     }
   }
 
+  async updateProductInStock(id, number) {
+    try {
+      const product = await this.productRepository.findOne({ where: { id } });
+      product.inStock = product.inStock - number;
+      await this.productRepository.save(product);
+    } catch (er) {
+      console.log(er, "Error while updating product inStock property");
+    }
+  }
+
   async deletePost(id) {
     try {
       const target = await this.productRepository.findOneBy({ id });
       if (!target) return 404;
 
-      await this.AWSService.deleteImage(target.filepath);
-      if (target.pinnedImageFilePath) {
-        await this.AWSService.deleteImage(target.pinnedImageFilePath);
-      }
       const deletedProduct = await this.productRepository.delete({ id });
       if (deletedProduct.affected === 0) return null;
 
       return deletedProduct;
     } catch (er) {
+      console.log(er, "Error while deleting product");
       return null;
     }
   }

@@ -19,6 +19,7 @@ export default function Card({
   listedCard?: boolean;
 }) {
   const dispatch = useDispatch();
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
   const { cart } = useSelector((state: RootState) => state.cart);
   let promotion;
   let diff;
@@ -65,7 +66,7 @@ export default function Card({
             }
           }}
         >
-          <CartButton />
+          {isLoggedIn && <CartButton />}
         </div>
         <Image
           src={`${card.image}`}

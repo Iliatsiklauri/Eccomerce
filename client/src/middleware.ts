@@ -20,7 +20,10 @@ export function middleware(request: NextRequest) {
   }
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/profile") && !token) {
+  if (
+    (pathname.startsWith("/profile") || pathname.startsWith("/checkout")) &&
+    !token
+  ) {
     return NextResponse.redirect(new URL("/auth", request.url));
   }
 
@@ -35,5 +38,11 @@ export function middleware(request: NextRequest) {
   return response;
 }
 export const config = {
-  matcher: ["/", "/auth", "/admin/:path*", "/profile/:path*"],
+  matcher: [
+    "/",
+    "/auth",
+    "/admin/:path*",
+    "/profile/:path*",
+    "/checkout/:path*",
+  ],
 };

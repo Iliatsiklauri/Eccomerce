@@ -42,3 +42,22 @@ export const addOrderById = async (products: number[], quantity: number) => {
     console.log(er, "Error while fetching users cart");
   }
 };
+
+export const addOrderByCart = async () => {
+  const authorization = getCookie("authorization");
+  try {
+    const usersCart = await fetch(
+      `${process.env.NEXT_PUBLIC_ORDERS_API}/cart` as string,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: authorization as string,
+        },
+      }
+    );
+    return usersCart.json();
+  } catch (er) {
+    console.log(er, "Error while fetching users cart");
+  }
+};

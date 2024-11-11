@@ -8,6 +8,8 @@ import { setCart } from "@/src/store/features/cartSlice";
 import { addItemToCart, updateCartItem } from "@/src/api/CartItemsApi";
 import { CartItem } from "@/src/types/CartItem";
 import { addOrderById } from "@/src/api/OrdersApi";
+import Link from "next/link";
+
 type PropType = {
   product: null | Product;
 };
@@ -24,6 +26,7 @@ export default function Pricebox({ product }: PropType) {
 
   const dispatch = useDispatch();
   const { cart } = useSelector((state: RootState) => state.cart);
+  const { isLoggedIn } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className="h-[290px] w-[30%] bg-opacity-60 bg-slate-50 p-4 rounded-md shadow-md flex items-center justify-between flex-col ">
@@ -63,51 +66,69 @@ export default function Pricebox({ product }: PropType) {
             </div>
           )}
         </div>
-        <button
-          className="btn w-full text-white btn-success"
-          onClick={async () => {
-            const existingCartItem = cart.find(
-              (cartItem: CartItem) =>
-                cartItem.product.pinnedImage === product?.pinnedImage
-            );
-            if (existingCartItem && product) {
-              if (
-                existingCartItem.quantity !==
-                  existingCartItem.product.inStock &&
-                existingCartItem.quantity + amount <= product?.inStock
-              ) {
-                const cartItems = await updateCartItem(
-                  existingCartItem.id,
-                  existingCartItem.quantity + amount
-                );
-                dispatch(setCart(cartItems));
-              }
-            } else {
-              if (product) {
-                const cartItems = await addItemToCart(product.id, amount);
-                if (!cartItems.message) {
+        {isLoggedIn ? (
+          <button
+            className="btn w-full text-white btn-success"
+            onClick={async () => {
+              const existingCartItem = cart.find(
+                (cartItem: CartItem) =>
+                  cartItem.product.pinnedImage === product?.pinnedImage
+              );
+              if (existingCartItem && product) {
+                if (
+                  existingCartItem.quantity !==
+                    existingCartItem.product.inStock &&
+                  existingCartItem.quantity + amount <= product?.inStock
+                ) {
+                  const cartItems = await updateCartItem(
+                    existingCartItem.id,
+                    existingCartItem.quantity + amount
+                  );
                   dispatch(setCart(cartItems));
                 }
+              } else {
+                if (product) {
+                  const cartItems = await addItemToCart(product.id, amount);
+                  if (!cartItems.message) {
+                    dispatch(setCart(cartItems));
+                  }
+                }
               }
-            }
-          }}
-        >
-          Add to Cart
-          <Image
-            src={"/icons/header/trolley.png"}
-            width={20}
-            height={20}
-            alt="cart"
-          />
-        </button>
-        <button
-          className="btn w-full text-white btn-neutral"
-          onClick={async () => {
-            if (product) await addOrderById([product?.id], amount);
-          }}
-        >
-          Buy
-        </button>
+            }}
+          >
+            Add to Cart
+            <Image
+              src={"/icons/header/trolley.png"}
+              width={20}
+              height={20}
+              alt="cart"
+            />
+          </button>
+        ) : (
+          <Link
+            href={"/auth?mode=login"}
+            className="btn w-full text-white btn-success"
+          >
+            Add to Cart
+          </Link>
+        )}
+        {isLoggedIn ? (
+          <button
+            className="btn w-full text-white btn-neutral"
+            onClick={async () => {
+              if (product) await addOrderById([product?.id], amount);
+            }}
+          >
+            Buy
+          </button>
+        ) : (
+          <Link
+            className="btn w-full text-white btn-neutral"
+            href={"/auth?mode=login"}
+          >
+            Buy
+          </Link>
+        )}
       </section>
     </div>
   );

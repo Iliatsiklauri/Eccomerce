@@ -18,12 +18,14 @@ type PropType = {
     lat: number;
     lng: number;
   } | null;
+  type?: boolean;
 };
 
 export default function GoogleMapComponent({
   setMapBorder,
   setSelectedAddress,
   selectedAddress,
+  type,
   mapBorder,
 }: PropType) {
   const [loading, setLoading] = useState(true);
@@ -86,7 +88,11 @@ export default function GoogleMapComponent({
   }, [map, selectedAddress, marker]);
 
   return (
-    <div className="flex flex-col items-center justify-center flex-shrink-0 gap-2 w-[55%]">
+    <div
+      className={` flex flex-col items-center justify-center flex-shrink-0 gap-2 ${
+        type ? "w-full" : "w-[55%]"
+      } `}
+    >
       <div
         className={` h-[320px] w-full rounded-lg overflow-hidden ${
           loading && "skeleton bg-black bg-opacity-15"
@@ -112,10 +118,12 @@ export default function GoogleMapComponent({
           />
         </LoadScript>
       </div>
-      <div className="w-full h-[40px] px-1">
-        <span className="font-medium text-black">Selected Address : </span>
-        <span className="text-black">{selectedAddress?.street}</span>
-      </div>
+      {!type && (
+        <div className="w-full h-[40px] px-1">
+          <span className="font-medium text-black">Selected Address : </span>
+          <span className="text-black">{selectedAddress?.street}</span>
+        </div>
+      )}
     </div>
   );
 }

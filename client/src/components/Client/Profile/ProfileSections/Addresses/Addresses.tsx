@@ -97,7 +97,7 @@ export default function Addresses({ user, setSubmitted }: PropType) {
   };
 
   return (
-    <div className="w-full h-full flex items-start  justify-between pt-3">
+    <div className="w-full h-full flex items-start justify-between">
       {modal && (
         <AddressApiModal loading={loading} setModal={setModal} res={response} />
       )}

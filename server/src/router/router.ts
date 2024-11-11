@@ -9,12 +9,14 @@ import commentRouter from "./comment.Router";
 import categoryRouter from "./category.router";
 import addressRouter from "./address.Router";
 import cartItemRouter from "./cartItem.Router";
+import orderRouter from "./order.Router";
 
 const Router = express.Router();
 
 Router.use("/users", AuthGuard, usersRouter);
 Router.use("/admin", AdminGuard, adminRouter);
 Router.use("/comments", AuthGuard, commentRouter);
+Router.use("/orders", orderRouter);
 Router.use("/manageCart", cartItemRouter);
 Router.use("/address", addressRouter);
 Router.use("/category", categoryRouter);

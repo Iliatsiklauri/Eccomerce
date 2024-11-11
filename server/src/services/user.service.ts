@@ -21,7 +21,11 @@ export class UserService {
     try {
       return await this.userRepository.findOne({
         where: { id },
-        relations: { Address: true, cartItems: { product: true } },
+        relations: {
+          Address: true,
+          cartItems: { product: true },
+          orders: true,
+        },
       });
     } catch {
       return null;
@@ -114,6 +118,19 @@ export class UserService {
     try {
     } catch (er) {
       console.log(er, "error while adding admin");
+    }
+  }
+
+  /// for helping purposes
+
+  async getRawUserById(id): Promise<User | null> {
+    try {
+      return await this.userRepository.findOne({
+        where: { id },
+        relations: { Address: true },
+      });
+    } catch {
+      return null;
     }
   }
 }

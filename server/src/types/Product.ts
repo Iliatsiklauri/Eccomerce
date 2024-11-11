@@ -32,6 +32,10 @@ export class productType {
   comments: Comment[];
 }
 
+export type OrderItemType = productType & {
+  quantity: number;
+};
+
 export type updateProductDto = {
   title?: string;
   description?: string;

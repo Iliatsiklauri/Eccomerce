@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Address } from "./Address";
 import { CartItem } from "./CartItem";
+import { Order } from "./Order";
 
 export enum UserRole {
   ADMIN = "ADMIN",
@@ -43,4 +44,7 @@ export class User {
 
   @OneToMany(() => CartItem, (CartItem) => CartItem.user)
   cartItems: CartItem[];
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 }

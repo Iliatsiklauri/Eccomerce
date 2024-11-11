@@ -1,5 +1,5 @@
 import { Address } from "./Address";
-import { Product } from "./Product";
+import { CartItem } from "./CartItem";
 import { user } from "./User";
 
 export enum orderStatus {
@@ -12,11 +12,7 @@ export type Order = {
   id: number;
   user: user;
   address: Address;
-  products: OrderItemType[];
+  products: CartItem[];
   orderStatus: orderStatus;
-  createAt: string;
-};
-
-export type OrderItemType = Product & {
-  quantity: number;
+  createdAt: Date;
 };

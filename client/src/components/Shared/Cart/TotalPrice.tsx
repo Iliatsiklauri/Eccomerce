@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 type PropType = {
   total: number;
@@ -12,7 +13,9 @@ export default function TotalPrice({ total }: PropType) {
           {Math.ceil(total * 100) / 100}$
         </span>
       </p>
-      <div className="btn btn-sm text-white btn-success">Checkout</div>
+      <Link className="btn btn-sm text-white btn-success" href={"/checkout"}>
+        Checkout
+      </Link>
     </div>
   );
 }

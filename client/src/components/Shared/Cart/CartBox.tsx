@@ -11,10 +11,12 @@ export default function CartBox({ cart, setCartMode }: PropType) {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const newTotal = cart.reduce((acc, cartItem: CartItem) => {
-      return acc + cartItem.quantity * cartItem.product.salePrice;
-    }, 0);
-    setTotal(newTotal);
+    if (cart) {
+      const newTotal = cart.reduce((acc, cartItem: CartItem) => {
+        return acc + cartItem.quantity * cartItem.product.salePrice;
+      }, 0);
+      setTotal(newTotal);
+    }
   }, [cart]);
 
   return (

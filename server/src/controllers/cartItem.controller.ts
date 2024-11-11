@@ -14,6 +14,12 @@ export const getAllItem = async (req: Request, res: Response) => {
 };
 
 export const getCartItemById = async (req: Request, res: Response) => {
+  const cartItemId = Number(req.params.cartItemId);
+
+  if (isNaN(cartItemId)) {
+    return res.status(400).json(new ErrorRes(400, "Invalid Id"));
+  }
+
   const cartItem = await cartItemService.getCartItemById(
     Number(req.params.cartItemId)
   );
