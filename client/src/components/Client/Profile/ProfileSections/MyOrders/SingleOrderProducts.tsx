@@ -9,9 +9,7 @@ type PropType = {
 export default function SingleOrderProducts({ orderItem }: PropType) {
   const product = orderItem.product;
   const isPromotion = product.price > product.salePrice;
-  const promotionPercentage =
-    Math.ceil(product.salePrice * orderItem.quantity * 100) / 100;
-  console.log(promotionPercentage);
+
   return (
     <div className="w-full p-2 rounded-md border-[1px] border-black border-opacity-10 bg-white text-sm flex justify-between items-center text-black shadow-sm">
       <div className="flex items-start justify-center gap-6">

@@ -11,11 +11,13 @@ export default function CartBox({ cart, setCartMode }: PropType) {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    if (cart) {
+    if (cart && cart.length > 0) {
       const newTotal = cart.reduce((acc, cartItem: CartItem) => {
         return acc + cartItem.quantity * cartItem.product.salePrice;
       }, 0);
       setTotal(newTotal);
+    } else {
+      setTotal(0);
     }
   }, [cart]);
 
@@ -40,7 +42,9 @@ export default function CartBox({ cart, setCartMode }: PropType) {
           </div>
         )}
       </div>
-      {cart.length > 0 && <TotalPrice total={total} />}
+      {cart.length > 0 && (
+        <TotalPrice total={total} setCartMode={setCartMode} />
+      )}
     </div>
   );
 }

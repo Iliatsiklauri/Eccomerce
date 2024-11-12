@@ -44,7 +44,7 @@ export const addOrderByCart = async (req: Request, res: Response) => {
     await CartItemsService.removeCartItem(cartItem.id);
   });
 
-  res.send("good");
+  res.status(200).json(new SuccessRes(200, "Order placed successfully"));
 };
 
 //dfasjiasddasuidashuidasih

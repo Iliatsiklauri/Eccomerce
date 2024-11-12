@@ -6,9 +6,12 @@ type PropType = {
 };
 
 export default function DetailsOrder({ order }: PropType) {
-  const total = order.products.reduce((acc, current) => {
-    return acc + current.product.salePrice * current.quantity;
-  }, 0);
+  let total;
+  if (order && order.products.length > 0) {
+    total = order.products.reduce((acc, current) => {
+      return acc + current.product.salePrice * current.quantity;
+    }, 0);
+  }
   return (
     <div className="flex flex-col items-start justify-center w-full gap-1 ">
       <div className="flex gap-2 text-sm text-black">

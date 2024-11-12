@@ -56,7 +56,9 @@ export const addOrderByCart = async () => {
         },
       }
     );
-    return usersCart.json();
+    const cart = await usersCart.json();
+    console.log(cart);
+    return cart;
   } catch (er) {
     console.log(er, "Error while fetching users cart");
   }

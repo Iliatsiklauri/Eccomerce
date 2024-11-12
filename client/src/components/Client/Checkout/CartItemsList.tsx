@@ -6,13 +6,24 @@ import OrderSummary from "./OrderSummary";
 
 type PropType = {
   cart: [] | CartItem[];
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  bg: boolean;
+  setBg: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean;
   selectedAddress: {
     street: string;
     lat: number;
     lng: number;
   } | null;
 };
-export default function CartItemsList({ cart, selectedAddress }: PropType) {
+export default function CartItemsList({
+  cart,
+  selectedAddress,
+  bg,
+  loading,
+  setBg,
+  setLoading,
+}: PropType) {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
@@ -35,7 +46,12 @@ export default function CartItemsList({ cart, selectedAddress }: PropType) {
         selectedAddress={selectedAddress}
       />
       <div className="w-[99%] h-[1px] bg-black opacity-15"></div>
-      <OrderButton />
+      <OrderButton
+        setBg={setBg}
+        bg={bg}
+        setLoading={setLoading}
+        loading={loading}
+      />
     </div>
   );
 }
