@@ -14,15 +14,16 @@ const categorysService = new categoryService();
 
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    let page = parseInt(req.query.page as string) || 1;
-    let limit = parseInt(req.query.limit as string) || 20;
-    let pinned = req.query.pinned === "true";
-    let skip = limit * (page - 1);
-    let category = parseInt(req.query.category as string);
-    let minPrice = parseInt(req.query.minPrice as string);
-    let maxPrice = parseInt(req.query.maxPrice as string);
-    let sort = req.query.sort as string;
-    let promotion = req.query.promotion === "true";
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const pinned = req.query.pinned === "true";
+    const skip = limit * (page - 1);
+    const category = parseInt(req.query.category as string);
+    const minPrice = parseInt(req.query.minPrice as string);
+    const maxPrice = parseInt(req.query.maxPrice as string);
+    const sort = req.query.sort as string;
+    const promotion = req.query.promotion === "true";
+
     const [products, total] = await productsService.getAllProducts(
       skip,
       limit,
@@ -66,8 +67,8 @@ export const searchProduct = async (req: Request, res: Response) => {
 // create product
 
 export const createProduct = async (req: Request, res: Response) => {
-  let image = req.files?.["image"] || [];
-  let pinnedImage = req.files?.["pinnedImage"] || [];
+  const image = req.files?.["image"] || [];
+  const pinnedImage = req.files?.["pinnedImage"] || [];
 
   if (!image) {
     return res.status(400).json(new ErrorRes(400, "image is required"));
@@ -81,7 +82,7 @@ export const createProduct = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );
@@ -117,7 +118,7 @@ export const updateProduct = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );

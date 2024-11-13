@@ -33,7 +33,7 @@ export default function OrderSummary({
         </p>
         <p className="text-md">
           <span className="font-semibold text-xl">Total: </span>
-          {total + 3.99}$
+          {`${Math.ceil((total + 3.99) * 100) / 100}$`}
         </p>
       </div>
     </div>

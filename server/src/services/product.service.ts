@@ -64,6 +64,7 @@ export class ProductService {
         relations: ["comments", "comments.user", "category"],
       });
     } catch (er) {
+      console.log(er, "Error while getting single product");
       return null;
     }
   }
@@ -81,6 +82,7 @@ export class ProductService {
         .getMany();
       return products;
     } catch (er) {
+      console.log(er, "Error while searching for products");
       return 400;
     }
   }
@@ -109,7 +111,7 @@ export class ProductService {
       const Product = await this.productRepository.save(newProduct);
       return Product;
     } catch (er) {
-      console.log(er);
+      console.log(er, "Error while creating product");
       return null;
     }
   }
@@ -161,7 +163,7 @@ export class ProductService {
       await this.productRepository.save(target);
       return target;
     } catch (er) {
-      console.log(er, "error while updating product");
+      console.log(er, "Error while updating product");
       return null;
     }
   }

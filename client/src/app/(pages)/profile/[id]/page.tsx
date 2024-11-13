@@ -12,6 +12,7 @@ type PropType = {
 export default function Page({ params: { id } }: PropType) {
   const [user, setUser] = useState<null | user>(null);
   const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
     async function getData() {
       const data = await getUserApi(id);

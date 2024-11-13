@@ -5,6 +5,7 @@ import { ErrorRes, SuccessRes } from "../utils/validation";
 import { UserService } from "../services/user.service";
 import { CartItem } from "../db/entities/CartItem";
 import { CartItemService } from "../services/cartItem.service";
+import { orderStatus } from "../db/entities/Order";
 
 const ordersService = new OrderService();
 const productsService = new ProductService();
@@ -12,8 +13,19 @@ const usersService = new UserService();
 const CartItemsService = new CartItemService();
 
 export const getAllOrders = async (req: Request, res: Response) => {
-  const AllOrders = await ordersService.getAllOrders();
-  res.json(AllOrders);
+  const status = req.query.status
+    ? (req.query.status as orderStatus)
+    : undefined;
+  const page = parseInt(req.query.page as string) || 1;
+  const limit = parseInt(req.query.limit as string) || 20;
+  const skip = limit * (page - 1);
+
+  const [products, total] = await ordersService.getAllOrders(
+    skip,
+    limit,
+    status
+  );
+  res.json({ products, total });
 };
 
 export const getUserOrders = async (req: Request, res: Response) => {
@@ -58,7 +70,7 @@ export const addOrderById = async (req: Request, res: Response) => {
       .status(400)
       .json(new ErrorRes(400, "quntity and product Id are required"));
 
-  let errors = [];
+  const errors = [];
 
   const user = await usersService.getRawUserById(req.user.id);
   if (!user.Address)
@@ -89,6 +101,24 @@ export const addOrderById = async (req: Request, res: Response) => {
     return res.status(400).json(new ErrorRes(400, "Could not add an Order"));
 
   return res.json(order);
+};
+
+export const updateOrderStatus = async (req: Request, res: Response) => {
+  const options = ["pending", "fullfiled", "failed"];
+  const orderId = req.params.id;
+  const orderStatus = req.body.orderStatus;
+
+  if (!options.includes(orderStatus))
+    return res.status(400).json(new ErrorRes(400, "Invalid orderStatus"));
+
+  const updated = await ordersService.updateOrder(Number(orderId), orderStatus);
+
+  if (!updated)
+    return res.status(400).json(new ErrorRes(400, "Failed to update order"));
+
+  return res
+    .status(200)
+    .json(new SuccessRes(200, "Order updated successfully"));
 };
 
 export const deleteOrder = async (req: Request, res: Response) => {

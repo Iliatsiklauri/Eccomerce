@@ -14,6 +14,7 @@ export class commentService {
         relations: ["product", "user"],
       });
     } catch (er) {
+      console.log(er, "Error while getting all comments");
       return null;
     }
   }
@@ -24,6 +25,7 @@ export class commentService {
       if (!comment) return null;
       return comment;
     } catch (er) {
+      console.log(er, "Error while getting single comment");
       return null;
     }
   }
@@ -42,6 +44,7 @@ export class commentService {
       comment.product = product;
       return await this.commentRepository.save(comment);
     } catch (er) {
+      console.log(er, "Error while adding comment");
       return null;
     }
   }
@@ -52,6 +55,7 @@ export class commentService {
       if (comment.affected === 0) return null;
       return comment;
     } catch (er) {
+      console.log(er, "Error while deleting single comment");
       return null;
     }
   }
@@ -62,6 +66,7 @@ export class commentService {
       await this.commentRepository.save(target);
       return target;
     } catch (er) {
+      console.log(er, "Error while updating single comment");
       return null;
     }
   }

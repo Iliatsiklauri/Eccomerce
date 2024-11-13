@@ -41,7 +41,7 @@ export const createAddress = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );
@@ -67,7 +67,7 @@ export const updateAddress = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );

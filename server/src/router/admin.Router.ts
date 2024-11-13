@@ -8,6 +8,7 @@ import {
 const adminRouter = express.Router();
 
 adminRouter.get("/", getAllAdmins);
+adminRouter.delete("/", deleteAdmin);
 adminRouter.post("/", addAdmin);
 
 export default adminRouter;

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CartItemService } from "../services/cartItem.service";
 import { UserService } from "../services/user.service";
 import { ProductService } from "../services/product.service";
-import { ErrorRes, SuccessRes, userType } from "../utils/validation";
+import { ErrorRes, userType } from "../utils/validation";
 
 const cartItemService = new CartItemService();
 const userService = new UserService();
@@ -71,7 +71,7 @@ export const addCartItem = async (req: Request, res: Response) => {
 
 export const updateCartItem = async (req: Request, res: Response) => {
   const cartItemId = req.params.cartItemId;
-  let quantity = req.body.quantity;
+  const quantity = req.body.quantity;
 
   const cartItem = await cartItemService.getCartItemById(Number(cartItemId));
   if (!cartItem)

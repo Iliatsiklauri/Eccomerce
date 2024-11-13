@@ -1,19 +1,27 @@
 import { AppDataSource } from "../db/database-connect";
 import { CartItem } from "../db/entities/CartItem";
-import { Order } from "../db/entities/Order";
-import { Product } from "../db/entities/Product";
+import { Order, orderStatus } from "../db/entities/Order";
 import { User } from "../db/entities/User";
 import { OrderItemType } from "../types/Product";
 
 export class OrderService {
   private readonly orderRepository = AppDataSource.getRepository(Order);
 
-  async getAllOrders() {
+  async getAllOrders(skip: number, limit: number, status: string | null) {
     try {
-      const orders = await this.orderRepository.find({
-        relations: { user: true },
-      });
-      return orders;
+      const query = await this.orderRepository
+        .createQueryBuilder("order")
+        .leftJoinAndSelect("order.user", "user")
+        .orderBy("order.createdAt", "DESC");
+      if (status) {
+        query.andWhere("order.orderStatus = :status", { status });
+      }
+
+      query.skip(skip).take(limit);
+
+      const [products, total] = await query.getManyAndCount();
+
+      return [products, total];
     } catch (er) {
       console.log(er, "Error while fetching all orders");
     }
@@ -65,6 +73,20 @@ export class OrderService {
       return savedOrder;
     } catch (er) {
       console.log(er, "Error while creating product");
+    }
+  }
+
+  async updateOrder(id: number, status: orderStatus) {
+    try {
+      const order = await this.orderRepository.findOne({ where: { id } });
+      if (!order) return null;
+      order.orderStatus = status;
+
+      const updated = await this.orderRepository.save(order);
+      return updated;
+    } catch (e) {
+      console.log(e, "Error while updating order status");
+      return null;
     }
   }
 

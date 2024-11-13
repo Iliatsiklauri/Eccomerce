@@ -3,11 +3,18 @@
 import { getUserApi } from "@/src/api/UsersApi";
 import CartItemsList from "@/src/components/Client/Checkout/CartItemsList";
 import CheckoutModal from "@/src/components/Client/Checkout/CheckoutModal";
-import GoogleMapComponent from "@/src/components/Client/Profile/ProfileSections/Addresses/GoogleMap";
 import { RootState } from "@/src/store/store";
 import { Address } from "@/src/types/Address";
-import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
+const GoogleMapComponent = dynamic(
+  () =>
+    import(
+      "@/src/components/Client/Profile/ProfileSections/Addresses/GoogleMap"
+    )
+);
 
 export default function Page() {
   const [bg, setBg] = useState(false);
@@ -26,20 +33,21 @@ export default function Page() {
     lng: 44.8271,
   });
 
+  const fetchUserAddress = useCallback(async () => {
+    if (id && !selectedAddress) {
+      const res = await getUserApi(id);
+      const address = res.Address as Address;
+      setSelectedAddress({
+        street: address.street,
+        lat: address.lat,
+        lng: address.lng,
+      });
+    }
+  }, [id, selectedAddress]);
+
   useEffect(() => {
-    const getUser = async () => {
-      if (id) {
-        const res = await getUserApi(id);
-        const address = res.Address as Address;
-        setSelectedAddress({
-          street: address.street,
-          lat: address.lat,
-          lng: address.lng,
-        });
-      }
-    };
-    getUser();
-  }, [id]);
+    fetchUserAddress();
+  }, [fetchUserAddress]);
 
   const [mapBorder, setMapBorder] = useState(false);
 

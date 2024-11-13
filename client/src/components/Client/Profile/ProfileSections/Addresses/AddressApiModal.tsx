@@ -24,7 +24,7 @@ export default function AddressApiModal({
 }: PropType) {
   return (
     <div
-      className={`w-full h-full absolute right-0 top-0 left-0 bottom-0 flex ${
+      className={`w-full h-full absolute right-0 top-0 left-0 bottom-0 flex  ${
         dif ? "items-center" : "items-start"
       }  justify-center `}
     >

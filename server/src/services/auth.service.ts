@@ -29,6 +29,7 @@ export class AuthService {
         initialAdmin: user.initialAdmin,
       });
     } catch (er) {
+      console.log(er, "Error while signing in");
       return null;
     }
   }

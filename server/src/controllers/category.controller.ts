@@ -31,7 +31,7 @@ export const addCategory = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );
@@ -74,7 +74,7 @@ export const updateCategory = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );
@@ -84,6 +84,9 @@ export const updateCategory = async (req: Request, res: Response) => {
     req.body,
     req.params.id
   );
+
+  if (!updatedCategory)
+    return res.status(400).json(new ErrorRes(400, "Failed to update category"));
 
   return res
     .status(200)

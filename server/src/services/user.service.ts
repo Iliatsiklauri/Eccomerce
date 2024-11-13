@@ -1,6 +1,7 @@
 import { AppDataSource } from "../db/database-connect";
 import { Address } from "../db/entities/Address";
 import { User } from "../db/entities/User";
+import { CreateUserDto } from "../types/UserDto";
 import { generateToken } from "../utils/jwt";
 import { userType } from "../utils/validation";
 import bcrypt from "bcrypt";
@@ -39,16 +40,17 @@ export class UserService {
         select: ["email", "password", "role", "fullname", "initialAdmin", "id"],
       });
       return user ?? null;
-    } catch {
+    } catch (er) {
+      console.log(er, "Error while getting user by email");
       return null;
     }
   }
 
-  async createUser(createUserDto): Promise<null | string> {
+  async createUser(createUserDto: CreateUserDto): Promise<null | string> {
     try {
       createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
-      const newUser = (await this.userRepository.create(createUserDto)) as any;
-      const savedUser: User = await this.userRepository.save(newUser);
+      const newUser = await this.userRepository.create(createUserDto);
+      const savedUser = await this.userRepository.save(newUser);
       const token = generateToken({
         id: savedUser.id,
         email: savedUser.email,
@@ -58,6 +60,7 @@ export class UserService {
       });
       return token;
     } catch (er) {
+      console.log(er, "Error while creating user");
       return null;
     }
   }
@@ -82,24 +85,23 @@ export class UserService {
 
       Object.assign(existingUser, updateUserDto);
       return await this.userRepository.save(existingUser);
-    } catch (error) {
+    } catch (er) {
+      console.log(er, "Error while updating user");
       return null;
     }
   }
 
-  async deleteUser(
-    id,
-    email: string,
-    role: string
-  ): Promise<null | boolean | number> {
+  async deleteUser(id, role: string): Promise<null | boolean | number> {
     try {
       const targetUser = await this.userRepository.findOne({
         where: { id },
         relations: { Address: true },
       });
+
       if (role !== "ADMIN" && targetUser.id !== id) {
         return 401;
       }
+
       if (targetUser?.Address) {
         await this.addressRepo.delete(targetUser.Address.id);
       }
@@ -116,6 +118,7 @@ export class UserService {
 
   async AddAdmin() {
     try {
+      console.log("Adding admin");
     } catch (er) {
       console.log(er, "error while adding admin");
     }

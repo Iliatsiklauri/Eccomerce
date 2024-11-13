@@ -1,10 +1,8 @@
 import { Request, Response } from "express";
 import { ErrorRes, logInSchema, SuccessRes } from "../utils/validation";
 import { AuthService } from "../services/auth.service";
-import { UserService } from "../services/user.service";
 
 const authService = new AuthService();
-const UsersService = new UserService();
 
 export const signIn = async (req: Request, res: Response) => {
   const { error } = logInSchema.validate(req.body);
@@ -13,7 +11,7 @@ export const signIn = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );

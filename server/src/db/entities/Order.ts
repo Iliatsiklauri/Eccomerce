@@ -16,10 +16,10 @@ export class Order {
   user: User;
 
   @Column("json")
-  products: Object[];
+  products: object[];
 
   @Column("json")
-  address: Object;
+  address: object;
 
   @Column({ type: "enum", enum: orderStatus, default: orderStatus.PENDING })
   orderStatus: orderStatus;

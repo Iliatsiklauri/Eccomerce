@@ -3,9 +3,10 @@ import React from "react";
 import StatusIcon from "./StatusIcon";
 type PropType = {
   order: Order;
+  admin?: boolean;
 };
 
-export default function DetailsOrder({ order }: PropType) {
+export default function DetailsOrder({ order, admin }: PropType) {
   let total;
   if (order && order.products.length > 0) {
     total = order.products.reduce((acc, current) => {
@@ -13,7 +14,7 @@ export default function DetailsOrder({ order }: PropType) {
     }, 0);
   }
   return (
-    <div className="flex flex-col items-start justify-center w-full gap-1 ">
+    <div className="flex flex-col items-start justify-center w-full gap-1 pr-3">
       <div className="flex gap-2 text-sm text-black">
         <p className="font-semibold">ORDER: {order.id}</p>
         <p className="font-semibold">Total: {total}$</p>
@@ -23,7 +24,12 @@ export default function DetailsOrder({ order }: PropType) {
         <p>
           Date: {new Date(order.createdAt).toLocaleString().replace(",", "")}
         </p>
-        <div className="flex items-center justify-center gap-1">
+        <div
+          className={` flex items-center justify-center gap-1 flex-shrink-0 ${
+            admin &&
+            "border-black border-[2px] border-opacity-20 p-1 rounded-lg"
+          } `}
+        >
           <StatusIcon orderStatus={order.orderStatus} />
           <p>Status : {order.orderStatus}</p>
         </div>

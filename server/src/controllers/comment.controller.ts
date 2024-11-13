@@ -23,7 +23,7 @@ export const createComment = async (req: Request, res: Response) => {
     return res
       .status(404)
       .json(
-        new ErrorRes(404, error.message.replace(/\\n/g, " ").replace(/\"/g, ""))
+        new ErrorRes(404, error.message.replace(/\n/g, " ").replace(/"/g, ""))
       );
   }
   const comment = await commentsService.addComment(
@@ -53,7 +53,7 @@ export const updateComment = async (req: Request, res: Response) => {
     return res
       .status(404)
       .json(
-        new ErrorRes(404, error.message.replace(/\\n/g, " ").replace(/\"/g, ""))
+        new ErrorRes(404, error.message.replace(/\n/g, " ").replace(/"/g, ""))
       );
   }
   const updateComment = await commentsService.updateComment(

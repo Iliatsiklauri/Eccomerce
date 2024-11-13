@@ -24,7 +24,7 @@ export const createUser = async (req: Request, res: Response) => {
       new ErrorRes(
         400,
         error.details.map((detail) =>
-          detail.message.replace(/\\n/g, " ").replace(/\"/g, "")
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
         )
       )
     );
@@ -62,8 +62,7 @@ export const updateUserInfo = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   const deletedUser = await UsersService.deleteUser(
-    req.params.id,
-    req.user.email,
+    Number(req.params.id),
     req.user.role
   );
   if (deletedUser === 401)
@@ -73,5 +72,7 @@ export const deleteUser = async (req: Request, res: Response) => {
   if (deletedUser === 404)
     return res.status(404).json(new ErrorRes(404, "User not Found"));
 
-  return res.status(204).send();
+  return res
+    .status(200)
+    .json(new SuccessRes(200, "Account deleted successfully"));
 };

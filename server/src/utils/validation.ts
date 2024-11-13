@@ -1,6 +1,5 @@
 import Joi from "joi";
 import { UserRole } from "../db/entities/User";
-import { Comment } from "../db/entities/Comment";
 import { Address } from "../db/entities/Address";
 
 export const userSchema = Joi.object({

@@ -12,7 +12,7 @@ export class categoryService {
       const categories = await this.categoryRepository.find();
       return categories;
     } catch (er) {
-      throw new Error("Failed to get categories");
+      throw console.log(er, "Failed to get categories");
     }
   }
 
@@ -21,7 +21,7 @@ export class categoryService {
       const category = await this.categoryRepository.findOneBy({ id });
       return category;
     } catch (er) {
-      throw new Error("Failed to get category");
+      throw console.log(er, "Failed to get category");
     }
   }
 
@@ -33,7 +33,7 @@ export class categoryService {
       return category || null;
     } catch (er) {
       console.log(er);
-      throw new Error("Failed to fetch category");
+      throw console.log(er, "Failed to fetch category");
     }
   }
 
@@ -51,7 +51,7 @@ export class categoryService {
       const category = await this.categoryRepository.save(newCategory);
       return category;
     } catch (er) {
-      throw new Error("Failed to create category");
+      throw console.log(er, "Failed to create category");
     }
   }
 
@@ -82,7 +82,7 @@ export class categoryService {
       await this.categoryRepository.delete({ id });
       return category;
     } catch (er) {
-      throw new Error("Failed to delete category");
+      throw console.log(er, "Failed to delete category");
     }
   }
 }

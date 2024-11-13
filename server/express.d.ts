@@ -1,4 +1,3 @@
-import { jwtpayload } from "jsonwebtoken";
 import { userType } from "./src/utils/validation";
 
 declare global {
