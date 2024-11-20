@@ -4,6 +4,9 @@ import Router from "./router/router";
 import { AppDataSource } from "./db/database-connect";
 import morgan from "morgan";
 import cors from "cors";
+import http from "http";
+import { Server } from "socket.io";
+import { webSocketSetup } from "./sockets/webSocket";
 
 const app = express();
 
@@ -17,6 +20,16 @@ AppDataSource.initialize().then(async () => {
   console.log("connected to database");
 });
 
-app.listen(4000, () => {
+const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
+
+webSocketSetup(io);
+
+server.listen(4000, () => {
   console.log("server started");
 });

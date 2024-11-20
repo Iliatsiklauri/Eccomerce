@@ -10,6 +10,7 @@ import categoryRouter from "./category.router";
 import addressRouter from "./address.Router";
 import cartItemRouter from "./cartItem.Router";
 import orderRouter from "./order.Router";
+import messageRouter from "./messages.Router";
 
 const Router = express.Router();
 
@@ -22,5 +23,6 @@ Router.use("/address", addressRouter);
 Router.use("/category", categoryRouter);
 Router.use("/products", productRouter);
 Router.use("/auth", authRouter);
+Router.use("/messages", AuthGuard, messageRouter);
 
 export default Router;

@@ -25,7 +25,7 @@ export default function CartBox({ cart, setCartMode }: PropType) {
     <div
       className={`w-[450px] bg-white shadow-lg rounded-lg z-40 flex flex-col items-center justify-start max-h-[400px] overflow-y-auto `}
     >
-      <div className="triangle"></div>
+      <div className="triangle absolute ml-[120px] top-[74px] border-b-[10px] border-white"></div>
       <CartTop setCartMode={setCartMode} />
       <div className="w-full flex flex-col items-center justify-start p-2 gap-3 ">
         {cart.length > 0 ? (

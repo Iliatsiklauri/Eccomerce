@@ -1,31 +1,14 @@
 "use client";
-import { setUsers, userType } from "@/src/store/features/usersSlice";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { userType } from "@/src/store/features/usersSlice";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import SingleUserSection from "./SingleUserSection";
-import { getCookie } from "cookies-next";
-import { getUsersApi } from "@/src/api/UsersApi";
 import { RootState } from "@/src/store/store";
 
 export default function UsersList() {
   const [userInfo, setUserInfo] = useState<null | number>(null);
   const state = useSelector((state: RootState) => state.user);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const getUsersArray = async () => {
-      try {
-        const token = getCookie("authorization");
-        if (token) {
-          const users = await getUsersApi(token as string);
-          dispatch(setUsers(users));
-        }
-      } catch (error) {
-        console.error("Failed to fetch users:", error);
-      }
-    };
 
-    getUsersArray();
-  }, [dispatch]);
   const isLoading = state.users === undefined;
   if (isLoading) return <div className="spinner"></div>;
 

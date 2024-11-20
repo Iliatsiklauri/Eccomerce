@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import PinnedCategory from "../components/Client/Home/PinnedCategory/PinnedCategory";
 import PromotionWrapper from "../components/Client/Home/PromotionWrapper";
 import BrowseProductsLine from "../components/Client/Home/BrowseLine/BrowseProductsLine";
+import ChatWrapper from "../components/Shared/Chat/ChatWrapper";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
         <BrowseProductsLine />
         <PinnedCategory />
       </Suspense>
+      <ChatWrapper />
     </div>
   );
 }
