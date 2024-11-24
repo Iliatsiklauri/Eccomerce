@@ -30,7 +30,7 @@ export default function RightMessages({
     }
   }, [id]);
 
-  // displaying correctly
+  // displaying messages correctly
 
   useEffect(() => {
     if (chatContainerRef.current) {
