@@ -24,6 +24,7 @@ export const fetchProducts = async ({
       },
     });
     const res = await data1.json();
+    console.log(res, "responseeeee");
     return res;
   } catch (er) {
     console.log(er);
