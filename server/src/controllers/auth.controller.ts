@@ -30,16 +30,3 @@ export const signIn = async (req: Request, res: Response) => {
       new SuccessRes(200, "User signed in successfully", response as string)
     );
 };
-
-export const addAdmin = async (req: Request, res: Response) => {
-  console.log(req.user);
-  res.send("add admin");
-};
-
-export const getAllAdmins = async (req: Request, res: Response) => {
-  res.send("All admins");
-};
-
-export const deleteAdmin = async (req: Request, res: Response) => {
-  res.send("delete admin");
-};

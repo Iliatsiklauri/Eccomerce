@@ -34,11 +34,29 @@ export class MessageService {
         relations: ["sender", "reciever"],
       });
 
-      console.log("Retrieved Messages:", messages);
       return messages;
     } catch (er) {
       console.log(er, "Error while fetching all messages");
       return null;
+    }
+  }
+
+  async getAllUsersFromMessages() {
+    try {
+      const users = new Map<number, User>();
+      const messages = await this.messageRepository.find({
+        relations: ["sender", "reciever"],
+      });
+
+      messages.forEach((message: Message) => {
+        if (message.sender && !users.has(message.sender.id)) {
+          users.set(message.sender.id, message.sender);
+        }
+      });
+
+      return Array.from(users.values());
+    } catch (error) {
+      console.error(error);
     }
   }
 }

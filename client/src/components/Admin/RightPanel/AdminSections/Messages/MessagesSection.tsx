@@ -48,14 +48,18 @@ export default function MessagesSection() {
 
   useEffect(() => {
     socket?.on("recieveMessage", (data) => {
-      setRecievedMessages((recieved) => [...recieved, data]);
-      console.log(recievedMessages, "recieved");
+      if (
+        (targetID == data.senderId && data.recieverId === null) ||
+        (targetID == data.recieverId && data.senderId === null)
+      ) {
+        setRecievedMessages((recieved) => [...recieved, data]);
+      }
     });
 
     return () => {
       socket?.off("recieveMessage");
     };
-  }, [socket, recievedMessages]);
+  }, [socket, recievedMessages,targetID]);
 
   return (
     <div className="w-full h-full bg-white rounded-xl shadow-md shadow-stone-500 flex items-center justify-between p-1">

@@ -19,14 +19,14 @@ export class Message {
   @Column({ nullable: true })
   senderId: number;
 
-  @ManyToOne(() => User, { nullable: true })
+  @ManyToOne(() => User, { nullable: true, onDelete: "CASCADE" })
   @JoinColumn({ name: "senderId" })
   sender: User;
 
   @Column({ nullable: true })
   recieverId: number;
 
-  @ManyToOne(() => User, { nullable: true })
+  @ManyToOne(() => User, { nullable: true, onDelete: "CASCADE" })
   @JoinColumn({ name: "recieverId" })
   reciever: User;
 

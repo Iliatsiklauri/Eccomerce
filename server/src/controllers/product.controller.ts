@@ -56,10 +56,10 @@ export const getProductById = async (req: Request, res: Response) => {
 export const searchProduct = async (req: Request, res: Response) => {
   const search = req.query.keyword.toString().toLocaleLowerCase();
   const products = await productsService.searchProductBySearch(search);
-  if (products === 400) {
+  if (!products) {
     return res
-      .status(products)
-      .json(new ErrorRes(products, "Error while searching for product"));
+      .status(400)
+      .json(new ErrorRes(400, "Error while searching for product"));
   }
   return res.json(products);
 };
@@ -126,9 +126,14 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   if (req.body.category) {
     const category = await categorysService.getById(req.body.category);
+
     if (!category)
       return res.status(404).json(new ErrorRes(404, "Invalid category"));
   }
+
+  const target = await productsService.getProductById(req.params.id);
+  if (!target)
+    return res.status(404).json(new ErrorRes(404, "Product Not Found"));
 
   const updated = await productsService.updateProduct(
     req.body,
@@ -137,24 +142,28 @@ export const updateProduct = async (req: Request, res: Response) => {
   );
 
   if (!updated) return res.status(400).json(new ErrorRes(400, "Bad request"));
-  if (updated === "imageEr")
+
+  if (req.body.image)
     return res
-      .status(409)
-      .json(new ErrorRes(409, "Choose one property for image"));
-  if (updated === "pinnedEr")
+      .status(400)
+      .json(new ErrorRes(400, "Choose one property for image"));
+
+  if (req.body.pinnedImage)
     return res
-      .status(409)
-      .json(new ErrorRes(409, "Choose one property for pinned image"));
-  if (updated === 404)
-    return res.status(404).json(new ErrorRes(404, "Product Not Found"));
+      .status(400)
+      .json(new ErrorRes(400, "Choose one property for pinned image"));
+
   return res
     .status(200)
     .json(new SuccessRes(200, "Product updated successfully"));
 };
 
 export const deleteProduct = async (req: Request, res: Response) => {
+  const target = await productsService.getProductById(req.params.id);
+
   const deletedProduct = await productsService.deletePost(req.params.id);
-  if (deletedProduct === 404) {
+
+  if (!target) {
     return res.status(404).json(new ErrorRes(404, "Product not found"));
   }
   if (!deletedProduct) {

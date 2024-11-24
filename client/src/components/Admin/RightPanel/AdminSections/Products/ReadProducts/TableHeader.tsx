@@ -16,7 +16,7 @@ export default function TableHeader() {
   const currentParams = new URLSearchParams(params.toString());
   const router = useRouter();
   return (
-    <thead className="border-b-opacity-35">
+    <thead className="border-opacity-30 border-black border-b-[1px]">
       <tr className="text-[16px] text-black font-medium border-opacity-35">
         <th>ID</th>
         <th>Image</th>

@@ -23,6 +23,6 @@ Router.use("/address", addressRouter);
 Router.use("/category", categoryRouter);
 Router.use("/products", productRouter);
 Router.use("/auth", authRouter);
-Router.use("/messages", AuthGuard, messageRouter);
+Router.use("/messages", messageRouter);
 
 export default Router;

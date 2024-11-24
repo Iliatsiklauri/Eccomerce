@@ -25,12 +25,6 @@ export default function RightMessages({
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (socket) {
-      socket.emit("fetchPrevMessages", id);
-    }
-  }, [id, socket]);
-
-  useEffect(() => {
     if (id && !isNaN(Number(id))) {
       setUserId(Number(id));
     }

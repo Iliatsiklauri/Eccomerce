@@ -83,7 +83,7 @@ export class ProductService {
       return products;
     } catch (er) {
       console.log(er, "Error while searching for products");
-      return 400;
+      return null;
     }
   }
 
@@ -123,10 +123,8 @@ export class ProductService {
   ): Promise<Product | null | number | string> {
     try {
       let target = await this.productRepository.findOneBy({ id });
-      if (!target) return 404;
 
       if (updateProductFilesDto.image) {
-        if (updateProductDto.image) return "imageEr";
         const [filepath, image] = await this.AWSService.uploadImage(
           updateProductFilesDto.image[0],
           "products"
@@ -135,8 +133,6 @@ export class ProductService {
       }
 
       if (updateProductFilesDto.pinnedImage) {
-        if (updateProductDto.pinnedImage) return "pinnedEr";
-
         const [pinnedImageFilePath, pinnedImage] =
           await this.AWSService.uploadImage(
             updateProductFilesDto.pinnedImage[0],
@@ -180,9 +176,6 @@ export class ProductService {
 
   async deletePost(id) {
     try {
-      const target = await this.productRepository.findOneBy({ id });
-      if (!target) return 404;
-
       const deletedProduct = await this.productRepository.delete({ id });
       if (deletedProduct.affected === 0) return null;
 

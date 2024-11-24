@@ -16,7 +16,7 @@ input[type="number"]::-webkit-inner-spin-button {
   height: 50px;
   animation: spin 1s linear infinite;
   margin: auto;
-  z-index: 100;
+  z-index: 40;
 }
 
 input:-webkit-autofill {

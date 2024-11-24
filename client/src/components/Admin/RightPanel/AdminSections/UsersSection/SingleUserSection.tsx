@@ -6,20 +6,16 @@ import UserModal from "@/src/components/Admin/modals/UserModal";
 
 type PropType = {
   el: userType;
-  userInfo: null | number;
-  setUserInfo: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
-export default function SingleUserSection({
-  el,
-  userInfo,
-  setUserInfo,
-}: PropType) {
-  const [modalType, setModalType] = useState("");
+export default function SingleUserSection({ el }: PropType) {
+  const [userInfo, setUserInfo] = useState<null | number>(null);
+
+  const [deleteModal, setDeleteModal] = useState(false);
   const UserModalRef = useRef<HTMLDialogElement>(null);
   return (
     <div className="w-full">
-      <UserModal UserModalRef={UserModalRef} el={el} modalType={modalType} />
+      {deleteModal && <UserModal el={el} setDeleteModal={setDeleteModal} />}
       <div
         className={`grid grid-cols-5 p-2 rounded-xl border border-gray-300 w-full relative shadow-sm shadow-stone-300 text-black`}
       >
@@ -40,7 +36,7 @@ export default function SingleUserSection({
             />
             {el.id === userInfo && (
               <UserInfoAction
-                setModalType={setModalType}
+                setDeleteModal={setDeleteModal}
                 setUserInfo={setUserInfo}
                 UserModalRef={UserModalRef}
               />

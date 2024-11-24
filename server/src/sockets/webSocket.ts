@@ -24,13 +24,15 @@ export const webSocketSetup = (io: Server) => {
         if (receiverSockets) {
           io.to(receiverSockets).emit("recieveMessage", message);
         }
+        adminSockets.forEach((adminSocketId) => {
+          io.to(adminSocketId).emit("recieveMessage", message);
+        });
       } else {
         adminSockets.forEach((adminSocketId) => {
           io.to(adminSocketId).emit("recieveMessage", message);
         });
+        io.to(socket.id).emit("recieveMessage", { ...message, echoed: true });
       }
-
-      io.to(socket.id).emit("recieveMessage", { ...message, echoed: true });
     });
   });
 };

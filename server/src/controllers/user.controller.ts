@@ -68,11 +68,34 @@ export const deleteUser = async (req: Request, res: Response) => {
   if (deletedUser === 401)
     return res
       .status(401)
-      .json(new ErrorRes(401, "User Unauthorized to delete others accaunt"));
+      .json(new ErrorRes(401, "User Unauthorized to delete others account"));
   if (deletedUser === 404)
     return res.status(404).json(new ErrorRes(404, "User not Found"));
 
   return res
     .status(200)
     .json(new SuccessRes(200, "Account deleted successfully"));
+};
+
+export const addAdmin = async (req: Request, res: Response) => {
+  const { error } = userSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json(
+      new ErrorRes(
+        400,
+        error.details.map((detail) =>
+          detail.message.replace(/\n/g, " ").replace(/"/g, "")
+        )
+      )
+    );
+  }
+  const existingUser = await UsersService.getUserByEmail(req.body.email);
+  if (existingUser) {
+    return res
+      .status(400)
+      .json(new ErrorRes(400, "This Email is already in use"));
+  }
+  const token = await UsersService.createUser(req.body, true);
+
+  res.status(201).json(new SuccessRes(201, "User created Successfully", token));
 };

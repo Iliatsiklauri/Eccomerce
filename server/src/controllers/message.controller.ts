@@ -11,3 +11,8 @@ export const getAllMessage = async (req: Request, res: Response) => {
   const messages = await messageService.getAllMessage(userId);
   return res.json(messages);
 };
+
+export const getAllUsersFromMessages = async (req: Request, res: Response) => {
+  const users = await messageService.getAllUsersFromMessages();
+  res.json(users);
+};

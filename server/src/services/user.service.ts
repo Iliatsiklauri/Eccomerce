@@ -1,6 +1,6 @@
 import { AppDataSource } from "../db/database-connect";
 import { Address } from "../db/entities/Address";
-import { User } from "../db/entities/User";
+import { User, UserRole } from "../db/entities/User";
 import { CreateUserDto } from "../types/UserDto";
 import { generateToken } from "../utils/jwt";
 import { userType } from "../utils/validation";
@@ -46,9 +46,16 @@ export class UserService {
     }
   }
 
-  async createUser(createUserDto: CreateUserDto): Promise<null | string> {
+  async createUser(
+    createUserDto: CreateUserDto,
+    isAdmin?: boolean
+  ): Promise<null | string> {
     try {
       createUserDto.password = await bcrypt.hash(createUserDto.password, 10);
+
+      if (isAdmin) {
+        createUserDto.role = UserRole.ADMIN;
+      }
       const newUser = await this.userRepository.create(createUserDto);
       const savedUser = await this.userRepository.save(newUser);
       const token = generateToken({
@@ -58,6 +65,7 @@ export class UserService {
         fullname: savedUser.fullname,
         initialAdmin: savedUser.initialAdmin,
       });
+
       return token;
     } catch (er) {
       console.log(er, "Error while creating user");
@@ -136,4 +144,6 @@ export class UserService {
       return null;
     }
   }
+
+  // admin
 }
