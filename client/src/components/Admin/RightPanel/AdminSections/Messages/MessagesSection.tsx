@@ -22,7 +22,7 @@ export default function MessagesSection() {
   // handling connection
 
   useEffect(() => {
-    const socketIo = io("ws://localhost:4000", {
+    const socketIo = io("ws://16.170.223.145:4000", {
       query: { userId: user.id, isAdmin: true },
     });
 
@@ -59,7 +59,7 @@ export default function MessagesSection() {
     return () => {
       socket?.off("recieveMessage");
     };
-  }, [socket, recievedMessages,targetID]);
+  }, [socket, recievedMessages, targetID]);
 
   return (
     <div className="w-full h-full bg-white rounded-xl shadow-md shadow-stone-500 flex items-center justify-between p-1">

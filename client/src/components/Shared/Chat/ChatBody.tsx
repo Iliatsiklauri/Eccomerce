@@ -21,7 +21,7 @@ export default function ChatBody() {
 
   useEffect(() => {
     if (user.id) {
-      const socketIo = io("ws://localhost:4000", {
+      const socketIo = io("ws://16.170.223.145:4000", {
         query: { userId: user.id, isAdmin: false },
       });
 
