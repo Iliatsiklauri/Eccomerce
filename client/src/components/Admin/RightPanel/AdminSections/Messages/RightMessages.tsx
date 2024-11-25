@@ -40,9 +40,9 @@ export default function RightMessages({
   }, [recievedMessages]);
 
   return (
-    <div className="h-full overflow-y-auto flex-shrink-0 w-[73%] flex items-center justify-center gap-3 flex-col 2xl:w-[75%] border-2 border-black rounded-xl p-1">
+    <div className="h-full overflow-y-auto flex-shrink-0 w-[73%] flex items-center justify-center gap-3 flex-col 2xl:w-[75%] bg-slate-200 border-2 border-black rounded-xl p-1">
       <div
-        className="w-full h-full border-2 border-black rounded-xl overflow-y-auto gap-3 p-1 flex flex-col"
+        className="w-full h-full rounded-xl overflow-y-auto gap-3 p-2  flex flex-col"
         ref={chatContainerRef}
       >
         {recievedMessages && recievedMessages.length > 0 ? (

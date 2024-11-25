@@ -17,7 +17,7 @@ export default function AdminSingleMessage({ obj }: PropType) {
         obj.senderId === null
           ? "self-end bg-blue-500"
           : "self-start bg-gray-500"
-      } p-1 rounded-xl px-1 relative`}
+      } p-1 rounded-xl px-1 relative max-w-[320px]`}
     >
       <p className="p-0.5 px-1 rounded-xl text-white break-words ">
         {obj.content}

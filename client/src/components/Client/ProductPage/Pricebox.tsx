@@ -7,8 +7,8 @@ import { RootState } from "@/src/store/store";
 import { setCart } from "@/src/store/features/cartSlice";
 import { addItemToCart, updateCartItem } from "@/src/api/CartItemsApi";
 import { CartItem } from "@/src/types/CartItem";
-import { addOrderById } from "@/src/api/OrdersApi";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type PropType = {
   product: null | Product;
@@ -27,6 +27,7 @@ export default function Pricebox({ product }: PropType) {
   const dispatch = useDispatch();
   const { cart } = useSelector((state: RootState) => state.cart);
   const { isLoggedIn } = useSelector((state: RootState) => state.auth);
+  const router = useRouter();
 
   return (
     <div className="h-[290px] w-[30%] bg-opacity-60 bg-slate-50 p-4 rounded-md shadow-md flex items-center justify-between flex-col ">
@@ -116,7 +117,11 @@ export default function Pricebox({ product }: PropType) {
           <button
             className="btn w-full text-white btn-neutral"
             onClick={async () => {
-              if (product) await addOrderById([product?.id], amount);
+              if (product) {
+                const cartItems = await addItemToCart(product.id, amount);
+                dispatch(setCart(cartItems));
+              }
+              router.push("/checkout");
             }}
           >
             Buy
