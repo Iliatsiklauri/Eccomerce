@@ -46,7 +46,7 @@ export default function ProductsList() {
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-10">
-      <div className="self-start">
+      <div className="self-start text-lg">
         <BreadCrumbs mainLink="Home" category={category} />
       </div>
       <div className={`flex w-full gap-5 items-start justify-between  `}>
@@ -57,8 +57,8 @@ export default function ProductsList() {
           <div
             className={` ${
               data && data?.products.length > 0
-                ? `grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0`
-                : "flex flex-col w-[82%]"
+                ? `grid grid-cols-4 2xl:grid-cols-4 w-[80%] 2xl:w-[82%] flex-shrink-0 `
+                : "flex flex-col w-[82%] min-h-[200px]"
             }`}
           >
             {data && !loading && data?.products.length > 0 ? (
@@ -73,6 +73,10 @@ export default function ProductsList() {
                   <Card card={el} listedCard />
                 </div>
               ))
+            ) : !loading && data?.products.length == 0 ? (
+              <div className="flex items-center justify-start pl-[25%] min-h-[200px] w-full text-3xl text-black">
+                No Products found
+              </div>
             ) : (
               <ProductsListSkeleton showheader less width />
             )}

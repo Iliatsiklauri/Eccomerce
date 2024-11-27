@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import FilterByPrice from "./FilterByPrice";
-import Link from "next/link";
+import SingleCategory from "./SingleCategory";
 
 export default function FilterAccordion() {
   const [active, setActive] = useState<null | string>(null);
@@ -41,40 +41,7 @@ export default function FilterAccordion() {
         </div>
         {active === "Price" && <FilterByPrice />}
       </div>
-      <div className="w-full flex items-start justify-center flex-col gap-2">
-        <div
-          className="w-full flex items-center justify-between cursor-pointer"
-          onClick={() => handleAccChange("Category")}
-        >
-          <p className="text-black text-xl">Category</p>
-          <Image
-            src={"/icons/adminPanel/arrow-down.png"}
-            width={20}
-            height={20}
-            alt="arrow"
-            className={`${
-              active === "Category" &&
-              "rotate-180 transition-all duration-150 ease-in-out"
-            }`}
-          />
-        </div>
-        {active === "Category" && (
-          <form className="w-full">
-            {categories.category.map((el) => (
-              <Link
-                href={`/products?category=${el.id}`}
-                onClick={() => {
-                  setActive(null);
-                }}
-                key={el.id}
-                className="w-full h-[32px] hover:bg-opacity-5 bg-opacity-0 bg-black cursor-pointer rounded-md pl-1 text-black flex items-center justify-start"
-              >
-                <p>{el.title}</p>
-              </Link>
-            ))}
-          </form>
-        )}
-      </div>
+      <SingleCategory categories={categories} />
     </div>
   );
 }

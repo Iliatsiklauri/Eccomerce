@@ -1,18 +1,21 @@
-import { Order } from "@/src/types/Order";
-import React from "react";
+import { Order, orderStatus } from "@/src/types/Order";
+import React, { useState } from "react";
 import IconOrder from "./IconOrder";
 import DetailsOrder from "./DetailsOrder";
 import Image from "next/image";
 import OrderProducts from "./OrderProducts";
 import { updateOrder } from "@/src/api/OrdersApi";
+import SingleOrderInfo from "./SingleOrderInfo";
 
 type PropType = {
   order: Order;
   setActiveOrder: React.Dispatch<React.SetStateAction<number | null>>;
-  activeOrder: number | null;
+  activeOrder?: number | null;
   admin?: boolean;
   setTrigger?: React.Dispatch<React.SetStateAction<boolean>>;
   trigger?: boolean;
+  active?: null | number;
+  setActive?: React.Dispatch<React.SetStateAction<number | null>>;
 };
 
 export default function SingleOrder({
@@ -22,14 +25,16 @@ export default function SingleOrder({
   activeOrder,
   setActiveOrder,
   admin,
+  active,
+  setActive,
 }: PropType) {
-  const handleStatusChange = async () => {
-    await updateOrder(order.orderStatus, order.id);
-    if (setTrigger) {
-      setTrigger(!trigger);
-    }
-  };
   const user = order.user;
+  const states = ["pending", "failed", "fullfiled"];
+
+  const [orderStat, setOrderStat] = useState<string | orderStatus>(
+    order.orderStatus
+  );
+
   return (
     <div className="w-full flex flex-col gap-3">
       <div
@@ -54,32 +59,7 @@ export default function SingleOrder({
           <IconOrder />
           <DetailsOrder order={order} admin={admin} />
         </div>
-        {admin && (
-          <div className="flex flex-shrink-0 items-start py-2 px-3 gap-4 justify-start  h-full w-[40%] 2xl:w-[30%] text-black text-sm border-l-2 border-r-2 border-black border-opacity-15 border-dashed">
-            <div className="p-1 bg-black rounded-full ">
-              <Image
-                src={"/icons/header/profile-user.png"}
-                height={20}
-                width={20}
-                alt="user"
-              />
-            </div>
-            <section className="flex items-start justify-between h-full flex-col">
-              <p>
-                <span className="font-semibold">Email: </span>
-                {user.email}
-              </p>
-              <p>
-                <span className="font-semibold">Fullname: </span>
-                {user.fullname}
-              </p>
-            </section>
-            <section className="w-1/2">
-              <span className="font-semibold">Address: </span>
-              {order.address.street}
-            </section>
-          </div>
-        )}
+        {admin && <SingleOrderInfo user={user} order={order} />}
         <div
           className={`${
             admin
@@ -88,23 +68,66 @@ export default function SingleOrder({
           }  flex  w-full h-full `}
         >
           {admin && (
-            <div
-              className={` w-[100px] z-10 text-black flex items-center cursor-pointer justify-center  h-[40px] rounded-md border-black border-[1px] ${
-                order.orderStatus === "pending"
-                  ? "bg-yellow-500"
-                  : order.orderStatus === "fullfiled"
-                  ? "bg-green-500"
-                  : "bg-red-500"
-              }`}
-              onClick={handleStatusChange}
-            >
-              {order.orderStatus}
+            <div className="w-[110px] flex items-center justify-center  bg-white rounded-lg border-black border-[1px] p-1 flex-col relative">
+              <div
+                className={`z-20 w-full text-black flex items-center cursor-pointer justify-center  h-[40px] rounded-md ${
+                  order.orderStatus === "pending"
+                    ? "bg-yellow-500"
+                    : order.orderStatus === "fullfiled"
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }`}
+                onClick={() => {
+                  if (setActive) {
+                    if (active === order.id) {
+                      setActive(null);
+                    } else {
+                      setActive(order.id);
+                    }
+                  }
+                }}
+              >
+                <p>{orderStat}</p>
+              </div>
+              {active === order.id && (
+                <div className="absolute bottom-[-100px] w-[115px] bg-white z-50 border-black border-[1px] rounded-lg flex flex-col items-center justify-center gap-1 p-1">
+                  {states
+                    .filter((el) => el !== order.orderStatus)
+                    .map((str) => (
+                      <div
+                        key={str}
+                        className={` ${
+                          str === "failed"
+                            ? "bg-red-500 "
+                            : str === "fullfiled"
+                            ? "bg-green-500"
+                            : "bg-yellow-500"
+                        } w-full text-sm  h-[40px] rounded-md flex items-center justify-center text-black cursor-pointer shadow-lg`}
+                        onClick={async () => {
+                          await updateOrder(str as orderStatus, order.id);
+                          setOrderStat(str);
+                          if (setActive) {
+                            setActive(null);
+                          }
+                          if (setTrigger) {
+                            setTrigger(!trigger);
+                          }
+                        }}
+                      >
+                        {str}
+                      </div>
+                    ))}
+                </div>
+              )}
             </div>
           )}
           {admin && (
             <div
               className="absolute w-full h-full cursor-pointer "
               onClick={() => {
+                if (setActive) {
+                  setActive(null);
+                }
                 if (admin) {
                   if (activeOrder === order.id) {
                     setActiveOrder(null);

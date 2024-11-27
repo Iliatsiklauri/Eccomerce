@@ -7,6 +7,7 @@ import { Product } from "@/src/types/Product";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Card({
@@ -64,6 +65,7 @@ export default function Card({
                 dispatch(setCart(cartItems));
               }
             }
+            toast.success("Item added to your cart");
           }}
         >
           {isLoggedIn && <CartButton />}

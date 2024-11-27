@@ -16,7 +16,6 @@ export const fetchProducts = async ({
     ? `${process.env.NEXT_PUBLIC_GETPRODUCTS_API}/?pinned=true&page=${page}`
     : process.env.NEXT_PUBLIC_GETPRODUCTS_API;
   try {
-    console.log(process.env.NEXT_PUBLIC_GETPRODUCTS_API, "apiii");
     const data1 = await fetch(url as string, {
       method: "GET",
       headers: {
@@ -24,7 +23,6 @@ export const fetchProducts = async ({
       },
     });
     const res = await data1.json();
-    console.log(res, "responseeeee");
     return res;
   } catch (er) {
     console.log(er);

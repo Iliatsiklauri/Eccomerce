@@ -26,14 +26,13 @@ export default function SingleCategoryDetails({ category }: PropType) {
   return (
     <div className="w-full bg-darkBrown px-6 py-3 rounded-md flex items-center justify-start text-white">
       <div className="flex items-center justify-center gap-3 w-fit ">
-        <p>Pinned : {checked ? "true" : "false"}</p>
+        <p>Pinned : </p>
+
         <input
           type="checkbox"
-          name=""
-          id=""
-          className="checkbox checkbox-sm bg-white"
-          defaultChecked={Boolean(category.pinned)}
-          onClick={handleClick}
+          className="toggle bg-white hover:bg-white"
+          checked={checked}
+          onChange={handleClick}
         />
       </div>
     </div>

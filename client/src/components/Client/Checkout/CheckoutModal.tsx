@@ -1,5 +1,6 @@
 import { setCart } from "@/src/store/features/cartSlice";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useDispatch } from "react-redux";
 type PropType = {
@@ -8,6 +9,9 @@ type PropType = {
   id: string | undefined;
 };
 export default function CheckoutModal({ setBg, loading, id }: PropType) {
+  const params = useSearchParams();
+  const quantity = params.get("quantity");
+
   const dispatch = useDispatch();
   return (
     <div className="fixed w-full h-full bottom-0 top-0 z-50 left-0 right-0 flex items-center justify-center flex-shrink-0">
@@ -32,7 +36,9 @@ export default function CheckoutModal({ setBg, loading, id }: PropType) {
                 href={"/"}
                 className="btn w-[45%] flex-shrink-0 h-[40px] btn-neutral text-white"
                 onClick={() => {
-                  dispatch(setCart([]));
+                  if (!quantity) {
+                    dispatch(setCart([]));
+                  }
                 }}
               >
                 {" "}
@@ -42,7 +48,9 @@ export default function CheckoutModal({ setBg, loading, id }: PropType) {
                 href={`/profile/${id}?section=orders`}
                 className="btn w-[45%] flex-shrink-0 h-[40px] btn-success text-white"
                 onClick={() => {
-                  dispatch(setCart([]));
+                  if (!quantity) {
+                    dispatch(setCart([]));
+                  }
                 }}
               >
                 Track your orders

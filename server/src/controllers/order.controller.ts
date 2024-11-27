@@ -6,11 +6,13 @@ import { UserService } from "../services/user.service";
 import { CartItem } from "../db/entities/CartItem";
 import { CartItemService } from "../services/cartItem.service";
 import { orderStatus } from "../db/entities/Order";
+import { AppDataSource } from "../db/database-connect";
 
 const ordersService = new OrderService();
 const productsService = new ProductService();
 const usersService = new UserService();
 const CartItemsService = new CartItemService();
+const cartItemRepository = AppDataSource.getRepository(CartItem);
 
 export const getAllOrders = async (req: Request, res: Response) => {
   const status = req.query.status
@@ -32,7 +34,8 @@ export const getUserOrders = async (req: Request, res: Response) => {
   const UserOrders = await ordersService.getUserOrders(req.user.id);
   res.json(UserOrders);
 };
-/// hreeerer
+
+/// ADD ORDER BY CART
 
 export const addOrderByCart = async (req: Request, res: Response) => {
   const user = await usersService.getUserById(req.user.id);
@@ -59,18 +62,16 @@ export const addOrderByCart = async (req: Request, res: Response) => {
   res.status(200).json(new SuccessRes(200, "Order placed successfully"));
 };
 
-//dfasjiasddasuidashuidasih
+//ADD ORDER BY ID
 
 export const addOrderById = async (req: Request, res: Response) => {
-  const IdArray = req.body.IdArray;
+  const producId = req.body.productId;
   const quantity = req.body.quantity;
 
-  if (!IdArray || !quantity)
+  if (!producId || !quantity)
     return res
       .status(400)
       .json(new ErrorRes(400, "quntity and product Id are required"));
-
-  const errors = [];
 
   const user = await usersService.getRawUserById(req.user.id);
   if (!user.Address)
@@ -78,24 +79,27 @@ export const addOrderById = async (req: Request, res: Response) => {
       .status(400)
       .json(new ErrorRes(400, "User does not have address property"));
 
-  const productsArray = await Promise.all(
-    IdArray.map((id) => productsService.getProductById(id))
-  );
+  const product = await productsService.getProductById(producId);
 
-  productsArray.forEach((product) => {
-    if (!product) {
-      errors.push(`Product not found with the id`);
-      return null;
-    }
-  });
+  if (!product) {
+    return res
+      .status(400)
+      .json(new ErrorRes(400, `Product not found with the id`));
+  }
 
-  if (errors.length > 0) return res.status(400).json(new ErrorRes(400, errors));
+  const cartItemObj = new CartItem();
 
-  productsArray.forEach(async (product) => {
-    await productsService.updateProductInStock(product.id, quantity);
-  });
+  cartItemObj.quantity = quantity;
+  cartItemObj.user = user;
+  cartItemObj.product = product;
 
-  const order = await ordersService.addOrder(productsArray, user, quantity);
+  const cartItem = await cartItemRepository.save(cartItemObj);
+
+  await productsService.updateProductInStock(product.id, quantity);
+
+  const order = await ordersService.addOrder(cartItem, user, quantity);
+
+  await CartItemsService.removeCartItem(cartItem.id);
 
   if (!order)
     return res.status(400).json(new ErrorRes(400, "Could not add an Order"));

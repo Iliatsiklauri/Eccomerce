@@ -1,8 +1,10 @@
 import { CartItem } from "@/src/types/CartItem";
+import { Product } from "@/src/types/Product";
 import React from "react";
 
 type PropType = {
   total: number;
+  product: Product | null;
   cart: [] | CartItem[];
   selectedAddress: {
     street: string;
@@ -15,7 +17,9 @@ export default function OrderSummary({
   cart,
   total,
   selectedAddress,
+  product,
 }: PropType) {
+  console.log(total);
   return (
     <div className="w-full flex flex-col items-start justify-center text-black gap-5 border-black border-opacity-30 rounded-md border-[1px] p-2">
       <h2 className="text-black text-2xl font-semibold">Summary</h2>
@@ -29,7 +33,7 @@ export default function OrderSummary({
         </p>
         <p className="text-sm">
           <span className="font-semibold text-base">Product(s): </span>
-          {cart.length}
+          {product ? 1 : cart.length}
         </p>
         <p className="text-md">
           <span className="font-semibold text-xl">Total: </span>

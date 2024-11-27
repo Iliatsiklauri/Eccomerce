@@ -52,9 +52,9 @@ export const getAllOrders = async ({
   }
 };
 
-export const addOrderById = async (products: number[], quantity: number) => {
+export const addOrderById = async (product: number, quantity: number) => {
   const payload = {
-    IdArray: products,
+    productId: product,
     quantity,
   };
   const authorization = getCookie("authorization");
@@ -97,14 +97,6 @@ export const addOrderByCart = async () => {
 };
 
 export const updateOrder = async (status: orderStatus, id: number) => {
-  let payload;
-  if (status === orderStatus.FAILED) {
-    payload = orderStatus.FULLFILED;
-  } else if (status === orderStatus.FULLFILED) {
-    payload = orderStatus.PENDING;
-  } else {
-    payload = orderStatus.FAILED;
-  }
   const authorization = getCookie("authorization");
   try {
     const res = await fetch(
@@ -115,12 +107,11 @@ export const updateOrder = async (status: orderStatus, id: number) => {
           "Content-Type": "application/json",
           authorization: authorization as string,
         },
-        body: JSON.stringify({ orderStatus: payload }),
+        body: JSON.stringify({ orderStatus: status }),
       }
     );
     const updatedOrder = await res.json();
-    return updatedOrder
-    return res;
+    return updatedOrder;
   } catch (er) {
     console.log(er, "Error while fetching users cart");
   }

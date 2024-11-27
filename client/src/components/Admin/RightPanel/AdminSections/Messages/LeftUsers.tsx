@@ -8,18 +8,17 @@ import React, { useEffect, useState } from "react";
 export default function LeftUsers() {
   const [chatUsers, setChatUsers] = useState<null | userType[]>(null);
 
+  const params = useSearchParams();
+  const id = params.get("id");
+  const router = useRouter();
+
   useEffect(() => {
     const getUsers = async () => {
       const users = await getAllUsersFromMessages();
       setChatUsers(users);
     };
-
     getUsers();
   }, []);
-
-  const params = useSearchParams();
-  const id = params.get("id");
-  const router = useRouter();
 
   useEffect(() => {
     if (
@@ -43,7 +42,7 @@ export default function LeftUsers() {
           >
             <div
               className={` w-full h-[55px] ${
-                Number(id) === user.id ? "bg-slate-300" : "bg-slate-100 "
+                Number(id) === user.id ? "bg-slate-200" : "bg-white "
               } bg-slate-100 rounded-xl text-black p-2 flex items-center justify-start gap-3  text-sm`}
             >
               <Image

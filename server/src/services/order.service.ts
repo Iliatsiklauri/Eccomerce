@@ -2,7 +2,6 @@ import { AppDataSource } from "../db/database-connect";
 import { CartItem } from "../db/entities/CartItem";
 import { Order, orderStatus } from "../db/entities/Order";
 import { User } from "../db/entities/User";
-import { OrderItemType } from "../types/Product";
 
 export class OrderService {
   private readonly orderRepository = AppDataSource.getRepository(Order);
@@ -31,6 +30,7 @@ export class OrderService {
     try {
       const orders = await this.orderRepository.find({
         where: { user: { id: userId } },
+        order: { createdAt: "ASC" },
       });
       return orders;
     } catch (er) {
@@ -58,13 +58,12 @@ export class OrderService {
     }
   }
 
-  async addOrder(products: OrderItemType[], user: User, quantity) {
+  async addOrder(product: CartItem, user: User, quantity) {
     try {
       const order = new Order();
-
-      products[0].quantity = quantity;
+      order.products = [];
       order.address = user.Address;
-      order.products = products;
+      order.products.push(product);
       order.user = user;
 
       const savedOrder = await this.orderRepository.save(order);

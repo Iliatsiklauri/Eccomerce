@@ -101,7 +101,8 @@ export default function AddProductsForm({ mode }: PropType) {
         );
       }
 
-      if (res.error) {
+      if (res.error && res.error.message !== "") {
+        setLoading(false);
         setError(res.error.message);
       } else {
         if (mode === "edit" && product) {
@@ -109,8 +110,9 @@ export default function AddProductsForm({ mode }: PropType) {
         } else {
           setProductId(res.id);
         }
-
+        console.log("i am here");
         setLoading(false);
+        console.log("i am here");
         setImageForPrev(null);
         setPinnedImage(null);
         setLoading(false);

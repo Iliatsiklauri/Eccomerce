@@ -9,6 +9,7 @@ import ProductImage from "@/src/components/Client/ProductPage/ProductImage";
 import BackButton from "@/src/components/Shared/BackButton/BackButton";
 import { Product } from "@/src/types/Product";
 import React, { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 type PropType = {
   params: {
@@ -41,6 +42,9 @@ export default function Page({ params: { id } }: PropType) {
   }
   return (
     <div className="w-full h-full flex items-start justify-center container1 flex-col">
+      <div>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
       <BackButton />
       <div className="w-full flex items-center justify-center py-12 flex-col">
         <div className="flex items-start justify-center container1 flex-col gap-16">

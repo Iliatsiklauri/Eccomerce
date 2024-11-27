@@ -4,6 +4,7 @@ import { deleteUserApi, getUsersApi } from "@/src/api/UsersApi";
 import { getCookie } from "cookies-next";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 type propType = {
   el: userType;
@@ -69,6 +70,7 @@ export default function UserModal({ el, setDeleteModal }: propType) {
                   const token = getCookie("authorization");
                   const users = await getUsersApi(token as string);
                   dispatch(setUsers(users));
+                  toast.success("User deleted Successfully !");
                 }}
               >
                 DELETE

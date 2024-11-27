@@ -10,11 +10,14 @@ type PropType = {
 
 export default function OrdersList({ orders, setTrigger, trigger }: PropType) {
   const [activeOrder, setActiveOrder] = useState<null | number>(null);
+  const [active, setActive] = useState<null | number>(null);
 
   return (
     <div className="flex flex-col gap-2 overflow-y-auto h-full w-full rounded-xl justify-start items-center p-2 ">
       {orders?.map((order: Order) => (
         <SingleOrder
+          active={active}
+          setActive={setActive}
           setTrigger={setTrigger}
           trigger={trigger}
           order={order}

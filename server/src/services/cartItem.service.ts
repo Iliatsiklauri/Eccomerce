@@ -51,7 +51,8 @@ export class CartItemService {
       cartItem.product = product;
       cartItem.quantity = quantity;
 
-      await this.CartItemRepository.save(cartItem);
+      const addedItem = await this.CartItemRepository.save(cartItem);
+
       return cartItem;
     } catch (er) {
       console.log(er, "Error while adding cart item");

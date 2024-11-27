@@ -6,6 +6,7 @@ import CheckoutModal from "@/src/components/Client/Checkout/CheckoutModal";
 import { RootState } from "@/src/store/store";
 import { Address } from "@/src/types/Address";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
@@ -22,6 +23,9 @@ export default function Page() {
 
   const { cart } = useSelector((state: RootState) => state.cart);
   const { id } = useSelector((state: RootState) => state.auth);
+
+  const params = useSearchParams();
+  const productId = params.get("id");
 
   const [selectedAddress, setSelectedAddress] = useState<null | {
     street: string;
@@ -53,7 +57,7 @@ export default function Page() {
 
   return (
     <div className="w-full flex items-center justify-center">
-      {cart.length === 0 ? (
+      {cart.length === 0 && productId === null ? (
         <div className="text-3xl text-black min-h-[500px] flex items-center justify-center">
           Go Home
         </div>
@@ -63,9 +67,7 @@ export default function Page() {
             cart={cart}
             selectedAddress={selectedAddress}
             setBg={setBg}
-            bg={bg}
             setLoading={setLoading}
-            loading={loading}
           />
           <div className="w-[35%] flex-shrink-0">
             <GoogleMapComponent

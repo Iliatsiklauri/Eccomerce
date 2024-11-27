@@ -143,12 +143,12 @@ export const updateProduct = async (req: Request, res: Response) => {
 
   if (!updated) return res.status(400).json(new ErrorRes(400, "Bad request"));
 
-  if (req.body.image)
+  if (req.body.image && updateFilesDto.image)
     return res
       .status(400)
       .json(new ErrorRes(400, "Choose one property for image"));
 
-  if (req.body.pinnedImage)
+  if (req.body.pinned && updateFilesDto.pinnedImage)
     return res
       .status(400)
       .json(new ErrorRes(400, "Choose one property for pinned image"));

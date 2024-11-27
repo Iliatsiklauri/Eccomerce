@@ -21,7 +21,7 @@ export default function ChatBody() {
 
   useEffect(() => {
     if (user.id) {
-      const socketIo = io("ws://16.170.223.145:4000", {
+      const socketIo = io("ws://localhost:4000", {
         query: { userId: user.id, isAdmin: false },
       });
 
@@ -65,12 +65,14 @@ export default function ChatBody() {
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socket?.emit("sendMessage", {
-      senderId: user.id,
-      recieverId: null,
-      content: message,
-    });
-    setMessage("");
+    if (message.length > 0) {
+      socket?.emit("sendMessage", {
+        senderId: user.id,
+        recieverId: null,
+        content: message,
+      });
+      setMessage("");
+    }
   };
 
   return (

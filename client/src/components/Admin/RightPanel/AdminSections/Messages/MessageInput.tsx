@@ -17,17 +17,18 @@ export default function MessageInput({ socket, userId }: PropType) {
 
   const sendMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    socket?.emit("sendMessage", {
-      senderId: null,
-      recieverId: userId,
-      content: message,
-    });
-    setMessage("");
+    if (message.length > 0 && message.trim() !== "") {
+      socket?.emit("sendMessage", {
+        senderId: null,
+        recieverId: userId,
+        content: message,
+      });
+      setMessage("");
+    }
   };
   return (
     <form
-      className="overflow-y-auto flex-shrink-0 border-2 border-black  rounded-xl w-full h-[60px] flex items-center justify-between bg-blue-100 px-2"
+      className="overflow-y-auto flex-shrink-0 border-t-2 border-black w-full h-[55px] flex items-center justify-between bg-blue-100 px-2"
       onSubmit={sendMessage}
     >
       <input

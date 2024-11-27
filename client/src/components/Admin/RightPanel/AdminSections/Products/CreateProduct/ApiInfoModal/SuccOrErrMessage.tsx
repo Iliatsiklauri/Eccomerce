@@ -7,7 +7,7 @@ type PropType = {
 
 export default function SuccOrErrMessage({ error, mode }: PropType) {
   return (
-    <div>
+    <div className="w-full text-center">
       {error ? (
         <>
           <h1 className="text-white text-xl">Something went wrong</h1>

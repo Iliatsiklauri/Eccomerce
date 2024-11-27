@@ -1,7 +1,7 @@
 import { CategoryType } from "@/src/types/Category";
 import { createSlice } from "@reduxjs/toolkit";
 
-type categoryState = {
+export type categoryState = {
   category: CategoryType[] | [];
   loading: boolean;
 };
